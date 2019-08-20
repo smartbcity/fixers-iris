@@ -1,0 +1,14 @@
+server:
+  port: 8889
+
+spring:
+  rabbitmq:
+    username: guest
+    password: guest
+    host: localhost
+    rest: http://localhost:15672/api
+
+actuator:
+  endpoints:
+    health:
+      sensitive: false

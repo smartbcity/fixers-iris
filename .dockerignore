@@ -1,0 +1,6 @@
+deploy
+gradle*
+.idea
+.env
+docker-compose*
+makefile

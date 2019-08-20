@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  rabbitmq:
+    image: "rabbitmq:3.7.17-alpine"
+    hostname: "rabbit"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    labels:
+      NAME: "rabbitmq"
+    volumes:
+      - ./infra/dev/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - ./infra/dev/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.config
