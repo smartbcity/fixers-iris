@@ -2,6 +2,7 @@ package city.smartb.iris.api.rest.websocket
 
 import city.smartb.iris.api.rest.model.Session
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketHandler
 import org.springframework.web.reactive.socket.WebSocketMessage
 import org.springframework.web.reactive.socket.WebSocketSession
@@ -11,6 +12,8 @@ import reactor.core.publisher.Mono
 open class AbstractReactiveWebSocketHandler<RECEIVE, SEND, HANDLER : AbstractHandler<RECEIVE, SEND>>(
         private val objectMapper: ObjectMapper,
         private val messagesHandler: HANDLER) : WebSocketHandler {
+
+    private val logger = LoggerFactory.getLogger(this.javaClass::class.java)
 
     override fun handle(webSocketSession: WebSocketSession): Mono<Void> {
         val session = getSessionId(webSocketSession)
@@ -30,6 +33,9 @@ open class AbstractReactiveWebSocketHandler<RECEIVE, SEND, HANDLER : AbstractHan
                 .map { it.getPayloadAsText() }
                 .map { messagesHandler.toValue(it) }
                 .map { messagesHandler.receiveFromDevice(session, it) }
+                .doOnError {
+                    logger.error("Error handling the message", it)
+                }
                 .then()
     }
 

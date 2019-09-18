@@ -8,7 +8,7 @@ open class Message(
         open val action: ActionType,
         open val url: String,
         open val application: String,
-        open val payload: Map<String, String>
+        open val payload: Map<String, String> = mapOf()
 ) {
     override fun toString(): String {
         return "Message(action=$action, url='$url', application='$application', payload=$payload)"

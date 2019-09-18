@@ -5,6 +5,7 @@ import city.smartb.iris.api.rest.model.Response
 import city.smartb.iris.api.rest.model.Session
 import city.smartb.iris.api.rest.websocket.AbstractHandler
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.LoggerFactory
 import org.springframework.amqp.rabbit.connection.ConnectionFactory
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer
@@ -18,7 +19,10 @@ class BrowserHandler (
         private val objectMapper: ObjectMapper
 ) : AbstractHandler<Message, Response>() {
 
+    private val logger = LoggerFactory.getLogger(BrowserHandler::class.java)
+
     override fun receiveFromDevice(session: Session, message: Message) {
+        logger.info("Receive message from browser to phone[${message}]")
         val toPhoneQueue = session.getQueueToSendToPhone()
         template.convertAndSend(toPhoneQueue, message);
     }
@@ -30,6 +34,7 @@ class BrowserHandler (
         return Flux.create<Response> { emitter ->
             mlc.setupMessageListener { messageListener ->
                 val payload = toResponse(messageListener.body)
+                logger.info("Send message from phone to Brower[${payload}]")
                 emitter.next(payload)
             }
             emitter.onRequest { v -> mlc.start() }
