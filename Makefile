@@ -12,5 +12,5 @@ push:
 	@docker push ${REST_JAVA_IMG}
 
 push-latest:
-    @docker tag ${REST_JAVA_IMG} ${SDK_REST_JAVA_LATEST}
+	@docker tag ${REST_JAVA_IMG} ${REST_JAVA_LATEST}
 	@docker push ${REST_JAVA_LATEST}
