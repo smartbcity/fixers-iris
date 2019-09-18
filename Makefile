@@ -1,13 +1,16 @@
-NAME   	:= smartbcity/iris-api
-IMG    	:= ${NAME}:${VERSION}
-LATEST  := ${NAME}:latest
+REST_JAVA_NAME	    := smartbcity/iris-api
+REST_JAVA_IMG	    := ${REST_JAVA_NAME}:${VERSION}
+REST_JAVA_LATEST	:= ${REST_JAVA_NAME}:latest
+
+test:
+	@gradle -p test -i
 
 package:
-	@docker build --build-arg VERSION=${VERSION} -f Dockerfile -t ${IMG} .
+	@docker build -f Dockerfile -t ${REST_JAVA_IMG} .
 
 push:
-	@docker push ${IMG}
+	@docker push ${REST_JAVA_IMG}
 
 push-latest:
-    @docker tag ${IMG} ${LATEST}
-	@docker push ${LATEST}
+    @docker tag ${REST_JAVA_IMG} ${SDK_REST_JAVA_LATEST}
+	@docker push ${REST_JAVA_LATEST}
