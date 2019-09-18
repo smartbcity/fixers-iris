@@ -1,5 +1,18 @@
 # Iris
 
+
+# Connect with QRCODE
+```
+Browser -> Iris =>connect()
+Phone -> Iris => connect()
+
+Phone -> Iris => send(PublicKeyResponse)
+Iris -> Phone => send(SignMessage)
+Phone -> Iris => send(SignResponse)
+
+Iris -> Browser => send(SignResponse)
+```
+
 ## Build project
 
 ```

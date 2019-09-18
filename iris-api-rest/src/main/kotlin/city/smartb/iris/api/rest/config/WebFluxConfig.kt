@@ -15,8 +15,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2WebFlux
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import java.util.concurrent.Executor
 
-
-
 @Configuration
 @EnableWebFlux
 @EnableSwagger2WebFlux
