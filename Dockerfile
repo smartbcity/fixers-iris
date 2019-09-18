@@ -6,7 +6,7 @@ RUN gradle build -x test
 
 FROM openjdk:11-jre-slim
 
-COPY --from=builder /home/gradle/src/docstampr-api-rest/build/libs/*-api-rest*.jar api-rest.jar
+COPY --from=builder /home/gradle/src/iris-api-rest/build/libs/*-api-rest*.jar api-rest.jar
 
 EXPOSE 8889
 
