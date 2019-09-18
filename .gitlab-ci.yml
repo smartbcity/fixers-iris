@@ -49,4 +49,4 @@ push-latest:
     -  echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin
   script:
     - export VERSION_BUILD=$(cat version.build)
-    - make push-latest -e VERSION=${VERSION_BUILD}
+    - make -B push-latest -e VERSION=${VERSION_BUILD}
