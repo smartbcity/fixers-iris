@@ -1,0 +1,52 @@
+image: civisblockchain/builder-ci:0.1.0-local-1
+
+stages:
+  - verify
+  - version
+  - package
+  - push
+
+variables:
+  SPRING_PROFILES_ACTIVE: gitlab
+
+# Disable Test
+#test:
+#  stage: verify
+#  script:
+#    - make test
+#  artifacts:
+#    reports:
+#      junit: preuve-mobi-api-rest/build/test-results/test/TEST-*.xml
+
+version:
+  stage: version
+  image: civisblockchain/semantic-versioning:latest
+  script:
+    - make -f /opt/io.smart-b/semantic-versioning/Makefile next_version >> version.build
+  artifacts:
+    paths:
+      - version*
+
+package:
+  stage: package
+  script:
+    - export VERSION_BUILD=$(cat version.build)
+    - make package -e VERSION=${VERSION_BUILD}
+
+push:
+  stage: push
+  when: manual
+  before_script:
+    -  echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - export VERSION_BUILD=$(cat version.build)
+    - make push -e VERSION=${VERSION_BUILD}
+
+push-latest:
+  stage: push
+  when: manual
+  before_script:
+    -  echo "$CI_REGISTRY_PASSWORD" | docker login -u "$CI_REGISTRY_USER" --password-stdin
+  script:
+    - export VERSION_BUILD=$(cat version.build)
+    - make push-latest -e VERSION=${VERSION_BUILD}

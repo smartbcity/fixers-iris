@@ -1,8 +1,8 @@
-NAME   	:= smartb/skeleton-api-rest
+NAME   	:= smartbcity/iris-api
 IMG    	:= ${NAME}:${VERSION}
 LATEST  := ${NAME}:latest
 
-build:
+package:
 	@docker build --build-arg VERSION=${VERSION} -f Dockerfile -t ${IMG} .
 
 tag-latest:
