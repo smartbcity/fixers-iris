@@ -1,7 +1,7 @@
 package city.smartb.iris.api.rest.model
 
 enum class ActionType {
-    AUTH, SIGN
+    AUTH, AUTH_PUB_KEY, SIGN, SIGN_PUB_KEY,
 }
 
 open class Message(
@@ -9,7 +9,7 @@ open class Message(
         open val url: String,
         open val application: String,
         open val payload: Map<String, String> = mapOf()
-) {
+) : TransitValue {
     override fun toString(): String {
         return "Message(action=$action, url='$url', application='$application', payload=$payload)"
     }

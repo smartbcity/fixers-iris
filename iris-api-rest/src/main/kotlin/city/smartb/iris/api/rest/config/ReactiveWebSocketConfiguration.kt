@@ -1,5 +1,7 @@
-package city.smartb.iris.api.rest.websocket
+package city.smartb.iris.api.rest.config
 
+import city.smartb.iris.api.rest.websocket.ApplicationReactiveWebSocketHandler
+import city.smartb.iris.api.rest.websocket.SignerReactiveWebSocketHandler
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.socket.server.support.WebSocketHandlerAdapter
 import org.springframework.web.reactive.handler.SimpleUrlHandlerMapping
@@ -11,17 +13,17 @@ import org.springframework.context.annotation.Bean
 class ReactiveWebSocketConfiguration {
 
     @Autowired
-    private lateinit var browserHandler: BrowserReactiveWebSocketHandler
+    private lateinit var applicationHandler: ApplicationReactiveWebSocketHandler
 
     @Autowired
-    private lateinit var responseHanlder: PhoneReactiveWebSocketHandler
+    private lateinit var signerHanlder: SignerReactiveWebSocketHandler
 
 
     @Bean
     fun webSocketHandlerMapping(): HandlerMapping {
         val map =  mapOf(
-                "/connect/application/*" to browserHandler,
-                "/connect/signer/*" to responseHanlder
+                "/connect/application/*" to applicationHandler,
+                "/connect/signer/*" to signerHanlder
 
         )
         return SimpleUrlHandlerMapping().apply {

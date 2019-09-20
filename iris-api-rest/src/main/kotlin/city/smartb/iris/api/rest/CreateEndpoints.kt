@@ -26,13 +26,13 @@ class CreateEndpoints(
 
     @PostMapping("/send/{id}")
     fun phoneConnect(@PathVariable id: String, @RequestBody value: String) {
-        template.convertAndSend(Session(id).getQueueToSendToPhone(), value);
+        template.convertAndSend(Session(id).getQueueToSendToSigner(), value);
     }
 
     @GetMapping("/get/{id}")
     fun handleReqDefResult(@PathVariable id: String): CompletableFuture<String?> {
         return CompletableFuture.supplyAsync((Supplier {
-            this.template.receiveAndConvert(Session(id).getQueueToSendToPhone(), DEFAULT_REPLY_TIMEOUT_MILLIS, typeReference<String>());
+            this.template.receiveAndConvert(Session(id).getQueueToSendToSigner(), DEFAULT_REPLY_TIMEOUT_MILLIS, typeReference<String>());
         }))
     }
 

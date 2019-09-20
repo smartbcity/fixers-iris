@@ -5,7 +5,7 @@ open class Response(
         open val action: ActionType,
         open val application: String,
         open val payload: Map<String, String>
-) {
+): TransitValue {
     override fun toString(): String {
         return "Response(action=$action, application='$application', payload=$payload)"
     }
@@ -22,7 +22,7 @@ class PublicKeyResponse(
 
 class AuthResponse(
         override val application: String,
-        val jwt: String
+        jwt: String
 ) : Response(
         action = ActionType.AUTH,
         application = application,
@@ -31,7 +31,7 @@ class AuthResponse(
 
 class SignResponse(
         override val application: String,
-        val signature: String
+        signature: String
 ) : Response(
         action = ActionType.SIGN,
         application = application,

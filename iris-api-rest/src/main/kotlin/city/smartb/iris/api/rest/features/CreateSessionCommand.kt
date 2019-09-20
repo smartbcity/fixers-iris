@@ -19,12 +19,12 @@ class CreateSessionCommand(val amqpAdmin: AmqpAdmin) {
             val uuid = UUID.randomUUID().toString()
             logger.info("Create session[${uuid}]")
             val args = hashMapOf("x-expires" to Duration.ofMinutes(15).toMillis()) as Map<String, Object>
-            val phoneQueueName = Session(uuid).getQueueToSendToPhone()
+            val phoneQueueName = Session(uuid).getQueueToSendToSigner()
             val phoneQueue = Queue(phoneQueueName, true, false, true, args);
             amqpAdmin.declareQueue(phoneQueue)
             logger.info("[${uuid}] queue[${phoneQueue}]")
 
-            val browserQueueName = Session(uuid).getQueueToSendToBrowser()
+            val browserQueueName = Session(uuid).getQueueToSendToApplication()
             val browserQueue = Queue(browserQueueName, true, false, true, args);
             amqpAdmin.declareQueue(browserQueue)
             logger.info("[${uuid}] queue[${browserQueueName}]")

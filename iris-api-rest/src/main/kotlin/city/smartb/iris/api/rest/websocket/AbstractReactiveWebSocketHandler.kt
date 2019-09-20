@@ -1,6 +1,7 @@
 package city.smartb.iris.api.rest.websocket
 
 import city.smartb.iris.api.rest.model.Session
+import city.smartb.iris.api.rest.model.TransitValue
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketHandler
@@ -9,7 +10,7 @@ import org.springframework.web.reactive.socket.WebSocketSession
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
-open class AbstractReactiveWebSocketHandler<RECEIVE, SEND, HANDLER : AbstractHandler<RECEIVE, SEND>>(
+open class AbstractReactiveWebSocketHandler<RECEIVE  : TransitValue, SEND : TransitValue, HANDLER : AbstractHandler<RECEIVE, SEND>>(
         private val objectMapper: ObjectMapper,
         private val messagesHandler: HANDLER) : WebSocketHandler {
 
@@ -21,7 +22,7 @@ open class AbstractReactiveWebSocketHandler<RECEIVE, SEND, HANDLER : AbstractHan
     }
 
     private fun send(webSocketSession: WebSocketSession, session: Session): Flux<WebSocketMessage> {
-        return messagesHandler.sendToDevice(session).map {
+        return messagesHandler.transferToDevice(session).map {
             val json = objectMapper.writeValueAsString(it)
             webSocketSession.textMessage(json)
         }
@@ -31,7 +32,7 @@ open class AbstractReactiveWebSocketHandler<RECEIVE, SEND, HANDLER : AbstractHan
         val session = Session(sessionId)
         return receive
                 .map { it.getPayloadAsText() }
-                .map { messagesHandler.toValue(it) }
+                .map { messagesHandler.toValueReceivedFromDevice(it.toByteArray()) }
                 .map { messagesHandler.receiveFromDevice(session, it) }
                 .doOnError {
                     logger.error("Error handling the message", it)

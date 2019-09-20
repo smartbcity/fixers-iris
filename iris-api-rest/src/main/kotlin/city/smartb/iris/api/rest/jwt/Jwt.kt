@@ -5,6 +5,9 @@ import com.nimbusds.jose.*
 import com.nimbusds.jwt.JWTClaimsSet
 import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.temporal.ChronoUnit
+import java.time.temporal.TemporalField
+import java.time.temporal.TemporalUnit
 import java.util.*
 
 
@@ -25,6 +28,10 @@ class Jwt(
         fun issueTime(issueTime: LocalDateTime) = apply { this.issueTime = issueTime }
 
         fun expirationTime(expirationTime: LocalDateTime) = apply { this.expirationTime = expirationTime }
+
+        fun fromNow() = apply { this.issueTime = LocalDateTime.now() }
+
+        fun valid(newValue: Long, unit: ChronoUnit) = apply { this.expirationTime = LocalDateTime.now().plus(newValue, unit) }
 
         fun build(): Jwt {
             val jwtClaims = JWTClaimsSet.Builder()
@@ -47,6 +54,8 @@ class Jwt(
                     .from(this.atZone(ZoneId.systemDefault())
                             .toInstant())
         }
+
+
 
     }
 
