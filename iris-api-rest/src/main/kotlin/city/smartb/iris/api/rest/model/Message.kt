@@ -1,37 +1,48 @@
 package city.smartb.iris.api.rest.model
 
 enum class ActionType {
-    AUTH, AUTH_PUB_KEY, SIGN, SIGN_PUB_KEY,
+    AUTH, PUB_KEY, SIGN, SIGN_PUB_KEY, SIGN_JWT
+}
+
+enum class Type {
+    QUERY, RESPONSE
 }
 
 open class Message(
         open val action: ActionType,
-        open val url: String,
-        open val application: String,
+        open val type: Type,
         open val payload: Map<String, String> = mapOf()
-) : TransitValue {
+) {
+
+    fun isQuery() = type == Type.QUERY
+    fun isResponse() = type == Type.RESPONSE
+
     override fun toString(): String {
-        return "Message(action=$action, url='$url', application='$application', payload=$payload)"
+        return "Message(action=$action, payload=$payload)"
     }
 }
 
-class SignMessage(
-        override val url: String,
-        override val application: String,
-        val sha256: String
-) : Message(
-        action = ActionType.SIGN,
-        url = url,
-        application = application,
+open class MessageQuery(
+        override val action: ActionType,
+        override val type: Type,
+        override val payload: Map<String, String> = mapOf()
+): Message(action, Type.QUERY, payload)
+
+open class MessageResponse(
+        override val action: ActionType,
+        override val type: Type,
+        override val payload: Map<String, String> = mapOf()
+): Message(action, Type.RESPONSE, payload)
+
+
+class SignPubKeyMessageQuery (val sha256: String): MessageQuery(
+        action = ActionType.SIGN_PUB_KEY,
+        type = Type.QUERY,
         payload = mapOf("sha256" to sha256)
 )
 
-class AuthMessage(
-        override val url: String,
-        override val application: String
-) : Message(
+class AuthMessageResponse (jwt: String): MessageQuery(
         action = ActionType.AUTH,
-        application = application,
-        url = url,
-        payload = mapOf()
+        type = Type.RESPONSE,
+        payload = mapOf("jwt" to jwt)
 )

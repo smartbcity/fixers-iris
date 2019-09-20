@@ -1,7 +1,6 @@
 package city.smartb.iris.api.rest.model
 
 import city.smartb.iris.api.rest.jwt.Jwt
-import com.sun.tools.javac.main.Option
 
 class Session(
         val id: String
@@ -13,12 +12,6 @@ class Session(
 
     fun getQueueToSendToSigner() = "$id.forPhone"
     fun getQueueToSendToApplication() = "$id.forBrowser"
-
-    fun getQueueToSendObjectFrom(value: TransitValue) = when {
-        value.isMessage() -> getQueueToSendToSigner()
-        value.isResponse() -> getQueueToSendToApplication()
-        else -> throw Option.InvalidValueException("Invalid value object[${value}]")
-    }
 
     @Synchronized
     fun setJWTKey(jwt: Jwt) {

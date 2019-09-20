@@ -1,15 +1,13 @@
 package city.smartb.iris.api.rest.jwt
 
+import city.smartb.iris.api.rest.sign.asByte64
 import city.smartb.iris.api.rest.sign.asSHA256ForNoneWithRSA
 import com.nimbusds.jose.*
 import com.nimbusds.jwt.JWTClaimsSet
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.temporal.ChronoUnit
-import java.time.temporal.TemporalField
-import java.time.temporal.TemporalUnit
 import java.util.*
-
 
 class Jwt(
         private val jwsObject: JWSObject
@@ -54,9 +52,6 @@ class Jwt(
                     .from(this.atZone(ZoneId.systemDefault())
                             .toInstant())
         }
-
-
-
     }
 
     companion object {
@@ -73,5 +68,8 @@ class Jwt(
         return jwsObject.signingInput.asSHA256ForNoneWithRSA()
     }
 
+    fun append(signature: String) :String {
+        return jwsObject.signingInput.asByte64() + '.' + signature
+    }
 
 }

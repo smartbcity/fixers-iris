@@ -1,9 +1,9 @@
 package city.smartb.iris.api.rest.websocket
 
 import city.smartb.iris.api.rest.model.Message
-import city.smartb.iris.api.rest.model.Response
+import city.smartb.iris.api.rest.model.MessageQuery
+import city.smartb.iris.api.rest.model.MessageResponse
 import city.smartb.iris.api.rest.model.Session
-import city.smartb.iris.api.rest.model.TransitValue
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.slf4j.LoggerFactory
@@ -14,15 +14,13 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 
 @Service
-abstract class AbstractHandler<RECEIVE_FROM_DEVICE : TransitValue, SEND_TO_DEVICE : TransitValue> (
+abstract class AbstractHandler<RECEIVE_FROM_DEVICE : Message, SEND_TO_DEVICE : Message> (
         private val connectionFactory: ConnectionFactory,
         private val template: RabbitTemplate,
         private val objectMapper: ObjectMapper
         ) {
 
     protected val logger = LoggerFactory.getLogger(this::class.java)
-
-
 
     abstract fun receiveFromDevice(session: Session, value: RECEIVE_FROM_DEVICE);
     abstract fun toValueReceivedFromDevice(it: ByteArray): RECEIVE_FROM_DEVICE
@@ -51,7 +49,7 @@ abstract class AbstractHandler<RECEIVE_FROM_DEVICE : TransitValue, SEND_TO_DEVIC
         }
     }
 
-    protected fun sendToBrowser(session: Session, response: Response) {
+    protected fun sendToBrowser(session: Session, response: Message) {
         val getQueueToSendToBrowser = session.getQueueToSendToApplication()
         template.convertAndSend(getQueueToSendToBrowser, response);
     }
@@ -61,14 +59,12 @@ abstract class AbstractHandler<RECEIVE_FROM_DEVICE : TransitValue, SEND_TO_DEVIC
         template.convertAndSend(getQueueToSendToSigner, message)
     }
 
-    protected fun toMessage(json: ByteArray): Message {
+    protected fun toMessageQuery(json: ByteArray): MessageQuery {
         return objectMapper.readValue(json)
     }
 
-    protected fun toResponse(json: ByteArray): Response {
+    protected fun toMessageResponse(json: ByteArray): MessageResponse {
         return objectMapper.readValue(json)
     }
-
-
 
 }

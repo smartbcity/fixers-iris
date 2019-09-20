@@ -1,7 +1,7 @@
 package city.smartb.iris.api.rest.websocket
 
+import city.smartb.iris.api.rest.model.Message
 import city.smartb.iris.api.rest.model.Session
-import city.smartb.iris.api.rest.model.TransitValue
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.LoggerFactory
 import org.springframework.web.reactive.socket.WebSocketHandler
@@ -10,7 +10,7 @@ import org.springframework.web.reactive.socket.WebSocketSession
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
-open class AbstractReactiveWebSocketHandler<RECEIVE  : TransitValue, SEND : TransitValue, HANDLER : AbstractHandler<RECEIVE, SEND>>(
+open class AbstractReactiveWebSocketHandler<RECEIVE  : Message, SEND : Message, HANDLER : AbstractHandler<RECEIVE, SEND>>(
         private val objectMapper: ObjectMapper,
         private val messagesHandler: HANDLER) : WebSocketHandler {
 

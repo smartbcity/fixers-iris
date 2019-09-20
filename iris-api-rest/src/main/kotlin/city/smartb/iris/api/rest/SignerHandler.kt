@@ -1,6 +1,6 @@
 package city.smartb.iris.api.rest
 
-import city.smartb.iris.api.rest.exception.InvalidResponseException
+import city.smartb.iris.api.rest.exception.InvalidMessageException
 import city.smartb.iris.api.rest.jwt.Jwt
 import city.smartb.iris.api.rest.model.*
 import city.smartb.iris.api.rest.sign.asByte64
@@ -16,25 +16,29 @@ class SignerHandler(
         connectionFactory: ConnectionFactory,
         template: RabbitTemplate,
         objectMapper: ObjectMapper
-) : AbstractHandler<Response, Message>(connectionFactory, template, objectMapper) {
+) : AbstractHandler<MessageResponse, MessageQuery>(connectionFactory, template, objectMapper) {
 
-    override fun receiveFromDevice(session: Session, response: Response) {
+    override fun receiveFromDevice(session: Session, response: MessageResponse) {
         logger.info("Receive message from phone to browser[${response}]")
         when (response.action) {
-            ActionType.AUTH_PUB_KEY -> sendSignJwtToSigner(response, session)
+            ActionType.PUB_KEY -> sendSignJwtToSigner(response, session)
             ActionType.SIGN_PUB_KEY -> sendSendJwtToApplication(response, session)
             else -> sendToBrowser(session, response)
         }
     }
 
-    private fun sendSendJwtToApplication(response: Response, session: Session) {
-        val signature = response.payload.get("signature")
-        session.getJWTKey()
+    private fun sendSendJwtToApplication(response: MessageResponse, session: Session) {
+        val signature = response.payload["signature"] ?:
+            throw InvalidMessageException("Message Type[${response.action}] must contains signature in payload")
+
+        val jwtKey = session.getJWTKey()
+        val jwtKeyHash = jwtKey!!.append(signature!!)
+        sendToBrowser(session, AuthMessageResponse(jwtKeyHash))
     }
 
-    private fun sendSignJwtToSigner(response: Response, session: Session) {
-        val publicKey = response.payload.get("publicKey")
-                ?: throw InvalidResponseException("Message Type ${ActionType.AUTH_PUB_KEY} must contains publicKey in payload")
+    private fun sendSignJwtToSigner(response: MessageResponse, session: Session) {
+        val publicKey = response.payload["publicKey"]
+                ?: throw InvalidMessageException("Message Type ${ActionType.PUB_KEY} must contains publicKey in payload")
 
         val jwtToSign = Jwt.builder()
                 .publicKey(publicKey)
@@ -43,15 +47,18 @@ class SignerHandler(
                 .build()
 
         session.setJWTKey(jwtToSign)
-        sendToPhone(session, SignMessage(
-                url = "",
-                sha256 = jwtToSign.asSHA256ForNoneWithRSA().asByte64(),
-                application = response.application
+
+        sendSignPubKeyMessageQuery(session, jwtToSign)
+    }
+
+    private fun sendSignPubKeyMessageQuery(session: Session, jwtToSign: Jwt) {
+        sendToPhone(session, SignPubKeyMessageQuery(
+                sha256 = jwtToSign.asSHA256ForNoneWithRSA().asByte64()
         ))
     }
 
-    override fun toValueReceivedFromDevice(body: ByteArray): Response = toResponse(body)
-    override fun toValueSendToDevice(body: ByteArray): Message = toMessage(body)
+    override fun toValueReceivedFromDevice(body: ByteArray): MessageResponse = toMessageResponse(body)
+    override fun toValueSendToDevice(body: ByteArray): MessageQuery = toMessageQuery(body)
 
     override fun getQueueNameToListen(session: Session) = session.getQueueToSendToSigner()
 
