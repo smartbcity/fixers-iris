@@ -27,7 +27,7 @@ class CreateSessionCommand(val amqpAdmin: AmqpAdmin) {
             val browserQueueName = Session(uuid).getQueueToSendToApplication()
             val browserQueue = Queue(browserQueueName, true, false, true, args);
             amqpAdmin.declareQueue(browserQueue)
-            logger.info("[${uuid}] queue[${browserQueueName}]")
+            logger.info("[${uuid}] queue[${browserQueue}]")
 
             it.success(CreateResponse((uuid)))
         }

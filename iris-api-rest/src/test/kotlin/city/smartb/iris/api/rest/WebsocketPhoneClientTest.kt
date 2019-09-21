@@ -14,14 +14,15 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.reactive.socket.WebSocketSession
 import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient
+import org.springframework.web.reactive.socket.client.StandardWebSocketClient
 import reactor.core.publisher.Mono
 import java.net.URI
 
 
 @ExtendWith(MockitoExtension::class)
-class WebsocketTest : WebBaseTest() {
+class WebsocketPhoneClientTest : WebBaseTest() {
 
-    val logger = LoggerFactory.getLogger(WebsocketTest::class.java)
+    val logger = LoggerFactory.getLogger(WebsocketPhoneClientTest::class.java)
 
     @Autowired
     lateinit var objectMessage: ObjectMapper
@@ -38,10 +39,13 @@ class WebsocketTest : WebBaseTest() {
         Assertions.assertThat(createResponse).isNotNull()
         Assertions.assertThat(createResponse.sessionId).isNotNull()
 
-        val uriSigner = URI.create("ws://localhost:8889/connect/signer/0cf7a2c1-db32-4623-a2ea-784401877cc7")
+        val uriApplication = URI.create("ws://localhost:$port/connect/application/${createResponse.sessionId}")
+        val uriSigner = URI.create("ws://localhost:$port/connect/signer/${createResponse.sessionId}")
 
-        connectWebSocket(createResponse, uriSigner, browserSocketHandler(uriSigner)).subscribe()
+        connectWebSocket(createResponse, uriSigner, sendPublicKeyHandler(uriSigner)).subscribe()
         Thread.sleep(5000);
+        connectWebSocket(createResponse, uriApplication, browserSocketHandler(uriApplication)).subscribe()
+        Thread.sleep(10000)
     }
 
     fun connectWebSocket(createResponse: CreateResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
@@ -49,6 +53,11 @@ class WebsocketTest : WebBaseTest() {
         return client.execute(uri, webSocketHandler)
     }
 
+
+    fun standardWebSocketClient(createResponse: CreateResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>) {
+        val client = StandardWebSocketClient()
+        client.execute(uri, webSocketHandler).subscribe()
+    }
 
     private fun browserSocketHandler(uri: URI) = { session: WebSocketSession ->
         session
@@ -64,5 +73,18 @@ class WebsocketTest : WebBaseTest() {
 
     }
 
+    private fun sendPublicKeyHandler(uri: URI) = { session: WebSocketSession ->
+        session.send(Mono.just(session.textMessage(getPublicKeyResponseAsString(uri)))).then()
+    }
+
+    fun getPublicKeyResponseAsString(url: URI): String {
+        return objectMessage.writeValueAsString(
+                MessageResponse(
+                        action = ActionType.PUB_KEY,
+                        type = Type.RESPONSE,
+                        payload = mapOf("publicKey" to "publicKeyValue")
+                )
+        )
+    }
 }
 

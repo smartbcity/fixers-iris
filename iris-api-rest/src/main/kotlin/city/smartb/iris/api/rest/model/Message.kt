@@ -35,6 +35,12 @@ open class MessageResponse(
 ): Message(action, Type.RESPONSE, payload)
 
 
+class PubKeyMessageQuery: MessageQuery(
+        action = ActionType.PUB_KEY,
+        type = Type.QUERY,
+        payload = mapOf()
+)
+
 class SignPubKeyMessageQuery (val sha256: String): MessageQuery(
         action = ActionType.SIGN_PUB_KEY,
         type = Type.QUERY,

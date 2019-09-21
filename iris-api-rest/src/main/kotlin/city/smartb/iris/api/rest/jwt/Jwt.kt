@@ -69,7 +69,7 @@ class Jwt(
     }
 
     fun append(signature: String) :String {
-        return jwsObject.signingInput.asByte64() + '.' + signature
+        return String(jwsObject.signingInput) + '.' + signature
     }
 
 }

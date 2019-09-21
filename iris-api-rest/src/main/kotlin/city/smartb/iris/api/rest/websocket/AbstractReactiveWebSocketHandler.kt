@@ -17,6 +17,10 @@ open class AbstractReactiveWebSocketHandler<RECEIVE  : Message, SEND : Message, 
     private val logger = LoggerFactory.getLogger(this.javaClass::class.java)
 
     override fun handle(webSocketSession: WebSocketSession): Mono<Void> {
+        logger.info("Create session:" +webSocketSession.id)
+        webSocketSession.attributes.forEach {
+            logger.info("[${it.key}] => ${it.value}")
+        }
         val session = getSessionId(webSocketSession)
         return webSocketSession.send(send(webSocketSession, session)).and(receive(webSocketSession.receive(), session.id))
     }

@@ -36,11 +36,4 @@ class CreateEndpoints(
         }))
     }
 
-    @GetMapping("/disconnect/{id}")
-    fun disconnect(@PathVariable id: String): CompletableFuture<Boolean> {
-        return CompletableFuture.supplyAsync((Supplier {
-            amqpAdmin.deleteQueue(id)
-        }))
-    }
-
 }

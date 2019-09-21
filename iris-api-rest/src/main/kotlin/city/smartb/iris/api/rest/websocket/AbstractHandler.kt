@@ -14,11 +14,11 @@ import org.springframework.stereotype.Service
 import reactor.core.publisher.Flux
 
 @Service
-abstract class AbstractHandler<RECEIVE_FROM_DEVICE : Message, SEND_TO_DEVICE : Message> (
+abstract class AbstractHandler<RECEIVE_FROM_DEVICE : Message, SEND_TO_DEVICE : Message>(
         private val connectionFactory: ConnectionFactory,
         private val template: RabbitTemplate,
         private val objectMapper: ObjectMapper
-        ) {
+) {
 
     protected val logger = LoggerFactory.getLogger(this::class.java)
 
@@ -28,8 +28,6 @@ abstract class AbstractHandler<RECEIVE_FROM_DEVICE : Message, SEND_TO_DEVICE : M
     protected abstract fun toValueSendToDevice(body: ByteArray): SEND_TO_DEVICE
     protected abstract fun getQueueNameToListen(session: Session): String
 
-
-    
     fun transferToDevice(session: Session): Flux<SEND_TO_DEVICE> {
         val queueNameToListen = getQueueNameToListen(session)
         val mlc = SimpleMessageListenerContainer(connectionFactory);
