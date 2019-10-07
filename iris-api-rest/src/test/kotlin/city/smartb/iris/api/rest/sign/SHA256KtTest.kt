@@ -38,8 +38,8 @@ class SHA256KtTest {
         val privateSignature = Signature.getInstance("NONEwithRSA")
         privateSignature.initSign(rsaPrivateKey);
         privateSignature.update(jsonLdObject)
-
-        return Base64.getEncoder().encodeToString(privateSignature.sign())
+        val signed = privateSignature.sign()
+        return Base64.getEncoder().encodeToString(signed)
     }
 
     private fun signSHA256withRSA(jsonLdObject: ByteArray, rsaPrivateKey: PrivateKey): String {

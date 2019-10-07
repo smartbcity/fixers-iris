@@ -33,6 +33,7 @@ class SignerHandler(
 
         val jwtKey = session.getJWTKey()
         val jwtKeyHash = jwtKey!!.append(signature!!)
+        logger.debug("Session[${session.id}] JWT To Application: ${jwtKeyHash}")
         sendToBrowser(session, AuthMessageResponse(jwtKeyHash))
     }
 
