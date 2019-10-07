@@ -40,21 +40,26 @@ class SignerHandler(
         val publicKey = response.payload["publicKey"]
                 ?: throw InvalidMessageException("Message Type ${ActionType.PUB_KEY} must contains publicKey in payload")
 
+        logger.debug("Session[${session.id}] Publuc key received from phone: ${publicKey}")
         val jwtToSign = Jwt.builder()
                 .publicKey(publicKey)
                 .fromNow()
                 .valid(3, ChronoUnit.HOURS)
                 .build()
 
+        logger.debug("Session[${session.id}] JWT to sign[${jwtToSign.asString()}]")
         session.setJWTKey(jwtToSign)
 
         sendSignPubKeyMessageQuery(session, jwtToSign)
     }
 
     private fun sendSignPubKeyMessageQuery(session: Session, jwtToSign: Jwt) {
-        sendToPhone(session, SignPubKeyMessageQuery(
+        val signPubKeyMessageQuery = SignPubKeyMessageQuery(
                 sha256 = jwtToSign.asSHA256ForNoneWithRSA().asByte64()
-        ))
+        )
+        logger.debug("Session[${session.id}] SignPubKeyMessageQuery[${signPubKeyMessageQuery}]")
+
+        sendToPhone(session, signPubKeyMessageQuery)
     }
 
     override fun toValueReceivedFromDevice(body: ByteArray): MessageResponse = toMessageResponse(body)

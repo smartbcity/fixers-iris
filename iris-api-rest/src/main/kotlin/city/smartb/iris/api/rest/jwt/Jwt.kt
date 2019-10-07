@@ -64,6 +64,10 @@ class Jwt(
         return jwsObject.signingInput
     }
 
+    fun asString(): String {
+        return String(jwsObject.signingInput)
+    }
+
     fun asSHA256ForNoneWithRSA(): ByteArray {
         return jwsObject.signingInput.asSHA256ForNoneWithRSA()
     }

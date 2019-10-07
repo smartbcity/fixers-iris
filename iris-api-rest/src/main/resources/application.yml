@@ -1,3 +1,8 @@
+logging:
+  level:
+    root: WARN
+    city.smartb.iris.api: DEBUG
+
 server:
   port: 8889
 
