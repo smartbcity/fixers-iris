@@ -1,4 +1,4 @@
-package city.smartb.iris.api.rest.sign
+package city.smartb.iris.api.rest.model.jwt
 
 import org.bouncycastle.asn1.DERNull
 import org.bouncycastle.asn1.nist.NISTObjectIdentifiers

@@ -1,7 +1,11 @@
 package city.smartb.iris.api.rest.model
 
-enum class ActionType {
-    AUTH, PUB_KEY, SIGN, SIGN_PUB_KEY, SIGN_JWT
+enum class ActionType(val index: Int) {
+    AUTH(0), PUB_KEY(1), SIGN(2), SIGN_PUB_KEY(3);
+
+    companion object {
+        fun valueOf(value: Int) = values().find { it.index == value }
+    }
 }
 
 enum class Type {
@@ -13,7 +17,6 @@ open class Message(
         open val type: Type,
         open val payload: Map<String, String> = mapOf()
 ) {
-
     fun isQuery() = type == Type.QUERY
     fun isResponse() = type == Type.RESPONSE
 
@@ -28,12 +31,6 @@ open class MessageQuery(
         override val payload: Map<String, String> = mapOf()
 ): Message(action, Type.QUERY, payload)
 
-open class MessageResponse(
-        override val action: ActionType,
-        override val type: Type,
-        override val payload: Map<String, String> = mapOf()
-): Message(action, Type.RESPONSE, payload)
-
 
 class PubKeyMessageQuery: MessageQuery(
         action = ActionType.PUB_KEY,
@@ -45,10 +42,4 @@ data class SignPubKeyMessageQuery (val sha256: String): MessageQuery(
         action = ActionType.SIGN_PUB_KEY,
         type = Type.QUERY,
         payload = mapOf("sha256" to sha256)
-)
-
-class AuthMessageResponse (jwt: String): MessageQuery(
-        action = ActionType.AUTH,
-        type = Type.RESPONSE,
-        payload = mapOf("jwt" to jwt)
 )

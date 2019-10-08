@@ -1,5 +1,7 @@
 package city.smartb.iris.api.rest.sign
 
+import city.smartb.iris.api.rest.model.jwt.asSHA256ForNoneWithRSA
+import com.nimbusds.jose.util.Base64URL
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 import java.security.Signature
@@ -20,7 +22,7 @@ class SHA256KtTest {
         val signature =  "test".toByteArray().asSHA256ForNoneWithRSA()
         val privKey = KeyPairReader.loadPrivateKey("rsa/adam")
         val signed  = signNoneWithRSA(signature, privKey)
-        Assertions.assertThat(signed).isEqualTo("Iixv9lizdEVr3qZsL81kIDMM4UNAwvU6cQcVnDvybOcbFO7XL8q5hjpzgGrF+z73BOhkhDI9BZJEQFlTm2ZiC7PkGroFUhcH9++wN64l+6KqIjO7hzBDlCBNEBkYQX3ZT1YFI9+QpWHY9/P1mZnbTmpWqvKkjBSkUEV5ISuYFdl/MKSKautYhq7T64yo606Zcu6qPP7LUUwaNSCfqTLG7/XCikWfy79aDL+4a11soeUwWkf0zX6+XrGbLEUZAy8rulv2rl7XftDGmJUoFUWNhujmwCm7HEGpHmVP81SJzqeG4OR6iQKYbgUfqm1B89XhX99JiVkrNBiDUintpWVvKg==")
+        Assertions.assertThat(signed).isEqualTo("Iixv9lizdEVr3qZsL81kIDMM4UNAwvU6cQcVnDvybOcbFO7XL8q5hjpzgGrF-z73BOhkhDI9BZJEQFlTm2ZiC7PkGroFUhcH9--wN64l-6KqIjO7hzBDlCBNEBkYQX3ZT1YFI9-QpWHY9_P1mZnbTmpWqvKkjBSkUEV5ISuYFdl_MKSKautYhq7T64yo606Zcu6qPP7LUUwaNSCfqTLG7_XCikWfy79aDL-4a11soeUwWkf0zX6-XrGbLEUZAy8rulv2rl7XftDGmJUoFUWNhujmwCm7HEGpHmVP81SJzqeG4OR6iQKYbgUfqm1B89XhX99JiVkrNBiDUintpWVvKg")
     }
 
     @Test
@@ -34,21 +36,23 @@ class SHA256KtTest {
         Assertions.assertThat(signed).isEqualTo(shaRSA)
     }
 
-    private fun signNoneWithRSA(jsonLdObject: ByteArray, rsaPrivateKey: PrivateKey): String {
-        val privateSignature = Signature.getInstance("NONEwithRSA")
-        privateSignature.initSign(rsaPrivateKey);
-        privateSignature.update(jsonLdObject)
-        val signed = privateSignature.sign()
-        return Base64.getEncoder().encodeToString(signed)
-    }
+    companion object {
+        fun signNoneWithRSA(jsonLdObject: ByteArray, rsaPrivateKey: PrivateKey): String {
+            val privateSignature = Signature.getInstance("NONEwithRSA")
+            privateSignature.initSign(rsaPrivateKey);
+            privateSignature.update(jsonLdObject)
+            val signed = privateSignature.sign()
+            return Base64URL.encode(signed).toString()
+        }
 
-    private fun signSHA256withRSA(jsonLdObject: ByteArray, rsaPrivateKey: PrivateKey): String {
-        val privateSignature = Signature.getInstance("SHA256withRSA")
-        privateSignature.initSign(rsaPrivateKey);
-        privateSignature.update(jsonLdObject)
+        fun signSHA256withRSA(jsonLdObject: ByteArray, rsaPrivateKey: PrivateKey): String {
+            val privateSignature = Signature.getInstance("SHA256withRSA")
+            privateSignature.initSign(rsaPrivateKey);
+            privateSignature.update(jsonLdObject)
 
-        return privateSignature.sign().let {
-            Base64.getEncoder().encodeToString(it)
+            return privateSignature.sign().let {
+                Base64URL.encode(it).toString()
+            }
         }
     }
 }

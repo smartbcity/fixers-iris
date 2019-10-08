@@ -1,7 +1,5 @@
-package city.smartb.iris.api.rest.jwt
+package city.smartb.iris.api.rest.model.jwt
 
-import city.smartb.iris.api.rest.sign.asByte64
-import city.smartb.iris.api.rest.sign.asSHA256ForNoneWithRSA
 import com.nimbusds.jose.*
 import com.nimbusds.jwt.JWTClaimsSet
 import java.time.LocalDateTime

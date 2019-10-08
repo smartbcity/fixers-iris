@@ -1,4 +1,4 @@
-package city.smartb.iris.api.rest.config
+package city.smartb.iris.api.rest
 
 import city.smartb.iris.api.rest.websocket.ApplicationReactiveWebSocketHandler
 import city.smartb.iris.api.rest.websocket.SignerReactiveWebSocketHandler
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 
 @Configuration
-class ReactiveWebSocketConfiguration {
+class ReactiveWebSocketEntryPoint {
 
     @Autowired
     private lateinit var applicationHandler: ApplicationReactiveWebSocketHandler

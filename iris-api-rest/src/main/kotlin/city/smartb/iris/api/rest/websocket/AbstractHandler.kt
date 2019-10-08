@@ -3,7 +3,7 @@ package city.smartb.iris.api.rest.websocket
 import city.smartb.iris.api.rest.model.Message
 import city.smartb.iris.api.rest.model.MessageQuery
 import city.smartb.iris.api.rest.model.MessageResponse
-import city.smartb.iris.api.rest.model.Session
+import city.smartb.iris.api.rest.model.ChannelSession
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import org.slf4j.LoggerFactory
@@ -22,14 +22,14 @@ abstract class AbstractHandler<RECEIVE_FROM_DEVICE : Message, SEND_TO_DEVICE : M
 
     protected val logger = LoggerFactory.getLogger(this::class.java)
 
-    abstract fun receiveFromDevice(session: Session, value: RECEIVE_FROM_DEVICE);
+    abstract fun receiveFromDevice(channelSession: ChannelSession, value: RECEIVE_FROM_DEVICE);
     abstract fun toValueReceivedFromDevice(it: ByteArray): RECEIVE_FROM_DEVICE
 
     protected abstract fun toValueSendToDevice(body: ByteArray): SEND_TO_DEVICE
-    protected abstract fun getQueueNameToListen(session: Session): String
+    protected abstract fun getQueueNameToListen(channelSession: ChannelSession): String
 
-    fun transferToDevice(session: Session): Flux<SEND_TO_DEVICE> {
-        val queueNameToListen = getQueueNameToListen(session)
+    fun transferToDevice(channelSession: ChannelSession): Flux<SEND_TO_DEVICE> {
+        val queueNameToListen = getQueueNameToListen(channelSession)
         val mlc = SimpleMessageListenerContainer(connectionFactory);
         mlc.setQueueNames(queueNameToListen)
         return listenFlux(mlc)
@@ -47,13 +47,13 @@ abstract class AbstractHandler<RECEIVE_FROM_DEVICE : Message, SEND_TO_DEVICE : M
         }
     }
 
-    protected fun sendToBrowser(session: Session, response: Message) {
-        val getQueueToSendToBrowser = session.getQueueToSendToApplication()
+    protected fun sendToBrowser(channelSession: ChannelSession, response: Message) {
+        val getQueueToSendToBrowser = channelSession.getQueueToSendToApplication()
         template.convertAndSend(getQueueToSendToBrowser, response);
     }
 
-    protected fun sendToPhone(session: Session, message: Message) {
-        val getQueueToSendToSigner = session.getQueueToSendToSigner()
+    protected fun sendToPhone(channelSession: ChannelSession, message: Message) {
+        val getQueueToSendToSigner = channelSession.getQueueToSendToSigner()
         template.convertAndSend(getQueueToSendToSigner, message)
     }
 

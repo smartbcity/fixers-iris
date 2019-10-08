@@ -1,9 +1,6 @@
 package city.smartb.iris.api.rest
 
-import city.smartb.iris.api.rest.features.CreateResponse
-import city.smartb.iris.api.rest.model.ActionType
-import city.smartb.iris.api.rest.model.MessageResponse
-import city.smartb.iris.api.rest.model.Type
+import city.smartb.iris.api.rest.features.session.CreateSessionResponse
 import city.smartb.iris.api.rest.utils.WebBaseTest
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions
@@ -28,11 +25,11 @@ class WebsocketTest : WebBaseTest() {
 
     @Test
     fun fullTest() {
-        val createResponse: CreateResponse = webClient()
-                .get()
-                .uri("/create")
+        val createResponse: CreateSessionResponse = webClient()
+                .post()
+                .uri("/channels")
                 .retrieve()
-                .bodyToMono(CreateResponse::class.java)
+                .bodyToMono(CreateSessionResponse::class.java)
                 .block()!!
 
         Assertions.assertThat(createResponse).isNotNull()
@@ -44,7 +41,7 @@ class WebsocketTest : WebBaseTest() {
         Thread.sleep(5000);
     }
 
-    fun connectWebSocket(createResponse: CreateResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
+    fun connectWebSocket(createResponse: CreateSessionResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
         val client = ReactorNettyWebSocketClient()
         return client.execute(uri, webSocketHandler)
     }

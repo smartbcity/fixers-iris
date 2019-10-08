@@ -1,5 +1,6 @@
 package city.smartb.iris.api.rest
 
+import city.smartb.iris.api.rest.features.session.CreateSessionResponse
 import city.smartb.iris.api.rest.utils.WebBaseTest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -15,42 +16,38 @@ class ConnectApiAsyncTest : WebBaseTest() {
     private var valueSent = "signedNewValue";
 
     companion object {
-        var id: String? = null
         var getCmdIsSent: Boolean = false
     }
 
-    @Test
+//    @Test
     fun create_shouldBeStartedFirst() {
-        var uri = baseUrl().path("/create").build().toUri()
-        println("//////create ${Thread.currentThread().name}")
-        id = this.restTemplate.getForObject(uri, String::class.java)
-    }
+        var uri = baseUrl().path("/channels").build().toUri()
+        println("//////channels ${Thread.currentThread().name}")
+        val session = this.restTemplate.postForObject(uri, null, CreateSessionResponse::class.java)
 
-    @Test
-    fun get_mustBeCalledBeforeSend() {
+        Thread.sleep(2000)
+        println("//////send  ${Thread.currentThread().name}")
+        Assertions.assertThat(session.sessionId).isNotBlank();
+        Assertions.assertThat(getCmdIsSent).isTrue();
+        webTestClient().post().uri("/channels/$session.sessionId/messages")
+                .syncBody(valueSent)
+                .exchange()
+
         Thread.sleep(1000)
         println("//////get  ${Thread.currentThread().name}")
-        Assertions.assertThat(id).isNotBlank();
+        Assertions.assertThat(session).isNotNull();
+        Assertions.assertThat(session.sessionId).isNotBlank();
         getCmdIsSent = true
         webTestClient()
                 .get()
-                .uri("/get/$id")
+                .uri("/channels/${session.sessionId}/messages")
                 .exchange()
                 .expectBody()
                 .consumeWith { response ->
                     Assertions.assertThat(response.getResponseBody()).isNotNull()
                     Assertions.assertThat(String(response.getResponseBody()!!)).isEqualTo(valueSent)
                 }
-    }
 
-    @Test
-    fun send_shouldBeExecutedTheLast() {
-        Thread.sleep(2000)
-        println("//////send  ${Thread.currentThread().name}")
-        Assertions.assertThat(id).isNotBlank();
-        Assertions.assertThat(getCmdIsSent).isTrue();
-        webTestClient().post().uri("/send/$id")
-                .syncBody(valueSent)
-                .exchange()
+
     }
 }

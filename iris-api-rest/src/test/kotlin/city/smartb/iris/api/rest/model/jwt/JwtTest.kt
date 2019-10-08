@@ -1,4 +1,4 @@
-package city.smartb.iris.api.rest.jwt
+package city.smartb.iris.api.rest.model.jwt
 
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
@@ -25,7 +25,6 @@ class JwtTest {
                 .issueTime( LocalDateTime.of(1955, 11, 12, 6, 38, 0))
                 .expirationTime( LocalDateTime.of(2015, 10, 21, 7, 28, 0))
                 .build().asSHA256ForNoneWithRSA()
-
 
         Assertions.assertThat(Base64.getEncoder().encodeToString(jwt)).isEqualTo("MDEwDQYJYIZIAWUDBAIBBQAEIEKMpxmGiBTmNXX/BOc43yNF6Mozpl7f3uSFOpTKa4t8")
     }

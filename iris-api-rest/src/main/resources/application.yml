@@ -16,4 +16,4 @@ spring:
 actuator:
   endpoints:
     health:
-      sensitive: false
+      sensitive: true

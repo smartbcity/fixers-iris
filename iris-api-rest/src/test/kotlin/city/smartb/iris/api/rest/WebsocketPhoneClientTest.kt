@@ -1,6 +1,6 @@
 package city.smartb.iris.api.rest
 
-import city.smartb.iris.api.rest.features.CreateResponse
+import city.smartb.iris.api.rest.features.session.CreateSessionResponse
 import city.smartb.iris.api.rest.model.ActionType
 import city.smartb.iris.api.rest.model.MessageResponse
 import city.smartb.iris.api.rest.model.Type
@@ -29,11 +29,11 @@ class WebsocketPhoneClientTest : WebBaseTest() {
 
     @Test
     fun fullTest() {
-        val createResponse: CreateResponse = webClient()
-                .get()
-                .uri("/create")
+        val createResponse: CreateSessionResponse = webClient()
+                .post()
+                .uri("/channels")
                 .retrieve()
-                .bodyToMono(CreateResponse::class.java)
+                .bodyToMono(CreateSessionResponse::class.java)
                 .block()!!
 
         Assertions.assertThat(createResponse).isNotNull()
@@ -48,13 +48,13 @@ class WebsocketPhoneClientTest : WebBaseTest() {
         Thread.sleep(10000)
     }
 
-    fun connectWebSocket(createResponse: CreateResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
+    fun connectWebSocket(createResponse: CreateSessionResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
         val client = ReactorNettyWebSocketClient()
         return client.execute(uri, webSocketHandler)
     }
 
 
-    fun standardWebSocketClient(createResponse: CreateResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>) {
+    fun standardWebSocketClient(createResponse: CreateSessionResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>) {
         val client = StandardWebSocketClient()
         client.execute(uri, webSocketHandler).subscribe()
     }
@@ -81,7 +81,6 @@ class WebsocketPhoneClientTest : WebBaseTest() {
         return objectMessage.writeValueAsString(
                 MessageResponse(
                         action = ActionType.PUB_KEY,
-                        type = Type.RESPONSE,
                         payload = mapOf("publicKey" to "publicKeyValue")
                 )
         )

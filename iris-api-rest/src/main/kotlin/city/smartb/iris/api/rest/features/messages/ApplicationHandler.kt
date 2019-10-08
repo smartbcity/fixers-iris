@@ -1,7 +1,6 @@
-package city.smartb.iris.api.rest
+package city.smartb.iris.api.rest.features.messages
 
 import city.smartb.iris.api.rest.model.*
-import city.smartb.iris.api.rest.sign.asByte64
 import city.smartb.iris.api.rest.websocket.AbstractHandler
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.amqp.rabbit.connection.ConnectionFactory
@@ -15,19 +14,18 @@ class ApplicationHandler(
         objectMapper: ObjectMapper
 ) : AbstractHandler<MessageQuery, MessageResponse>(connectionFactory, template, objectMapper) {
 
-    override fun receiveFromDevice(session: Session, message: MessageQuery) {
+    override fun receiveFromDevice(channelSession: ChannelSession, message: MessageQuery) {
         logger.info("Receive message from browser to phone[${message}]")
         when (message.action) {
-            ActionType.AUTH -> sendPubKeyToSigner(session, message)
-            else -> sendToPhone(session, message)
+            ActionType.AUTH -> sendPubKeyToSigner(channelSession, message)
+            else -> sendToPhone(channelSession, message)
         }
     }
 
-
-    fun sendPubKeyToSigner(session: Session, message: MessageQuery) {
+    fun sendPubKeyToSigner(channelSession: ChannelSession, message: MessageQuery) {
         val pubKeyMessageQuery = PubKeyMessageQuery()
         logger.info("Convert Message[${message.action}] to [${pubKeyMessageQuery.action}] ")
-        sendToPhone(session, pubKeyMessageQuery)
+        sendToPhone(channelSession, pubKeyMessageQuery)
     }
 
 
@@ -39,8 +37,8 @@ class ApplicationHandler(
         return toMessageQuery(body)
     }
 
-    override fun getQueueNameToListen(session: Session): String {
-        return session.getQueueToSendToApplication()
+    override fun getQueueNameToListen(channelSession: ChannelSession): String {
+        return channelSession.getQueueToSendToApplication()
     }
 
 }
