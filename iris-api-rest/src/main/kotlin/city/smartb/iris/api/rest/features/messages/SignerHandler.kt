@@ -3,7 +3,7 @@ package city.smartb.iris.api.rest.features.messages
 import city.smartb.iris.api.rest.exception.InvalidMessageException
 import city.smartb.iris.api.rest.model.jwt.Jwt
 import city.smartb.iris.api.rest.model.*
-import city.smartb.iris.api.rest.model.jwt.asByte64
+import city.smartb.iris.api.rest.model.jwt.asByte64Url
 import city.smartb.iris.api.rest.websocket.AbstractHandler
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.amqp.rabbit.connection.ConnectionFactory
@@ -56,7 +56,7 @@ class SignerHandler(
 
     private fun sendSignPubKeyMessageQuery(channelSession: ChannelSession, jwtToSign: Jwt) {
         val signPubKeyMessageQuery = SignPubKeyMessageQuery(
-                sha256 = jwtToSign.asSHA256ForNoneWithRSA().asByte64()
+                sha256 = jwtToSign.asSHA256ForNoneWithRSA().asByte64Url()
         )
         logger.debug("Session[${channelSession.channelId}] SignPubKeyMessageQuery[${signPubKeyMessageQuery}]")
 

@@ -67,7 +67,7 @@ class Jwt(
     }
 
     fun asSHA256ForNoneWithRSA(): ByteArray {
-        return jwsObject.signingInput.asSHA256ForNoneWithRSA()
+        return jwsObject.signingInput.asSHA256()
     }
 
     fun append(signature: String) :String {

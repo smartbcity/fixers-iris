@@ -1,20 +1,12 @@
 package city.smartb.iris.api.rest.model.jwt
 
-import org.bouncycastle.asn1.DERNull
-import org.bouncycastle.asn1.nist.NISTObjectIdentifiers
-import org.bouncycastle.asn1.x509.AlgorithmIdentifier
-import org.bouncycastle.asn1.x509.DigestInfo
-import java.security.MessageDigest
-import java.util.*
+import com.google.common.hash.Hashing
+import com.nimbusds.jose.util.Base64URL
 
-//https://stackoverflow.com/questions/33305800/difference-between-sha256withrsa-and-sha256-then-rsa
-fun ByteArray.asSHA256ForNoneWithRSA(): ByteArray {
-    val digest = MessageDigest.getInstance("SHA-256").digest(this)
-    val sha256Aid = AlgorithmIdentifier(NISTObjectIdentifiers.id_sha256, DERNull.INSTANCE)
-    val di = DigestInfo(sha256Aid, digest)
-    return di.toASN1Primitive().getEncoded();
+fun ByteArray.asSHA256(): ByteArray {
+    return  Hashing.sha256().hashBytes(this).asBytes()
 }
 
-fun ByteArray.asByte64(): String {
-    return Base64.getEncoder().encodeToString(this)
+fun ByteArray.asByte64Url(): String {
+    return Base64URL.encode(this).toString()
 }

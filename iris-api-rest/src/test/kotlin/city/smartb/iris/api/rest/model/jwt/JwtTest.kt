@@ -26,7 +26,7 @@ class JwtTest {
                 .expirationTime( LocalDateTime.of(2015, 10, 21, 7, 28, 0))
                 .build().asSHA256ForNoneWithRSA()
 
-        Assertions.assertThat(Base64.getEncoder().encodeToString(jwt)).isEqualTo("MDEwDQYJYIZIAWUDBAIBBQAEIEKMpxmGiBTmNXX/BOc43yNF6Mozpl7f3uSFOpTKa4t8")
+        Assertions.assertThat(Base64.getUrlEncoder().encodeToString(jwt)).isEqualTo("QoynGYaIFOY1df8E5zjfI0XoyjOmXt_e5IU6lMpri3w=")
     }
 
 }
