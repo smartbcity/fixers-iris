@@ -8,7 +8,7 @@ import org.springframework.web.reactive.socket.WebSocketSession
 import kotlin.collections.HashMap
 
 @Component
-class SessionProvider {
+class ChannelProvider {
 
     companion object {
         private val ALL_SIM_CHANNEL_ID: HashMap<PhoneChannelId, SimChannelId> = HashMap()

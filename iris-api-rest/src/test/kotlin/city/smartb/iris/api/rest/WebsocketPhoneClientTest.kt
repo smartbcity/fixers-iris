@@ -1,9 +1,8 @@
 package city.smartb.iris.api.rest
 
-import city.smartb.iris.api.rest.features.session.CreateSessionResponse
+import city.smartb.iris.api.rest.features.session.CreateChannelResponse
 import city.smartb.iris.api.rest.model.ActionType
 import city.smartb.iris.api.rest.model.MessageResponse
-import city.smartb.iris.api.rest.model.Type
 import city.smartb.iris.api.rest.utils.WebBaseTest
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions
@@ -29,18 +28,18 @@ class WebsocketPhoneClientTest : WebBaseTest() {
 
     @Test
     fun fullTest() {
-        val createResponse: CreateSessionResponse = webClient()
+        val createResponse: CreateChannelResponse = webClient()
                 .post()
                 .uri("/channels")
                 .retrieve()
-                .bodyToMono(CreateSessionResponse::class.java)
+                .bodyToMono(CreateChannelResponse::class.java)
                 .block()!!
 
         Assertions.assertThat(createResponse).isNotNull()
-        Assertions.assertThat(createResponse.sessionId).isNotNull()
+        Assertions.assertThat(createResponse.channelId).isNotNull()
 
-        val uriApplication = URI.create("ws://localhost:$port/connect/application/${createResponse.sessionId}")
-        val uriSigner = URI.create("ws://localhost:$port/connect/signer/${createResponse.sessionId}")
+        val uriApplication = URI.create("ws://localhost:$port/connect/application/${createResponse.channelId}")
+        val uriSigner = URI.create("ws://localhost:$port/connect/signer/${createResponse.channelId}")
 
         connectWebSocket(createResponse, uriSigner, sendPublicKeyHandler(uriSigner)).subscribe()
         Thread.sleep(5000);
@@ -48,13 +47,13 @@ class WebsocketPhoneClientTest : WebBaseTest() {
         Thread.sleep(10000)
     }
 
-    fun connectWebSocket(createResponse: CreateSessionResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
+    fun connectWebSocket(createResponse: CreateChannelResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
         val client = ReactorNettyWebSocketClient()
         return client.execute(uri, webSocketHandler)
     }
 
 
-    fun standardWebSocketClient(createResponse: CreateSessionResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>) {
+    fun standardWebSocketClient(createResponse: CreateChannelResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>) {
         val client = StandardWebSocketClient()
         client.execute(uri, webSocketHandler).subscribe()
     }

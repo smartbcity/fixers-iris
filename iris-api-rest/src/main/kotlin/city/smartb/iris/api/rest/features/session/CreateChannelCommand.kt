@@ -9,16 +9,16 @@ import reactor.core.publisher.Mono
 import java.time.Duration
 
 @Component
-class CreateSessionCommand(
-        val sessionProvider: SessionProvider,
+class CreateChannelCommand(
+        val channelProvider: ChannelProvider,
         val amqpAdmin: AmqpAdmin
 ) {
 
-    private val logger = LoggerFactory.getLogger(CreateSessionCommand::class.java)
+    private val logger = LoggerFactory.getLogger(CreateChannelCommand::class.java)
 
-    fun execute(): Mono<CreateSessionResponse> {
+    fun execute(): Mono<CreateChannelResponse> {
         return Mono.create {
-            val session = sessionProvider.create()
+            val session = channelProvider.create()
             logger.info("Create session[${session.channelId}]")
             val args = hashMapOf("x-expires" to Duration.ofMinutes(15).toMillis()) as Map<String, Object>
             val phoneQueueName = session.getQueueToSendToSigner()
@@ -31,7 +31,7 @@ class CreateSessionCommand(
             amqpAdmin.declareQueue(browserQueue)
             logger.info("[${session.channelId}] queue[${browserQueue}]")
 
-            it.success(CreateSessionResponse((session.channelId.id)))
+            it.success(CreateChannelResponse((session.channelId.id)))
         }
     }
 

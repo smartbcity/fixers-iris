@@ -1,6 +1,6 @@
 package city.smartb.iris.api.rest
 
-import city.smartb.iris.api.rest.features.session.CreateSessionResponse
+import city.smartb.iris.api.rest.features.session.CreateChannelResponse
 import city.smartb.iris.api.rest.utils.WebBaseTest
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.assertj.core.api.Assertions
@@ -25,15 +25,15 @@ class WebsocketTest : WebBaseTest() {
 
     @Test
     fun fullTest() {
-        val createResponse: CreateSessionResponse = webClient()
+        val createResponse: CreateChannelResponse = webClient()
                 .post()
                 .uri("/channels")
                 .retrieve()
-                .bodyToMono(CreateSessionResponse::class.java)
+                .bodyToMono(CreateChannelResponse::class.java)
                 .block()!!
 
         Assertions.assertThat(createResponse).isNotNull()
-        Assertions.assertThat(createResponse.sessionId).isNotNull()
+        Assertions.assertThat(createResponse.channelId).isNotNull()
 
         val uriSigner = URI.create("ws://localhost:8889/connect/signer/0cf7a2c1-db32-4623-a2ea-784401877cc7")
 
@@ -41,7 +41,7 @@ class WebsocketTest : WebBaseTest() {
         Thread.sleep(5000);
     }
 
-    fun connectWebSocket(createResponse: CreateSessionResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
+    fun connectWebSocket(createResponse: CreateChannelResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
         val client = ReactorNettyWebSocketClient()
         return client.execute(uri, webSocketHandler)
     }
