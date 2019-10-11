@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class ApplicationHandler(
+        val browserMessageTransformer: BrowserMessageTransformer,
         connectionFactory: ConnectionFactory,
         template: RabbitTemplate,
         objectMapper: ObjectMapper
@@ -16,10 +17,8 @@ class ApplicationHandler(
 
     override fun receiveFromDevice(channelSession: ChannelSession, message: MessageQuery) {
         logger.info("Receive message from browser to phone[${message}]")
-        when (message.action) {
-            ActionType.AUTH -> sendPubKeyToSigner(channelSession, message)
-            else -> sendToPhone(channelSession, message)
-        }
+        val msgToSend = browserMessageTransformer.transform(channelSession, message)
+        sendToPhone(channelSession, msgToSend)
     }
 
     fun sendPubKeyToSigner(channelSession: ChannelSession, message: MessageQuery) {

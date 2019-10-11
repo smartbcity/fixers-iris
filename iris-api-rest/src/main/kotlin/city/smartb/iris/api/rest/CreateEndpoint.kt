@@ -1,10 +1,13 @@
 package city.smartb.iris.api.rest
 
+import city.smartb.iris.api.rest.features.messages.BrowserMessageTransformer
 import city.smartb.iris.api.rest.features.session.CreateChannelResponse
 import city.smartb.iris.api.rest.features.session.CreateChannelCommand
 import city.smartb.iris.api.rest.model.ChannelId
 import city.smartb.iris.api.rest.features.session.ChannelProvider
 import city.smartb.iris.api.rest.features.sim.SimService
+import city.smartb.iris.api.rest.model.Message
+import city.smartb.iris.api.rest.model.MessageQuery
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.web.bind.annotation.*
@@ -14,6 +17,7 @@ import java.util.function.Supplier
 
 @RestController
 class CreateEndpoint(
+        private val browserMessageTransformer: BrowserMessageTransformer,
         private val simService: SimService,
         private val channelProvider: ChannelProvider,
         private val createChannelCommand: CreateChannelCommand,
@@ -41,9 +45,10 @@ class CreateEndpoint(
     }
 
     @PostMapping("/channels/{id}/messages")
-    fun sendMessage(@PathVariable id: String, @RequestBody value: String) {
+    fun sendMessage(@PathVariable id: String, @RequestBody value: MessageQuery) {
         val channelSession = channelProvider.fromChannelId(ChannelId(id))
-        template.convertAndSend(channelSession.getQueueToSendToSigner(), value);
+        val msgToSend = browserMessageTransformer.transform(channelSession, value)
+        template.convertAndSend(channelSession.getQueueToSendToSigner(), msgToSend);
     }
 
 }

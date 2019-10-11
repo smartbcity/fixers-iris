@@ -14,11 +14,11 @@ class ChannelSession(
     }
 
     fun getQueueToSendToSigner(): String {
-        return "$channelId.id.forPhone"
+        return "${channelId.id}.forPhone"
     }
 
     fun getQueueToSendToApplication(): String {
-        return "$channelId.id.forBrowser"
+        return "${channelId.id}.forBrowser"
     }
 
     @Synchronized

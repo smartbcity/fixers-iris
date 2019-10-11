@@ -16,6 +16,7 @@ class SimService(
         val simChannelId = channelProvider.getOrCreateSimChannelId(channelSession.channelId, phoneNumber)
         val handler = SimHandler(channelSession = channelSession, kannelClient = kannelClient, messagesHandler = messagesHandler)
         channelSession.linkSimHandler(simChannelId, handler)
+        handler.start()
     }
 
     fun stop(channelSession: ChannelSession) {
