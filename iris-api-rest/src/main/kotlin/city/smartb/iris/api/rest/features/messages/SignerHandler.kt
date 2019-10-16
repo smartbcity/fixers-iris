@@ -45,7 +45,7 @@ class SignerHandler(
         val jwtToSign = Jwt.builder()
                 .publicKey(publicKey)
                 .fromNow()
-                .valid(3, ChronoUnit.HOURS)
+                .valid(7, ChronoUnit.DAYS)
                 .build()
 
         logger.debug("Session[${channelSession.channelId}] JWT to sign[${jwtToSign.asString()}]")
