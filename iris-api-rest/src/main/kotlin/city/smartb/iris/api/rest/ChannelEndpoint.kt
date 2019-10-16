@@ -8,6 +8,7 @@ import city.smartb.iris.api.rest.features.session.ChannelProvider
 import city.smartb.iris.api.rest.features.session.DeleteChannelCommand
 import city.smartb.iris.api.rest.features.sim.SimService
 import city.smartb.iris.api.rest.model.MessageQuery
+import city.smartb.iris.api.rest.model.SimChannelId
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.web.bind.annotation.*
@@ -32,9 +33,9 @@ class ChannelEndpoint(
     fun create(): Mono<CreateChannelResponse> = createChannelCommand.execute()
 
     @PutMapping("/channels/{channelId}")
-    fun connectPhoneNumber(@PathVariable channelId: String, @RequestParam("phoneNumber") phoneNumber: String) {
+    fun connectPhoneNumber(@PathVariable channelId: String, @RequestParam("phoneNumber") phoneNumber: String): Mono<SimChannelId> {
         val channelSession = channelProvider.fromChannelId(ChannelId(channelId))
-        simService.start(channelSession, phoneNumber)
+        return simService.start(channelSession, phoneNumber)
     }
 
     @DeleteMapping("/channels/{channelId}")
