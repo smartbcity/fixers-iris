@@ -1,5 +1,3 @@
-package city.smartb.iris.api.rest
-
 import city.smartb.iris.api.rest.features.session.CreateChannelResponse
 import city.smartb.iris.api.rest.utils.WebBaseTest
 import org.assertj.core.api.Assertions
@@ -10,7 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension
 
 @Execution(ExecutionMode.CONCURRENT)
 @ExtendWith(MockitoExtension::class)
-class ConnectApiAsyncTest : WebBaseTest() {
+class ChannelEndpointTest : WebBaseTest() {
 
     private var valueSent = "signedNewValue";
 

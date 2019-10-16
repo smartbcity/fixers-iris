@@ -42,6 +42,15 @@ class ChannelProvider {
            SimChannelId( phoneNumber = phoneNumber, phoneChannelId = ALL_SIM_CHANNEL_ID.size)
        })
     }
+
+    fun delete(channelId: ChannelId) {
+        ALL_SIM_CHANNEL_ID.keys.filter {
+            it.id == channelId
+        }.forEach {
+            ALL_SIM_CHANNEL_ID.remove(it)
+        }
+        ALL_CHANNEL_SESSION.remove(channelId)
+    }
 }
 
 data class PhoneChannelId(
