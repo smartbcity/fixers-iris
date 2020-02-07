@@ -16,6 +16,9 @@ ext {
 }
 
 dependencies {
+    //    https://github.com/springfox/springfox/issues/2932
+    implementation 'org.springframework.plugin:spring-plugin-core:2.0.0.RELEASE'
+
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
