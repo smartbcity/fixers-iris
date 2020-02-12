@@ -20,7 +20,7 @@ enum class Type {
 open class Message(
         open val action: ActionType,
         open val type: Type,
-        open val payload: Map<String, String> = mapOf()
+        open val payload: Map<String, Any> = mapOf()
 ) {
     fun isQuery() = type == Type.QUERY
     fun isResponse() = type == Type.RESPONSE
@@ -33,7 +33,7 @@ open class Message(
 open class MessageQuery(
         override val action: ActionType,
         override val type: Type,
-        override val payload: Map<String, String> = mapOf()
+        override val payload: Map<String, Any> = mapOf()
 ) : Message(action, Type.QUERY, payload)
 
 
