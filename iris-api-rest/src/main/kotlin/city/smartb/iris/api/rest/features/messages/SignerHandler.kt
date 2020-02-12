@@ -28,7 +28,7 @@ class SignerHandler(
     }
 
     private fun sendSendJwtToApplication(response: MessageResponse, channelSession: ChannelSession) {
-        val signature = response.payload["signature"] ?:
+        val signature = response.payload["signature"] as String? ?:
             throw InvalidMessageException("Message Type[${response.action}] must contains signature in payload")
 
         val jwtKey = channelSession.getJWTKey()
@@ -38,7 +38,7 @@ class SignerHandler(
     }
 
     private fun sendSignJwtToSigner(response: MessageResponse, channelSession: ChannelSession) {
-        val publicKey = response.payload["publicKey"]
+        val publicKey = response.payload["publicKey"]  as String?
                 ?: throw InvalidMessageException("Message Type ${ActionType.PUB_KEY} must contains publicKey in payload")
 
         logger.debug("Session[${channelSession.channelId}] Publuc key received from phone: ${publicKey}")
