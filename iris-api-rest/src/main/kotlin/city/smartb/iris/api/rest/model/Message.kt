@@ -6,7 +6,8 @@ enum class ActionType(val index: Int) {
     SIGN(2),
     SIGN_PUB_KEY(3),
     CREDENTIAL_REQUEST(4),
-    CREDENTIAL_OFFER(5);
+    CREDENTIAL_OFFER(5),
+    CREDENTIAL_TRANSFER(6);
 
     companion object {
         fun valueOf(value: Int) = values().find { it.index == value }
