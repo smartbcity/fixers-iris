@@ -1,5 +1,6 @@
-package city.smartb.iris.jwt.jwt;
+package city.smartb.iris.jwt.generator;
 
+import city.smartb.iris.jwt.IrisJwt;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;

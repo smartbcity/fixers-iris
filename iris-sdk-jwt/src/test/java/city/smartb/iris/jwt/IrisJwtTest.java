@@ -2,8 +2,7 @@ package city.smartb.iris.jwt;
 
 import city.smartb.iris.crypto.rsa.RSAKeyPairGenerator;
 import city.smartb.iris.jwt.base.DataTest;
-import city.smartb.iris.jwt.jwt.IrisJwt;
-import city.smartb.iris.jwt.jwt.IrisJwtGenerator;
+import city.smartb.iris.jwt.generator.IrisJwtGenerator;
 import city.smartb.iris.jwt.validator.IrisJwtError;
 import city.smartb.iris.jwt.validator.IrisJwtValidator;
 import com.nimbusds.jose.JOSEException;

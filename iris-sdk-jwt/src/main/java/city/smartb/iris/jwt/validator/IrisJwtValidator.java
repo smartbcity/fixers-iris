@@ -1,7 +1,7 @@
 package city.smartb.iris.jwt.validator;
 
-import city.smartb.iris.jwt.jwt.IrisJwt;
-import city.smartb.iris.jwt.jwt.IrisPublicKey;
+import city.smartb.iris.jwt.IrisJwt;
+import city.smartb.iris.jwt.IrisPublicKey;
 
 import java.util.ArrayList;
 import java.util.List;

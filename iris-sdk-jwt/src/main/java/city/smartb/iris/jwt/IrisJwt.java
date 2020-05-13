@@ -1,4 +1,4 @@
-package city.smartb.iris.jwt.jwt;
+package city.smartb.iris.jwt;
 
 import city.smartb.iris.jwt.exception.InvalidJwtException;
 import com.nimbusds.jwt.JWTClaimsSet;

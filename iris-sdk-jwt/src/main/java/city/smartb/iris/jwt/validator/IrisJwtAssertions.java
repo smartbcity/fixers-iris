@@ -1,6 +1,6 @@
 package city.smartb.iris.jwt.validator;
 
-import city.smartb.iris.jwt.jwt.IrisPublicKey;
+import city.smartb.iris.jwt.IrisPublicKey;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.crypto.RSASSAVerifier;
 import com.nimbusds.jwt.SignedJWT;
