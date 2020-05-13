@@ -1,0 +1,20 @@
+package city.smartb.iris.jwt.validator;
+
+import city.smartb.iris.jwt.exception.InvalidJwtException;
+import city.smartb.iris.jwt.jwt.IrisJwt;
+import city.smartb.iris.jwt.parser.IrisJwtParser;
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+class IrisJwtValidatorTest {
+
+    @Test
+    void shouldBeValid() throws InvalidJwtException {
+        IrisJwtValidator validator = new IrisJwtValidator("fakeIssuer", "fakeAudience");
+
+        IrisJwt jwt = IrisJwtParser.parse("eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUJDZ0tDQVFFQXo1el9JS2ZhaTZRbGd5bmVNeUxtZ1J2UW5IbVVKUk12QnZhWFBKdENtWThkamxzd2llLU5mbDlZVTFUem9wVGRveGV6SFMwVXRyTUwyUDYwajVoeTAyMzZSTXQyeFJ6SEViRDUtM1ZUTHA0blV0WTBYeHlfSE96WVprMGVkUjZ0eHNHeGRtR2g0OS15VzA4MzBVdFllNV8wTHNKN1hMWnFIYWNCcmhBaURXU1Ryb2NINDVIODR4cGxCRmhfWG01TWdnWEF4eGlzZGJoNERGdXZtWmw5T2lENWw1NmZqZGE1T0s3SS16RlhJb0s0UmtMSWJuYWJsdW5BR3diblc0cjF1QldKbDZDZEIwWnAwVlo4ZGJWZ2VtdVJoMHlNdklwaFRra19ocDRZVW9NbkJ2SWdyaG9uZ3FCc2xvcThWSk5pVW9jOE00MDRnaVdqSWJ1Tnc5b2NnUUlEQVFBQiIsImF1ZCI6Imh0dHBzOlwvXC9pcmlzLnNtYXJ0Yi5uZXR3b3JrIiwiaXNzIjoiaXJpcy5zbWFydGIubmV0d29yayIsImV4cCI6MTU3MDgyNTY4NCwiaWF0IjoxNTcwODE0ODg0fQ.pZ_Y8yogxRHVtk2v_4thzVN9Kp0SYvSKx8hD913xb-CNillATlflUFxiWpa-oQcrzCjhbiw6e6lVKrB5kY-dpLc-WE3b7lB8GxvXAvp8A3obQ4eFW_bkaEq3wSAXV_iKLzhwniarKf4vVT3rgUPr4TRHebay8SCiLxwdKcVkPEmNv_9WtHhyaqpx2QWMgRZ20jLkcO-SQSm26SwM6JNGArOdtLuCw03kpwyG0CpXdDgfAPAd7bk-x-6e_lcf9CVr4ye9h7uMn8chuitZrzPS6piEFCGVek8vrlcjZXK9EhkhofaT3mVzoy1GJiu6TgWtRPy0ZLbEa_ObgAYlhIlGbQ");
+
+        Assertions.assertThat(validator.validate(jwt)).contains(IrisJwtError.form("Expiration date must be in future"));
+    }
+
+}
