@@ -15,15 +15,24 @@ cache:
     - ./.gradle
 
 variables:
-  BRANCH_VERSION: "experimental-SNAPSHOT"
-  MASTER_VERSION: "next-SNAPSHOT"
+  BRANCH_VERSION: "-experimental-SNAPSHOT"
+  MASTER_VERSION: "-SNAPSHOT"
   PROFILES_ACTIVE: "gitlab"
 
-.version:
+.version-tag:
   stage: version
   image: smartbcity/gitlab-ci-semantic-versioning:master
   script:
-    - make -f /opt/city.smartb/semantic-versioning/Makefile next_version >> version.build
+    - make -f /opt/city.smartb/semantic-versioning/Makefile -e BRANCH_NAME=$CI_COMMIT_REF_NAME next_version >> version.build
+  artifacts:
+    paths:
+      - version*
+
+.version-next-tag:
+  stage: version
+  image: smartbcity/gitlab-ci-semantic-versioning:master
+  script:
+    - make -f /opt/city.smartb/semantic-versioning/Makefile -e BRANCH_NAME=$CI_COMMIT_REF_NAME next_tag_version >> version.build
   artifacts:
     paths:
       - version*
@@ -82,9 +91,9 @@ variables:
 
 version-branch:
   <<: *onlyBranch
-  extends: .version
-  script:
-    - echo $BRANCH_VERSION > version.build
+  extends: .version-next-tag
+  after_script:
+    - echo $(cat version.build)$BRANCH_VERSION > version.build
     - echo "//////////////////////////////"
     - echo "Version is "+ $(cat version.build)
     - echo "//////////////////////////////"
@@ -107,9 +116,9 @@ push-branch:
 
 version-master:
   <<: *onlyMaster
-  extends: .version
+  extends: .version-next-tag
   after_script:
-    - echo $MASTER_VERSION > version.build
+    - echo $(cat version.build)$MASTER_VERSION > version.build
     - echo "//////////////////////////////"
     - echo "Version is "+ $(cat version.build)
     - echo "//////////////////////////////"
@@ -128,7 +137,7 @@ push-master:
   when: manual
 
 version-tags:
-  extends: .version
+  extends: .version-tag
   only:
     - tags
 

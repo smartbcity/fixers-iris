@@ -62,18 +62,9 @@ subprojects {
         publishing {
             publications {
                 mavenJava(MavenPublication) {
-                    artifactId = project.name
                     from components.java
                     artifact sourcesJar
                     artifact javadocJar
-                    versionMapping {
-                        usage('java-api') {
-                            fromResolutionOf('runtimeClasspath')
-                        }
-                        usage('java-runtime') {
-                            fromResolutionResult()
-                        }
-                    }
                     pom {
                         name = pomName
                         description = pomDescription
