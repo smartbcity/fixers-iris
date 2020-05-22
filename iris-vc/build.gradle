@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(":iris-crypto:iris-crypto-rsa")
+    implementation project(":iris-ld:iris-ld-proofs")
+    implementation project(":iris-ld:iris-ld-jsonld")
+}

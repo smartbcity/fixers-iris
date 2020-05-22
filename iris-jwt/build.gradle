@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(":iris-crypto:iris-crypto-rsa")
+
+    implementation 'com.nimbusds:nimbus-jose-jwt:6.0'
+    implementation "org.bouncycastle:bcprov-jdk15on:${bouncycastleVersion}"
+}

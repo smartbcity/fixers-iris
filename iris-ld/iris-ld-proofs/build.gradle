@@ -1,0 +1,6 @@
+dependencies {
+    implementation project(":iris-crypto:iris-crypto-rsa")
+    implementation project(":iris-ld:iris-ld-jsonld")
+    implementation "com.github.jsonld-java:jsonld-java:${jsonldJavaVersion}"
+    implementation "com.nimbusds:nimbus-jose-jwt:${joseJwtVersion}"
+}

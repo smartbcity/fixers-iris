@@ -1,0 +1,4 @@
+dependencies {
+    implementation "com.nimbusds:nimbus-jose-jwt:${joseJwtVersion}"
+    implementation "org.bouncycastle:bcprov-jdk15on:${bouncycastleVersion}"
+}
