@@ -2,6 +2,7 @@ package city.smartb.iris.vc;
 
 import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.jsonld.reader.JsonFieldReader;
+import city.smartb.iris.ldproof.LdProof;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,7 +20,6 @@ public class VerifiableCredential extends JsonLdObject {
     public static final String JSON_LD_ISSUER = "issuer";
     public static final String JSON_LD_ISSUANCE_DATE = "issuanceDate";
     public static final String JSON_LD_CREDENTIAL_SUBJECT = "credentialSubject";
-    public static final String JSON_LD_PROOF = "proof";
 
     public VerifiableCredential(Map<String, Object> json) {
         super(json);
@@ -38,11 +38,12 @@ public class VerifiableCredential extends JsonLdObject {
     }
 
     public Map<String, Object> getCredentialSubject() {
-        return (Map<String, Object>) this.get(JSON_LD_CREDENTIAL_SUBJECT).asMap();
+        return this.get(JSON_LD_CREDENTIAL_SUBJECT).asMap();
     }
 
-    public Map<String, Object> getProof() {
-        return this.get(JSON_LD_PROOF).asMap();
+    public LdProof getProof() {
+        Map<String, Object> map = this.get(LdProof.JSON_LD_PROOF).asMap();
+        return LdProof.fromMap(map);
     }
 
 }

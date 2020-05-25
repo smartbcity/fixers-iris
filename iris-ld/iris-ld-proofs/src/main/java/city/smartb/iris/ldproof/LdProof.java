@@ -2,19 +2,20 @@ package city.smartb.iris.ldproof;
 
 import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.jsonld.reader.JsonFieldReader;
-import java.util.Date;
+
+import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class LdProof extends JsonLdObject {
 
-    public static LdProof fromMap(LinkedHashMap<String, Object> json) {
+    public static LdProof fromMap(Map<String, Object> json) {
         return new LdProof(json);
     }
 
     public static final String JSON_LD_CONTEXT_SECURITY_V2 = "https://w3id.org/security/v2";
 
-    public static final String JSON_LD_TERM_PROOF = "proof";
+    public static final String JSON_LD_PROOF = "proof";
 
     public static final String JSON_LD_CREATED = "created";
     public static final String JSON_LD_DOMAIN = "domain";
@@ -36,8 +37,8 @@ public class LdProof extends JsonLdObject {
         return get(JSON_LD_PURPOSE).asString();
     }
 
-    public Date getCreated() {
-        return get(JSON_LD_CREATED).asDate();
+    public LocalDateTime getCreated() {
+        return get(JSON_LD_CREATED).asLocalDateTime();
     }
 
     public String getVerificationMethod() {

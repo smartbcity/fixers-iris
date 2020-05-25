@@ -1,5 +1,6 @@
 package city.smartb.iris.jsonld.reader;
 
+import city.smartb.iris.jsonld.jackson.ObjectMapperFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ public class JsonFieldReaderJackson implements JsonFieldReader {
      private final ObjectMapper mapper;
 
      public JsonFieldReaderJackson() {
-         this(new ObjectMapper());
+          this(new ObjectMapperFactory().create());
      }
 
      public JsonFieldReaderJackson(ObjectMapper mapper) {

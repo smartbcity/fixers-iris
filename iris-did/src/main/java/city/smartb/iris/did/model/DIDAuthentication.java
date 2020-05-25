@@ -1,4 +1,6 @@
-package city.smartb.iris.did;
+package city.smartb.iris.did.model;
+
+import java.util.Map;
 
 public class DIDAuthentication {
 
@@ -16,6 +18,10 @@ public class DIDAuthentication {
 			return ((DIDPublicKey) json).getId();
 		}
 		return null;
+	}
+
+	public Object toJSON() {
+		return json;
 	}
 
 }

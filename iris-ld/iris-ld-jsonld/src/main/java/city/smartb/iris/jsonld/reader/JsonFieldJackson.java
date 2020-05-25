@@ -1,5 +1,6 @@
 package city.smartb.iris.jsonld.reader;
 
+import city.smartb.iris.jsonld.jackson.ObjectMapperFactory;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,7 +20,7 @@ public class JsonFieldJackson extends JsonField {
     }
 
     public JsonFieldJackson(Map<String, Object> json, String key) {
-        this(new ObjectMapper(), json, key);
+        this(new ObjectMapperFactory().create(), json, key);
     }
 
     @Override
@@ -56,12 +57,6 @@ public class JsonFieldJackson extends JsonField {
     public <T> List<T> asListObjects(Class<T> clazz) {
         Object obj = json.get(key);
         return mapper.convertValue(obj, new TypeReference<List<T>>() {});
-    }
-
-    @Override
-    public Date asDate() {
-        Object obj = json.get(key);
-        return mapper.convertValue(obj, Date.class);
     }
 
     @Override

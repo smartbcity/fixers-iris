@@ -23,7 +23,7 @@ public class LdJsonObjectBuilder {
     }
 
     public static void removeFromJsonLdObject(LinkedHashMap<String, Object> jsonLdObject) {
-        jsonLdObject.remove(LdProof.JSON_LD_TERM_PROOF);
+        jsonLdObject.remove(LdProof.JSON_LD_PROOF);
     }
 
 }

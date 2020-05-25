@@ -1,6 +1,7 @@
 package city.smartb.iris.jwt;
 
 import city.smartb.iris.crypto.rsa.RSAKeyPairGenerator;
+import city.smartb.iris.crypto.rsa.exception.CryptoException;
 import city.smartb.iris.jwt.base.DataTest;
 import city.smartb.iris.jwt.generator.IrisJwtGenerator;
 import city.smartb.iris.jwt.validator.IrisJwtError;
@@ -8,7 +9,6 @@ import city.smartb.iris.jwt.validator.IrisJwtValidator;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jwt.JWTClaimsSet;
 import org.assertj.core.api.Assertions;
-import org.bouncycastle.crypto.CryptoException;
 import org.junit.jupiter.api.Test;
 
 import java.security.KeyPair;
@@ -23,7 +23,7 @@ class IrisJwtTest {
     private final String issuer = "iris.smartb.network";
     private final String audience = "https://iris.smartb.network";
 
-    private IrisJwtValidator validator = new IrisJwtValidator(issuer, audience);
+    private final IrisJwtValidator validator = new IrisJwtValidator(issuer, audience);
 
     @Test
     void shouldBeValid() throws CryptoException, JOSEException, ParseException {
@@ -35,7 +35,7 @@ class IrisJwtTest {
     }
 
     @Test
-    void shouldBeInvalid_WhenAudianceIsNotGood() throws CryptoException, JOSEException, ParseException {
+    void shouldBeInvalid_WhenAudianceIsNotGood() throws JOSEException, ParseException, CryptoException {
         DataTest dataTest = new DataTest();
         KeyPair keyPair = RSAKeyPairGenerator.generate2048Pair();
         JWTClaimsSet claims = IrisJwtGenerator.generateClaimSet(keyPair.getPublic(), Optional.empty(), issuer, audience)

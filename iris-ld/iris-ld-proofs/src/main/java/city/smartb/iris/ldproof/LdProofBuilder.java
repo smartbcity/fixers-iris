@@ -5,8 +5,9 @@ import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.ldproof.util.CanonicalizationUtil;
 import com.github.jsonldjava.core.JsonLdConsts;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class LdProofBuilder {
         return this;
     }
 
-    public LdProofBuilder withCreated(Date created) {
+    public LdProofBuilder withCreated(LocalDateTime created) {
         json.put(LdProof.JSON_LD_CREATED, created);
         return this;
     }

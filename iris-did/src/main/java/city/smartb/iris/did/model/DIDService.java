@@ -1,4 +1,4 @@
-package city.smartb.iris.did;
+package city.smartb.iris.did.model;
 
 import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.jsonld.reader.JsonFieldReader;

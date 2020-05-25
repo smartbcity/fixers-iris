@@ -28,8 +28,6 @@ public abstract class JsonField {
 
     public abstract <T> List<T> asListObjects(Class<T> clazz);
 
-    public abstract Date asDate();
-
     public abstract LocalDate asLocalDate();
 
     public abstract LocalDateTime asLocalDateTime();

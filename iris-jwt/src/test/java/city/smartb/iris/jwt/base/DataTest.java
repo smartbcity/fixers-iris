@@ -1,13 +1,13 @@
 package city.smartb.iris.jwt.base;
 
 import city.smartb.iris.crypto.rsa.RSAKeyPairGenerator;
+import city.smartb.iris.crypto.rsa.exception.CryptoException;
 import city.smartb.iris.jwt.IrisJwt;
 import city.smartb.iris.jwt.generator.IrisJwtGenerator;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.RSASSASigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
-import org.bouncycastle.crypto.CryptoException;
 
 import java.security.KeyPair;
 import java.security.PrivateKey;
@@ -19,16 +19,10 @@ public class DataTest {
     private final String issuer = "iris.smartb.network";
     private final String audience = "https://iris.smartb.network";
 
-//    private final String issuerWallet =  "did:mobiliteeco:";
-//    private final String audienceWallet = "http://app.mobilite.eco";
-//
     public IrisJwt generateSignedJWT() throws JOSEException, ParseException, CryptoException {
         return generateSignedJWT(issuer, audience);
     }
 
-//    public IrisJwt generateWalletSignedJWT() throws JOSEException, ParseException, CryptoException {
-//        return generateSignedJWT(issuerWallet+ UUID.randomUUID().toString(), audienceWallet);
-//    }
     public IrisJwt generateSignedJWT(String issuer, String audience) throws JOSEException, ParseException, CryptoException {
         KeyPair keyPair = RSAKeyPairGenerator.generate2048Pair();
         return generateSignedJWT(keyPair, issuer, audience);
