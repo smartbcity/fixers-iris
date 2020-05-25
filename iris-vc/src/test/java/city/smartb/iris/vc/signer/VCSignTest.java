@@ -31,14 +31,17 @@ class VCSignTest {
                 .withIssuanceDate("2020-05-25T11:37:24.293")
                 .withIssuer("UnitTest")
                 .withCredentialSubject(claims);
+
         LdProofBuilder proofBuilder = LdProofBuilder.builder()
                 .withChallenge("Chalenges")
                 .withCreated(LocalDateTime.parse("2020-05-25T11:37:24.293"))
                 .withDomain("smartb.city")
                 .withProofPurpose("ProofPurpose")
                 .withVerificationMethod("VerificationMethod");
+
         KeyPair pair = RSAKeyPairReader.loadKeyPair("userAgentUnitTest");
         Signer signer = Signer.rs256Signer((RSAPrivateKey) pair.getPrivate());
+
         VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
         Assertions.assertThat(cred.getProof()).isNotNull();

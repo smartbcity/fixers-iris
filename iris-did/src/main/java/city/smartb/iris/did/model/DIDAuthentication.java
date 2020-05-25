@@ -1,7 +1,5 @@
 package city.smartb.iris.did.model;
 
-import java.util.Map;
-
 public class DIDAuthentication {
 
 	private final Object json;
