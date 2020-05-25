@@ -4,7 +4,7 @@ import city.smartb.iris.crypto.rsa.signer.Signer;
 import city.smartb.iris.ldproof.LdJsonObjectBuilder;
 import city.smartb.iris.ldproof.LdProof;
 import city.smartb.iris.ldproof.LdProofBuilder;
-import city.smartb.iris.ldproof.crypto.rsa.RsaSignature2018LdProofSigner;
+import city.smartb.iris.ldproof.crypto.RsaSignature2018LdProofSigner;
 import city.smartb.iris.vc.VerifiableCredential;
 import city.smartb.iris.vc.VerifiableCredentialBuilder;
 

@@ -1,8 +1,8 @@
 package city.smartb.iris.jsonld;
 
 import city.smartb.iris.jsonld.reader.JsonField;
-import city.smartb.iris.jsonld.reader.JsonFieldReader;
 import city.smartb.iris.jsonld.reader.JsonFieldJackson;
+import city.smartb.iris.jsonld.reader.JsonFieldReader;
 import com.github.jsonldjava.core.JsonLdConsts;
 
 import java.util.LinkedHashMap;

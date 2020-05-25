@@ -1,7 +1,7 @@
 package city.smartb.iris.jwt.validator;
 
-import city.smartb.iris.jwt.exception.InvalidJwtException;
 import city.smartb.iris.jwt.IrisJwt;
+import city.smartb.iris.jwt.exception.InvalidJwtException;
 import city.smartb.iris.jwt.parser.IrisJwtParser;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;

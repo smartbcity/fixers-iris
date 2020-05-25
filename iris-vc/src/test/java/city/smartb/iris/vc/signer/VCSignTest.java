@@ -3,6 +3,7 @@ package city.smartb.iris.vc.signer;
 import city.smartb.iris.crypto.rsa.RSAKeyPairReader;
 import city.smartb.iris.crypto.rsa.exception.InvalidRsaKeyException;
 import city.smartb.iris.crypto.rsa.signer.Signer;
+import city.smartb.iris.crypto.rsa.verifier.Verifier;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import city.smartb.iris.vc.VerifiableCredential;
 import city.smartb.iris.vc.VerifiableCredentialBuilder;
@@ -12,12 +13,14 @@ import org.junit.jupiter.api.Test;
 import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 class VCSignTest {
 
+    private VCVerifier vcVerifier = new VCVerifier();
     private VCSign vcSign = new VCSign();
 
     @Test
@@ -53,5 +56,36 @@ class VCSignTest {
         Assertions.assertThat(cred.getProof().getType()).isEqualTo("RsaSignature2018");
         Assertions.assertThat(cred.getProof().getVerificationMethod()).isEqualTo("VerificationMethod");
 
+    }
+
+
+    @Test
+    void verify() throws GeneralSecurityException, InvalidRsaKeyException {
+        Map<String, Object> claims = new LinkedHashMap<>();
+        claims.put("name", "smartb");
+
+        VerifiableCredentialBuilder vcBuild = VerifiableCredentialBuilder
+                .create()
+                .withId("477599e2-eab4-4cd8-b4ab-75aad8a21f2e")
+                .withIssuanceDate("2020-05-25T11:37:24.293")
+                .withIssuer("UnitTest")
+                .withCredentialSubject(claims);
+
+        LdProofBuilder proofBuilder = LdProofBuilder.builder()
+                .withChallenge("Chalenges")
+                .withCreated(LocalDateTime.parse("2020-05-25T11:37:24.293"))
+                .withDomain("smartb.city")
+                .withProofPurpose("ProofPurpose")
+                .withVerificationMethod("VerificationMethod");
+
+        KeyPair pair = RSAKeyPairReader.loadKeyPair("userAgentUnitTest");
+        Signer signer = Signer.rs256Signer((RSAPrivateKey) pair.getPrivate());
+
+        VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
+
+        Verifier verifier = Verifier.rs256Verifier((RSAPublicKey) pair.getPublic());
+        Boolean isValid = vcVerifier.verify(cred, verifier);
+
+        Assertions.assertThat(isValid).isTrue();
     }
 }

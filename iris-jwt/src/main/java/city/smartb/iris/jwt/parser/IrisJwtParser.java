@@ -1,7 +1,7 @@
 package city.smartb.iris.jwt.parser;
 
-import city.smartb.iris.jwt.exception.InvalidJwtException;
 import city.smartb.iris.jwt.IrisJwt;
+import city.smartb.iris.jwt.exception.InvalidJwtException;
 import com.nimbusds.jwt.SignedJWT;
 
 import java.text.ParseException;

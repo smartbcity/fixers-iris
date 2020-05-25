@@ -8,7 +8,6 @@ import com.github.jsonldjava.core.JsonLdProcessor;
 public class CanonicalizationUtil {
 
 	private CanonicalizationUtil() {
-
 	}
 
 	public static String buildCanonicalizedDocument(Object jsonLdObject) throws JsonLdError {

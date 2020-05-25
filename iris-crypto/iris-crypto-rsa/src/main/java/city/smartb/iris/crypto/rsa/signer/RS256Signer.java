@@ -2,7 +2,8 @@ package city.smartb.iris.crypto.rsa.signer;
 
 import com.nimbusds.jose.JWSAlgorithm;
 
-import java.security.*;
+import java.security.GeneralSecurityException;
+import java.security.Signature;
 import java.security.interfaces.RSAPrivateKey;
 
 public class RS256Signer implements Signer {

@@ -1,13 +1,11 @@
 package city.smartb.iris.ldproof.signer;
 
 import city.smartb.iris.crypto.rsa.signer.Signer;
-import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.ldproof.LdJsonObjectBuilder;
+import city.smartb.iris.ldproof.LdProof;
 import city.smartb.iris.ldproof.LdProofBuilder;
-import city.smartb.iris.ldproof.util.CanonicalizationUtil;
 import city.smartb.iris.ldproof.util.JWSUtil;
 import city.smartb.iris.ldproof.util.SHAUtil;
-import city.smartb.iris.ldproof.LdProof;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
@@ -15,7 +13,6 @@ import com.nimbusds.jose.util.Base64URL;
 
 import java.security.GeneralSecurityException;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 
 public abstract class LdProofSigner {
 

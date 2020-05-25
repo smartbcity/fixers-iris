@@ -1,4 +1,4 @@
-package city.smartb.iris.ldproof.crypto.rsa;
+package city.smartb.iris.ldproof.crypto;
 
 import city.smartb.iris.crypto.rsa.signer.Signer;
 import city.smartb.iris.ldproof.LdProofBuilder;

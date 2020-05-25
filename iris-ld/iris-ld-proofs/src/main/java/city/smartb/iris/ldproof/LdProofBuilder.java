@@ -5,11 +5,11 @@ import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.ldproof.util.CanonicalizationUtil;
 import com.github.jsonldjava.core.JsonLdConsts;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LdProofBuilder {
 
@@ -17,7 +17,22 @@ public class LdProofBuilder {
         return new LdProofBuilder();
     }
 
-    private final LinkedHashMap<String, Object> json = new LinkedHashMap<>();
+    private final LinkedHashMap<String, Object> json;
+
+    public LdProofBuilder() {
+        this.json = new LinkedHashMap<>();
+    }
+
+    public LdProofBuilder(Map<String, Object> json) {
+        this.json = new LinkedHashMap<>(json);
+    }
+
+    public static LdProofBuilder fromLdProof(LdProof ldProof) {
+        Map<String, Object> json = ldProof.asJson();
+        json.remove(LdProof.JSON_LD_JWS);
+        json.remove(LdProof.JSON_LD_SIGNATURE_VALUE);
+        return new LdProofBuilder(json);
+    }
 
     public LdProofBuilder withProofPurpose(String proofPurpose) {
         json.put(LdProof.JSON_LD_PURPOSE, proofPurpose);
@@ -44,8 +59,11 @@ public class LdProofBuilder {
         return this;
     }
 
+    public String canonicalize() {
+        return CanonicalizationUtil.buildCanonicalizedDocument(json);
+    }
+
     public String canonicalize(Signer signer) {
-//        addSecurityContextToJsonLdObject(json);
         json.put(JsonLdObject.JSON_TYPE, signer.getTerm());
         return CanonicalizationUtil.buildCanonicalizedDocument(json);
     }

@@ -1,6 +1,7 @@
 package city.smartb.iris.did.model;
 
 import city.smartb.iris.jsonld.reader.JsonFieldReader;
+
 import java.util.Map;
 
 public class DIDPublicKey extends ControledJsonLdObject {
