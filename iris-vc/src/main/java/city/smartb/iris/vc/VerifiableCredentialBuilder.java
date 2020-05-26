@@ -63,7 +63,7 @@ public class VerifiableCredentialBuilder extends JsonLdObject {
     }
 
     public VerifiableCredential asJson(LdProof proof) {
-        this.jsonLdObject.put(VC_PROOF, proof);
+        this.jsonLdObject.put(VC_PROOF, proof.asJson());
         return  new VerifiableCredential(this.jsonLdObject);
     }
 }
