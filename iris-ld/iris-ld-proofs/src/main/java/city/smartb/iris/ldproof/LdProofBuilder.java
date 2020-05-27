@@ -64,7 +64,7 @@ public class LdProofBuilder {
     }
 
     public String canonicalize(Signer signer) {
-        json.put(JsonLdObject.JSON_TYPE, signer.getTerm());
+        json.put(JsonLdObject.JSON_LD_TYPE, signer.getTerm());
         return CanonicalizationUtil.buildCanonicalizedDocument(json);
     }
 

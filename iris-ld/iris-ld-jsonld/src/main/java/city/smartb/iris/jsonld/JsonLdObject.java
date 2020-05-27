@@ -1,7 +1,7 @@
 package city.smartb.iris.jsonld;
 
 import city.smartb.iris.jsonld.reader.JsonField;
-import city.smartb.iris.jsonld.reader.JsonFieldJackson;
+import city.smartb.iris.jsonld.jackson.JsonFieldJackson;
 import city.smartb.iris.jsonld.reader.JsonFieldReader;
 import com.github.jsonldjava.core.JsonLdConsts;
 
@@ -11,8 +11,9 @@ import java.util.Map;
 
 public class JsonLdObject {
 
-    public static final String JSON_ID = "id";
-    public static final String JSON_TYPE = "type";
+    public static final String JSON_LD_CONTEXT = "@context";
+    public static final String JSON_LD_ID = "id";
+    public static final String JSON_LD_TYPE = "type";
 
     protected final LinkedHashMap<String, Object> jsonLdObject;
     private final JsonFieldReader fieldReader;
@@ -39,7 +40,7 @@ public class JsonLdObject {
         if(ldId != null) {
             return ldId;
         }
-        return fieldReader.read(jsonLdObject, JSON_ID).asString();
+        return fieldReader.read(jsonLdObject, JSON_LD_ID).asString();
     }
 
     public String getType() {
@@ -47,7 +48,7 @@ public class JsonLdObject {
         if(ldId != null) {
             return ldId;
         }
-        return fieldReader.read(jsonLdObject, JSON_TYPE).asString();
+        return fieldReader.read(jsonLdObject, JSON_LD_TYPE).asString();
     }
 
     public Map<String, Object> toJSON() {

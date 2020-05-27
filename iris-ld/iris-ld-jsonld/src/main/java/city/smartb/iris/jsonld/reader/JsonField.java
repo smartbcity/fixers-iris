@@ -7,12 +7,14 @@ import java.util.Map;
 
 public abstract class JsonField {
 
-    protected final Map<String, Object> json;
-    protected final String key;
+    protected final Object obj;
+
+    public JsonField(Object obj) {
+        this.obj = obj;
+    }
 
     public JsonField(Map<String, Object> json, String key) {
-        this.json = json;
-        this.key = key;
+        this.obj = json.get(key);
     }
 
     public abstract String asString();

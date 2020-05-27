@@ -1,6 +1,6 @@
-package city.smartb.iris.jsonld.reader;
+package city.smartb.iris.jsonld.jackson;
 
-import city.smartb.iris.jsonld.jackson.ObjectMapperFactory;
+import city.smartb.iris.jsonld.reader.JsonField;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -24,49 +24,41 @@ public class JsonFieldJackson extends JsonField {
 
     @Override
     public String asString() {
-        Object obj = json.get(key);
         return mapper.convertValue(obj, String.class);
     }
 
     @Override
     public Integer asInteger() {
-        Object obj = json.get(key);
         return mapper.convertValue(obj, Integer.class);
     }
 
     @Override
     public Map<String, Object> asMap() {
-        Object obj = json.get(key);
         return mapper.convertValue(obj, new TypeReference<Map<String, Object>>() {});
     }
 
     @Override
     public List<Map<String, Object>> getMaps() {
-        Object obj = json.get(key);
         return mapper.convertValue(obj, new TypeReference<List<Map<String, Object>>>() {});
     }
 
     @Override
     public <T> T asObject(Class<T> clazz) {
-        Object obj = json.get(key);
         return mapper.convertValue(obj, clazz);
     }
 
     @Override
     public <T> List<T> asListObjects(Class<T> clazz) {
-        Object obj = json.get(key);
-        return mapper.convertValue(obj, new TypeReference<List<T>>() {});
+        return mapper.convertValue(obj,  mapper.getTypeFactory().constructCollectionType(List.class, clazz));
     }
 
     @Override
     public LocalDate asLocalDate() {
-        Object obj = json.get(key);
         return mapper.convertValue(obj, LocalDate.class);
     }
 
     @Override
     public LocalDateTime asLocalDateTime() {
-        Object obj = json.get(key);
         return mapper.convertValue(obj, LocalDateTime.class);
     }
 }

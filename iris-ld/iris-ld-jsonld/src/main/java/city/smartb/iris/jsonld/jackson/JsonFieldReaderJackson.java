@@ -1,6 +1,7 @@
-package city.smartb.iris.jsonld.reader;
+package city.smartb.iris.jsonld.jackson;
 
-import city.smartb.iris.jsonld.jackson.ObjectMapperFactory;
+import city.smartb.iris.jsonld.reader.JsonField;
+import city.smartb.iris.jsonld.reader.JsonFieldReader;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;

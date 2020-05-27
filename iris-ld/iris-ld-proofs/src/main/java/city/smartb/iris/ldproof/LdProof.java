@@ -54,7 +54,7 @@ public class LdProof extends JsonLdObject {
     }
 
     public String getType() {
-        return get(JSON_TYPE).asString();
+        return get(JSON_LD_TYPE).asString();
     }
 
     public String getJws() {

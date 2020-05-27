@@ -32,7 +32,7 @@ public class DIDDocumentBuilder extends JsonLdObject {
     }
 
     public DIDDocumentBuilder withId(String id) {
-        jsonLdObject.put(JsonLdObject.JSON_ID, id);
+        jsonLdObject.put(JsonLdObject.JSON_LD_ID, id);
         return this;
     }
 

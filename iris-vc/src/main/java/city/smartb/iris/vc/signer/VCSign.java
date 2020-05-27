@@ -16,6 +16,6 @@ public class VCSign {
         RsaSignature2018LdProofSigner ldSigner = new RsaSignature2018LdProofSigner(signer, proofBuilder);
         LdJsonObjectBuilder builder = LdJsonObjectBuilder.builder(vcBuild.asJson());
         LdProof proof = ldSigner.sign(builder);
-        return vcBuild.asJson(proof);
+        return vcBuild.build(proof);
     }
 }
