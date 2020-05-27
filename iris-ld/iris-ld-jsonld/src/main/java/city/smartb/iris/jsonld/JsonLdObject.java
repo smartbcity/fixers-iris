@@ -51,7 +51,7 @@ public class JsonLdObject {
         return fieldReader.read(jsonLdObject, JSON_LD_TYPE).asString();
     }
 
-    public Map<String, Object> toJSON() {
+    public Map<String, Object> asJson() {
         return jsonLdObject;
     }
 }

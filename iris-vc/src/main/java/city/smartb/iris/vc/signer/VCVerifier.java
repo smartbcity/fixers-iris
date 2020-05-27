@@ -10,6 +10,6 @@ public class VCVerifier {
 
     public Boolean verify(VerifiableCredential vc, Verifier verifier) throws GeneralSecurityException {
         RsaSignature2018LdProofVerifier ldSigner = new RsaSignature2018LdProofVerifier(verifier);
-        return ldSigner.verify(vc.toJSON());
+        return ldSigner.verify(vc.asJson());
     }
 }

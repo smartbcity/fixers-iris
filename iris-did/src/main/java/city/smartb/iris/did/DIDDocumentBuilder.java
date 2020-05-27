@@ -37,7 +37,7 @@ public class DIDDocumentBuilder extends JsonLdObject {
     }
 
     public DIDDocumentBuilder withPublicKeys(List<DIDPublicKey> keys) {
-        List<Map<String, Object>> keysJson = keys.parallelStream().map(publicKey -> publicKey.toJSON()).collect(Collectors.toList());
+        List<Map<String, Object>> keysJson = keys.parallelStream().map(publicKey -> publicKey.asJson()).collect(Collectors.toList());
         jsonLdObject.put(DIDDocument.JSON_LD_PUBLICKEY, keysJson);
         return this;
     }
@@ -48,7 +48,7 @@ public class DIDDocumentBuilder extends JsonLdObject {
     }
 
     public DIDDocumentBuilder withServices(List<DIDService> services) {
-        List<Map<String, Object>> servicesJSon = services.parallelStream().map(service -> service.toJSON()).collect(Collectors.toList());
+        List<Map<String, Object>> servicesJSon = services.parallelStream().map(service -> service.asJson()).collect(Collectors.toList());
         jsonLdObject.put(DIDDocument.JSON_LD_SERVICE, servicesJSon);
         return this;
     }

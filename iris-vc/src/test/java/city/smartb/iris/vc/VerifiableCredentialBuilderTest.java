@@ -18,7 +18,7 @@ class VerifiableCredentialBuilderTest {
 
             VerifiableCredential build = VerifiableCredentialBuilder.create().build(proof);
 
-            Object json = build.toJSON().get(LdProof.JSON_LD_PROOF);
+            Object json = build.asJson().get(LdProof.JSON_LD_PROOF);
             boolean isMap = json instanceof Map;
             Assertions.assertThat(isMap).isTrue();
 
