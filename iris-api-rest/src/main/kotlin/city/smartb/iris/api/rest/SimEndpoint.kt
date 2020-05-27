@@ -23,8 +23,7 @@ class SimEndpoint(
             @PathVariable actionType: Int,
             @PathVariable payload: String
     ): Mono<CreateChannelResponse> {
-
-
+        log.info("Handle sim response phoneNumber[${phoneNumber}] phoneChannelId[${phoneChannelId}] actionType[${actionType}] payload[${payload}]")
         val message = when(ActionType.valueOf(actionType)){
             ActionType.PUB_KEY -> PublicKeyResponse(payload)
             ActionType.SIGN -> SignResponse(payload)

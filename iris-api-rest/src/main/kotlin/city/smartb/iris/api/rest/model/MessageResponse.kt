@@ -2,7 +2,7 @@ package city.smartb.iris.api.rest.model
 
 open class MessageResponse(
         override val action: ActionType,
-        override val payload: Map<String, String> = mapOf()
+        override val payload: Map<String, Any> = mapOf()
 ): Message(action, Type.RESPONSE, payload)
 
 open class PublicKeyResponse(

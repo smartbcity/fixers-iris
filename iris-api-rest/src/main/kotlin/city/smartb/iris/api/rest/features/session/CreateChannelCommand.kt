@@ -20,14 +20,15 @@ class CreateChannelCommand(
         return Mono.create {
             val session = channelProvider.create()
             logger.info("Create session[${session.channelId}]")
-            val args = hashMapOf("x-expires" to Duration.ofMinutes(15).toMillis()) as Map<String, Object>
+            val args = hashMapOf("x-expires" to Duration.ofMinutes(60).toMillis()) as Map<String, Object>
+
             val phoneQueueName = session.getQueueToSendToSigner()
-            val phoneQueue = Queue(phoneQueueName, true, false, true, args);
+            val phoneQueue = Queue(phoneQueueName, true, false, false, args);
             amqpAdmin.declareQueue(phoneQueue)
             logger.info("[${session.channelId}] queue[${phoneQueue}]")
 
             val browserQueueName = ChannelSession(session.channelId).getQueueToSendToApplication()
-            val browserQueue = Queue(browserQueueName, true, false, true, args);
+            val browserQueue = Queue(browserQueueName, true, false, false, args);
             amqpAdmin.declareQueue(browserQueue)
             logger.info("[${session.channelId}] queue[${browserQueue}]")
 

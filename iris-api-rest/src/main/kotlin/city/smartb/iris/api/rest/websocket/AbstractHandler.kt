@@ -58,11 +58,13 @@ abstract class AbstractHandler<RECEIVE_FROM_DEVICE : Message, SEND_TO_DEVICE : M
     }
 
     protected fun toMessageQuery(json: ByteArray): MessageQuery {
-        return objectMapper.readValue(json)
+        logger.info("MessageQuery to deserialize: "+ String(json))
+        return objectMapper.readValue(json, MessageQuery::class.java)
     }
 
     protected fun toMessageResponse(json: ByteArray): MessageResponse {
-        return objectMapper.readValue(json)
+        logger.info("MessageResponse to deserialize: "+ String(json))
+        return objectMapper.readValue(json, MessageResponse::class.java)
     }
 
 }

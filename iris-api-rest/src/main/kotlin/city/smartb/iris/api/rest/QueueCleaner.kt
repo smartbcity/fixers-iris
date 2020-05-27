@@ -4,7 +4,6 @@ import city.smartb.iris.api.rest.config.logger
 import com.rabbitmq.http.client.ReactorNettyClient
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Flux
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
