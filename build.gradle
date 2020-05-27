@@ -17,6 +17,7 @@ subprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        maven { url 'https://jitpack.io' }
     }
 
     ext {
@@ -27,7 +28,7 @@ subprojects {
         jacksonVersion = '2.9.8'
         bouncycastleVersion = '1.65'
         joseJwtVersion = '8.17'
-        jsonldJavaVersion = '0.13.0'
+        jsonldJavaVersion = '1.1-SNAPSHOT'
     }
 
     dependencies {

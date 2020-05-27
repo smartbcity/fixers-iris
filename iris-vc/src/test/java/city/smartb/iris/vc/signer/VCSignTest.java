@@ -30,6 +30,7 @@ class VCSignTest {
 
         VerifiableCredentialBuilder vcBuild = VerifiableCredentialBuilder
                 .create()
+                .withContextDefault()
                 .withId("477599e2-eab4-4cd8-b4ab-75aad8a21f2e")
                 .withIssuanceDate("2020-05-25T11:37:24.293")
                 .withIssuer("UnitTest")
