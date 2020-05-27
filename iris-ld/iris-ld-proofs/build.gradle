@@ -1,6 +1,6 @@
 dependencies {
     api project(":iris-crypto:iris-crypto-rsa")
     api project(":iris-ld:iris-ld-jsonld")
-    api ("com.github.jsonld-java:jsonld-java:${jsonldJavaVersion}")  { changing = true }
+    implementation ("com.github.jsonld-java:jsonld-java:${jsonldJavaVersion}")  { changing = true }
     api "com.nimbusds:nimbus-jose-jwt:${joseJwtVersion}"
 }
