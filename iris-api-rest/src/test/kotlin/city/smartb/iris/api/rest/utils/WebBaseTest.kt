@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.http.HttpHeaders
+import org.springframework.http.MediaType
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
 import org.springframework.web.reactive.function.client.WebClient
@@ -32,9 +34,15 @@ class WebBaseTest {
         return UriComponentsBuilder.fromHttpUrl("http://localhost:$port")
     }
 
-    protected fun webClient(): WebClient {
-        return WebClient.create("http://localhost:$port")
+    protected fun webClient(): WebTestClient {
+        return WebTestClient
+                .bindToServer()
+                .responseTimeout(Duration.ofSeconds(20))
+                .baseUrl(baseUrl().toUriString())
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build()
     }
+
 
     protected fun webTestClient(): WebTestClient {
         return WebTestClient.bindToServer()

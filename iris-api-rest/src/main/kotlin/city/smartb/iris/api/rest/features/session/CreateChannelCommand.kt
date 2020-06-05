@@ -16,7 +16,7 @@ class CreateChannelCommand(
 
     private val logger = LoggerFactory.getLogger(CreateChannelCommand::class.java)
 
-    fun execute(): Mono<CreateChannelResponse> {
+    fun execute(): Mono<ChannelResponse> {
         return Mono.create {
             val session = channelProvider.create()
             logger.info("Create session[${session.channelId}]")
@@ -32,7 +32,10 @@ class CreateChannelCommand(
             amqpAdmin.declareQueue(browserQueue)
             logger.info("[${session.channelId}] queue[${browserQueue}]")
 
-            it.success(CreateChannelResponse((session.channelId.id)))
+            it.success(ChannelResponse(
+                    session.channelId.id,
+                    status = ChannelStatus.CREATED
+            ))
         }
     }
 

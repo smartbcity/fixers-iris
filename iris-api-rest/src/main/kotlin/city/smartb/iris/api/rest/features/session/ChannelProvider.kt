@@ -21,6 +21,10 @@ class ChannelProvider {
         return fromChannelId(ChannelId(channelId))
     }
 
+    fun isExists(id: ChannelId): Boolean {
+        return ALL_CHANNEL_SESSION.containsKey(id)
+    }
+
     fun fromChannelId(id: ChannelId): ChannelSession {
         return ALL_CHANNEL_SESSION.getOrPut(id, { ChannelSession(id) })
     }
