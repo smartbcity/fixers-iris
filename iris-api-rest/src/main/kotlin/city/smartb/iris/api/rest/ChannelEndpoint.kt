@@ -1,11 +1,8 @@
 package city.smartb.iris.api.rest
 
 import city.smartb.iris.api.rest.features.messages.BrowserMessageTransformer
-import city.smartb.iris.api.rest.features.session.CreateChannelResponse
-import city.smartb.iris.api.rest.features.session.CreateChannelCommand
+import city.smartb.iris.api.rest.features.session.*
 import city.smartb.iris.api.rest.model.ChannelId
-import city.smartb.iris.api.rest.features.session.ChannelProvider
-import city.smartb.iris.api.rest.features.session.DeleteChannelCommand
 import city.smartb.iris.api.rest.features.sim.SimService
 import city.smartb.iris.api.rest.model.MessageQuery
 import city.smartb.iris.api.rest.model.SimChannelId
@@ -21,6 +18,7 @@ class ChannelEndpoint(
         private val browserMessageTransformer: BrowserMessageTransformer,
         private val simService: SimService,
         private val channelProvider: ChannelProvider,
+        private val getChannelCommand: GetChannelCommand,
         private val createChannelCommand: CreateChannelCommand,
         private val deleteChannelCommand: DeleteChannelCommand,
         private val template: RabbitTemplate) {
@@ -30,7 +28,10 @@ class ChannelEndpoint(
     final inline fun <reified T> typeReference() = object : ParameterizedTypeReference<T>() {}
 
     @PostMapping("/channels")
-    fun create(): Mono<CreateChannelResponse> = createChannelCommand.execute()
+    fun create(): Mono<ChannelResponse> = createChannelCommand.execute()
+
+    @GetMapping("/channels/{channelId}")
+    fun get(@PathVariable channelId: ChannelId): Mono<ChannelResponse> = getChannelCommand.execute(channelId)
 
     @PutMapping("/channels/{channelId}")
     fun connectPhoneNumber(@PathVariable channelId: String, @RequestParam("phoneNumber") phoneNumber: String): Mono<SimChannelId> {

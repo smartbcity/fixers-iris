@@ -1,6 +1,6 @@
 package city.smartb.iris.api.rest
 
-import city.smartb.iris.api.rest.features.session.CreateChannelResponse
+import city.smartb.iris.api.rest.features.session.ChannelResponse
 import city.smartb.iris.api.rest.model.ActionType
 import city.smartb.iris.api.rest.model.MessageResponse
 import city.smartb.iris.api.rest.utils.WebBaseTest
@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.junit.jupiter.MockitoExtension
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.test.web.reactive.server.expectBody
 import org.springframework.web.reactive.socket.WebSocketSession
 import org.springframework.web.reactive.socket.client.ReactorNettyWebSocketClient
 import org.springframework.web.reactive.socket.client.StandardWebSocketClient
@@ -28,40 +29,40 @@ class WebsocketPhoneClientTest : WebBaseTest() {
 
     @Test
     fun fullTest() {
-        val createResponse: CreateChannelResponse = webClient()
+        val response: ChannelResponse = webClient()
                 .post()
                 .uri("/channels")
-                .retrieve()
-                .bodyToMono(CreateChannelResponse::class.java)
-                .block()!!
+                .exchange()
+                .expectBody<ChannelResponse>()
+                .returnResult().responseBody!!
 
-        Assertions.assertThat(createResponse).isNotNull()
-        Assertions.assertThat(createResponse.channelId).isNotNull()
+        Assertions.assertThat(response).isNotNull()
+        Assertions.assertThat(response.channelId).isNotNull()
 
-        val uriApplication = URI.create("ws://localhost:$port/connect/application/${createResponse.channelId}")
-        val uriSigner = URI.create("ws://localhost:$port/connect/signer/${createResponse.channelId}")
+        val uriApplication = URI.create("ws://localhost:$port/connect/application/${response.channelId}")
+        val uriSigner = URI.create("ws://localhost:$port/connect/signer/${response.channelId}")
 
-        connectWebSocket(createResponse, uriSigner, sendPublicKeyHandler(uriSigner)).subscribe()
+        connectWebSocket(response, uriSigner, sendPublicKeyHandler(uriSigner)).subscribe()
         Thread.sleep(5000);
-        connectWebSocket(createResponse, uriApplication, browserSocketHandler(uriApplication)).subscribe()
+        connectWebSocket(response, uriApplication, browserSocketHandler()).subscribe()
         Thread.sleep(10000)
     }
 
-    fun connectWebSocket(createResponse: CreateChannelResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
+    fun connectWebSocket(response: ChannelResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>): Mono<Void> {
         val client = ReactorNettyWebSocketClient()
         return client.execute(uri, webSocketHandler)
     }
 
 
-    fun standardWebSocketClient(createResponse: CreateChannelResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>) {
+    fun standardWebSocketClient(response: ChannelResponse, uri: URI, webSocketHandler: (WebSocketSession) -> Mono<Void>) {
         val client = StandardWebSocketClient()
         client.execute(uri, webSocketHandler).subscribe()
     }
 
-    private fun browserSocketHandler(uri: URI) = { session: WebSocketSession ->
+    private fun browserSocketHandler() = { session: WebSocketSession ->
         session
                 .receive()
-                .map<String> {
+                .map {
                     logger.info("/////////////////////from test browser Message[${it.payloadAsText}]")
                     it.payloadAsText
                 }

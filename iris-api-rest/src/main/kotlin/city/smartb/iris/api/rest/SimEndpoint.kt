@@ -2,7 +2,7 @@ package city.smartb.iris.api.rest
 
 import city.smartb.iris.api.rest.config.logger
 import city.smartb.iris.api.rest.exception.InvalidValueException
-import city.smartb.iris.api.rest.features.session.CreateChannelResponse
+import city.smartb.iris.api.rest.features.session.ChannelResponse
 import city.smartb.iris.api.rest.model.*
 import city.smartb.iris.api.rest.features.session.ChannelProvider
 import city.smartb.iris.api.rest.features.messages.SignerHandler
@@ -22,7 +22,7 @@ class SimEndpoint(
             @PathVariable phoneChannelId: Int,
             @PathVariable actionType: Int,
             @PathVariable payload: String
-    ): Mono<CreateChannelResponse> {
+    ): Mono<ChannelResponse> {
         log.info("Handle sim response phoneNumber[${phoneNumber}] phoneChannelId[${phoneChannelId}] actionType[${actionType}] payload[${payload}]")
         val message = when(ActionType.valueOf(actionType)){
             ActionType.PUB_KEY -> PublicKeyResponse(payload)

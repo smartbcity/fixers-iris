@@ -1,4 +1,4 @@
-import city.smartb.iris.api.rest.features.session.CreateChannelResponse
+import city.smartb.iris.api.rest.features.session.ChannelResponse
 import city.smartb.iris.api.rest.utils.WebBaseTest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.extension.ExtendWith
@@ -20,7 +20,7 @@ class ChannelEndpointTest : WebBaseTest() {
     fun create_shouldBeStartedFirst() {
         var uri = baseUrl().path("/channels").build().toUri()
         println("//////channels ${Thread.currentThread().name}")
-        val session = this.restTemplate.postForObject(uri, null, CreateChannelResponse::class.java)
+        val session = this.restTemplate.postForObject(uri, null, ChannelResponse::class.java)
 
         Thread.sleep(2000)
         println("//////send  ${Thread.currentThread().name}")
