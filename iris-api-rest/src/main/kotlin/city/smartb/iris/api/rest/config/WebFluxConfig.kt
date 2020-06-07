@@ -19,7 +19,9 @@ class WebFluxConfig : WebFluxConfigurer {
 
     override fun addCorsMappings(corsRegistry: CorsRegistry) {
         corsRegistry.addMapping("/**")
-                .allowedMethods("*")
+                .allowedMethods("GET", "PUT", "POST", "DELETE", "OPTION")
+                .allowedHeaders("Access-Control-Allow-Headers", "X-Requested-With", "Content-Type", "Content-Length", "Authorization")
+                .allowCredentials(true)
                 .allowedOrigins("*")
                 .maxAge(3600)
     }
