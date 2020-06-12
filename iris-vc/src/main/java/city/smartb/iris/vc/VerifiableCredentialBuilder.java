@@ -38,6 +38,16 @@ public class VerifiableCredentialBuilder<T> extends JsonLdObject {
         return this;
     }
 
+    public <Ojb> VerifiableCredentialBuilder<T> with(String key, Ojb o) {
+        this.jsonLdObject.put(key, convertorJackson.toJson(o));
+        return this;
+    }
+
+    public <Ojb> VerifiableCredentialBuilder<T> with(String key, List<Ojb> o) {
+        this.jsonLdObject.put(key, convertorJackson.toJson(o));
+        return this;
+    }
+
     public VerifiableCredentialBuilder<T> withContext(List<String> context) {
         this.jsonLdObject.put(JsonLdObject.JSON_LD_CONTEXT, context);
         return this;

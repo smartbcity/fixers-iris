@@ -58,6 +58,24 @@ class VerifiableCredentialTest {
             Assertions.assertThat(subject).containsOnly(new Pojo("1"), new Pojo("2"));
 
         }
+
+        @Test
+        void shouldReturnPojoListAsCutomObj() {
+            List<Pojo> expected = ImmutableList.of(new Pojo("1"), new Pojo("2"));
+
+            VerifiableCredential credential = VerifiableCredentialBuilder.<Pojo>create()
+                    .withContextDefault()
+                    .withIssuanceDateNow()
+                    .withId("http://smartb.city/credentials/1872")
+                    .withIssuer("Unit Test")
+                    .withCredentialSubject(expected)
+                    .with("custom", expected)
+                    .build(LdProof.fromMap(new LinkedHashMap<>()));
+            List<Pojo> custom = credential.getCredentialSubject().asListObjects(Pojo.class);
+
+            Assertions.assertThat(custom).containsOnly(new Pojo("1"), new Pojo("2"));
+
+        }
     }
 
     public <T> VerifiableCredential createCredentialSubject(T subject) {

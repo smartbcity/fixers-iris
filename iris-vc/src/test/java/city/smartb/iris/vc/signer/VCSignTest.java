@@ -7,6 +7,7 @@ import city.smartb.iris.crypto.rsa.verifier.Verifier;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import city.smartb.iris.vc.VerifiableCredential;
 import city.smartb.iris.vc.VerifiableCredentialBuilder;
+import com.google.common.collect.ImmutableList;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +17,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 class VCSignTest {
@@ -88,5 +90,68 @@ class VCSignTest {
         Boolean isValid = vcVerifier.verify(cred, verifier);
 
         Assertions.assertThat(isValid).isTrue();
+    }
+
+
+    @Test
+    void verifyVCContainsCustomValue() throws GeneralSecurityException, InvalidRsaKeyException {
+        Map<String, Object> claims = new LinkedHashMap<>();
+        claims.put("name", "smartb");
+
+        VerifiableCredentialBuilder vcBuild = VerifiableCredentialBuilder
+                .create()
+                .withId("477599e2-eab4-4cd8-b4ab-75aad8a21f2e")
+                .withIssuanceDate("2020-05-25T11:37:24.293")
+                .withIssuer("UnitTest")
+                .withCredentialSubject(claims)
+                .with("custom", VCRef.list());
+
+        LdProofBuilder proofBuilder = LdProofBuilder.builder()
+                .withChallenge("Chalenges")
+                .withCreated(LocalDateTime.parse("2020-05-25T11:37:24.293"))
+                .withDomain("smartb.city")
+                .withProofPurpose("ProofPurpose")
+                .withVerificationMethod("VerificationMethod");
+
+        KeyPair pair = RSAKeyPairReader.loadKeyPair("userAgentUnitTest");
+        Signer signer = Signer.rs256Signer((RSAPrivateKey) pair.getPrivate());
+
+        VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
+
+        Verifier verifier = Verifier.rs256Verifier((RSAPublicKey) pair.getPublic());
+        Boolean isValid = vcVerifier.verify(cred, verifier);
+
+        Assertions.assertThat(isValid).isTrue();
+        Assertions.assertThat(cred.get("custom").asListObjects(VCRef.class)).hasSize(2);
+    }
+
+    public static class VCRef {
+        public static List<VCRef> list() {
+            return ImmutableList.of(
+                    new VCRef().setId("1").setJws("jws1"),
+                    new VCRef().setId("2").setJws("jws2")
+            );
+        }
+
+        private String jws;
+        private String id;
+
+        public String getJws() {
+            return jws;
+        }
+
+        public VCRef setJws(String jws) {
+            this.jws = jws;
+            return this;
+        }
+
+        public String getId() {
+            return id;
+        }
+
+        public VCRef setId(String id) {
+            this.id = id;
+            return this;
+        }
     }
 }
