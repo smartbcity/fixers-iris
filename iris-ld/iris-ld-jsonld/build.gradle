@@ -1,6 +1,0 @@
-dependencies {
-    implementation ("com.github.jsonld-java:jsonld-java:${jsonldJavaVersion}")  { changing = true }
-    api "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
-    api "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
-    api "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
-}

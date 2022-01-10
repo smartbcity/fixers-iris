@@ -1,6 +1,0 @@
-dependencies {
-    api project(":iris-crypto:iris-crypto-rsa")
-
-    api "com.nimbusds:nimbus-jose-jwt:${joseJwtVersion}"
-    api "org.bouncycastle:bcprov-jdk15on:${bouncycastleVersion}"
-}

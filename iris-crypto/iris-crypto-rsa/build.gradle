@@ -1,4 +1,0 @@
-dependencies {
-    api "com.nimbusds:nimbus-jose-jwt:${joseJwtVersion}"
-    api "org.bouncycastle:bcprov-jdk15on:${bouncycastleVersion}"
-}
