@@ -1,5 +1,20 @@
 package city.smartb.iris.vc.signer;
 
+import java.security.GeneralSecurityException;
+import java.security.KeyPair;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Test;
+
+import com.google.common.collect.ImmutableList;
+
 import city.smartb.iris.crypto.rsa.RSAKeyPairReader;
 import city.smartb.iris.crypto.rsa.exception.InvalidRsaKeyException;
 import city.smartb.iris.crypto.rsa.signer.Signer;
@@ -7,18 +22,6 @@ import city.smartb.iris.crypto.rsa.verifier.Verifier;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import city.smartb.iris.vc.VerifiableCredential;
 import city.smartb.iris.vc.VerifiableCredentialBuilder;
-import com.google.common.collect.ImmutableList;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-
-import java.security.GeneralSecurityException;
-import java.security.KeyPair;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.time.LocalDateTime;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 class VCSignTest {
 
@@ -29,13 +32,20 @@ class VCSignTest {
     void sign() throws GeneralSecurityException, InvalidRsaKeyException {
         Map<String, Object> claims = new LinkedHashMap<>();
         claims.put("name", "smartb");
+        claims.put("amount", "666");
+        claims.put("azerty", "ok");
+
+        List<String> context = new ArrayList<>();
+        context.add(VerifiableCredentialBuilder.VC_DEFAULT_CONTEXT);
+        context.add(getClass().getResource("/context.json").toString());
 
         VerifiableCredentialBuilder vcBuild = VerifiableCredentialBuilder
                 .create()
-                .withContextDefault()
-                .withId("477599e2-eab4-4cd8-b4ab-75aad8a21f2e")
+                .withContext(context)
+                .withType("VerifiableCredential")
+                .withId("did:477599e2-eab4-4cd8-b4ab-75aad8a21f2e")
                 .withIssuanceDate("2020-05-25T11:37:24.293")
-                .withIssuer("UnitTest")
+                .withIssuer("did:UnitTest")
                 .withCredentialSubject(claims);
 
         LdProofBuilder proofBuilder = LdProofBuilder.builder()
@@ -51,16 +61,14 @@ class VCSignTest {
         VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
         Assertions.assertThat(cred.getProof()).isNotNull();
-        Assertions.assertThat(cred.getProof().getJws()).isEqualTo("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..QT2nS9mUkFIQnCHM5EJItJ5ZvlUZKoMQBeydJ9YtXypy228vrloDmAZr1fCeL1QEX8dnqfQrQFfHFeGdZIuD1pIsnMUdAbIBdlwCE_Dax8BzCRqXWaiCz6nsz5Bjbsbpc78DvUqF3ass28vkvZrhMYzoDtqjtQz4LMjRHBe0eAosp37pQHuo7v6hilPCWz82mzO2A7rI16AWDO0d9DUIkSWOShGQO22mA5UC9zXrTs3CvY0zNR4rJB_I7Akh75HjQpgOSALrkzy5yE8OCx09QGN69xT46qY7nsdG8-KWT6dThwjhslXIVXUvowZPld_oIOGUfpN8-bp_LxDnX7ZApA");
+        Assertions.assertThat(cred.getProof().getJws()).isEqualTo("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..FBbPaEcpojgK5z6g-Nog7nvhrgnGSZF_fOWN_PYVovk85XmjpYBAEYld_Z9asrR9hniWd0E7Y4KaLw4dMuVZhF9gF2z5ejCld4S4bQQQB0wzjBYxNCfrDhE6kms8ok20JNBh1HgKK3wPPab0j3d2frP1EhGa_7tOfmYplmjlIhFIruRovj10JIRSWR4jhz4ceZD86In2KPOtnz85ERbcAh5qywO0UpU40U2t0t-RVMHmEwePsd80hG1B27uVplBonjCccXJpzPlfkXhla4LMRRsOkVw19pFqHXMRFGP6Sl8Ock9qPxS_7krD7mHgKbHH4Xa7IZAMZTPJLFfUA_szWA");
         Assertions.assertThat(cred.getProof().getChallenge()).isEqualTo("Chalenges");
         Assertions.assertThat(cred.getProof().getCreated()).isEqualTo("2020-05-25T11:37:24.293");
         Assertions.assertThat(cred.getProof().getDomain()).isEqualTo("smartb.city");
         Assertions.assertThat(cred.getProof().getProofPurpose()).isEqualTo("ProofPurpose");
         Assertions.assertThat(cred.getProof().getType()).isEqualTo("RsaSignature2018");
         Assertions.assertThat(cred.getProof().getVerificationMethod()).isEqualTo("VerificationMethod");
-
     }
-
 
     @Test
     void verify() throws GeneralSecurityException, InvalidRsaKeyException {
