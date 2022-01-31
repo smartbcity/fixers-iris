@@ -1,0 +1,13 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "sb": "https://smartb.city#",
+      
+    "name": "schema:name",
+    "amount": "schema:amount",
+    "azerty": {
+        "@id": "sb:azerty",
+        "@type": "xsd:string"
+    }
+  }
+}

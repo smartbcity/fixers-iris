@@ -1,18 +1,19 @@
 package city.smartb.iris.ldproof.signer;
 
+import java.security.GeneralSecurityException;
+import java.util.Collections;
+
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.JWSSigner;
+import com.nimbusds.jose.util.Base64URL;
+
 import city.smartb.iris.crypto.rsa.signer.Signer;
 import city.smartb.iris.ldproof.LdJsonObjectBuilder;
 import city.smartb.iris.ldproof.LdProof;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import city.smartb.iris.ldproof.util.JWSUtil;
 import city.smartb.iris.ldproof.util.SHAUtil;
-import com.nimbusds.jose.JOSEException;
-import com.nimbusds.jose.JWSHeader;
-import com.nimbusds.jose.JWSSigner;
-import com.nimbusds.jose.util.Base64URL;
-
-import java.security.GeneralSecurityException;
-import java.util.Collections;
 
 public abstract class LdProofSigner {
 
@@ -30,7 +31,7 @@ public abstract class LdProofSigner {
 	public LdProof sign(LdJsonObjectBuilder jsonLdObject) throws GeneralSecurityException {
 		String canonicalizedDocument = jsonLdObject.buildCanonicalizedDocument();
 		String canonicalizedProofOptions = ldProofBuilder.canonicalize(signer);
-		String jws =  sign(canonicalizedDocument, canonicalizedProofOptions);
+		String jws = sign(canonicalizedDocument, canonicalizedProofOptions);
 		return ldProofBuilder.build(jws);
 	}
 
