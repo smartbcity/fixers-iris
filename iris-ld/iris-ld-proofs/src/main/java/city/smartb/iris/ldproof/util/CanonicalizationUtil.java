@@ -14,7 +14,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.github.jsonldjava.core.JsonLdConsts;
+import city.smartb.iris.jsonld.JsonLdConsts;
 
 import io.setl.rdf.normalization.RdfNormalize;
 import jakarta.json.JsonStructure;

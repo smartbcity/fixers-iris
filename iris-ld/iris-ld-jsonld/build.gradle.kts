@@ -4,8 +4,6 @@ plugins {
 }
 
 dependencies {
-	implementation("com.github.jsonld-java:jsonld-java:${Versions.jsonldJavaVersion}")
-
 	api("com.fasterxml.jackson.core:jackson-core:${Versions.jacksonVersion}")
 	api("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${Versions.jacksonVersion}")
 	api("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${Versions.jacksonVersion}")

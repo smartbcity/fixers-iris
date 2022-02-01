@@ -7,7 +7,6 @@ import city.smartb.iris.ldproof.LdProof;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import city.smartb.iris.ldproof.util.JWSUtil;
 import city.smartb.iris.ldproof.util.SHAUtil;
-import com.github.jsonldjava.core.JsonLdError;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSObject;
@@ -25,7 +24,7 @@ public abstract class LdProofVerifier {
         this.verifier = verifier;
     }
 
-   public boolean verify(Map<String, Object> jsonLdObject, LdProof ldProof) throws JsonLdError, GeneralSecurityException {
+   public boolean verify(Map<String, Object> jsonLdObject, LdProof ldProof) throws GeneralSecurityException {
 
         LdProofBuilder builder = LdProofBuilder.fromLdProof(ldProof);
         String canonicalizedProof = builder.canonicalize();

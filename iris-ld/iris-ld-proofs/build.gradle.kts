@@ -7,7 +7,6 @@ dependencies {
 	api(project(":iris-crypto:iris-crypto-rsa"))
 	api(project(":iris-ld:iris-ld-jsonld"))
 
-	implementation("com.github.jsonld-java:jsonld-java:${Versions.jsonldJavaVersion}")
 	implementation("com.apicatalog:titanium-json-ld:1.1.0")
 	implementation("io.setl:rdf-urdna:1.1")
 

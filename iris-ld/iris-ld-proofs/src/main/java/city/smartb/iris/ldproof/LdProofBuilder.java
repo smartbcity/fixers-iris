@@ -3,7 +3,7 @@ package city.smartb.iris.ldproof;
 import city.smartb.iris.crypto.rsa.signer.Signer;
 import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.ldproof.util.CanonicalizationUtil;
-import com.github.jsonldjava.core.JsonLdConsts;
+import city.smartb.iris.jsonld.JsonLdConsts;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

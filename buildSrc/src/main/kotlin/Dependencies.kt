@@ -12,6 +12,5 @@ object Versions {
     const val bouncycastleVersion = "1.70"
 
     const val joseJwtVersion = "9.15.2"
-    const val jsonldJavaVersion = "1.1-SNAPSHOT"
 }
 
