@@ -17,3 +17,9 @@ include( "iris-ld:iris-ld-jsonld",
 include( "iris-jwt")
 include( "iris-did")
 include( "iris-vc")
+
+include(
+    "iris-signer:iris-signer-api",
+    "iris-signer:iris-signer-core",
+    "iris-signer:iris-signer-client"
+)

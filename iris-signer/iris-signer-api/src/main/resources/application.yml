@@ -1,0 +1,14 @@
+server:
+  port: 8082
+
+spring:
+  cloud:
+    function:
+      web:
+        path: /api
+
+vault:
+  scheme: http
+  host: localhost
+  port: 8200
+  token: ***REMOVED***

@@ -6,11 +6,11 @@ import java.util.Base64;
 
 public class RSAKeyPairEncoderBase64 {
 
-    public static String encode(RSAPrivateKey value) {
+    public static String encodePrivateKey(RSAPrivateKey value) {
         return encode(value.getEncoded());
     }
 
-    public static String encode(RSAPublicKey value) {
+    public static String encodePublicKey(RSAPublicKey value) {
         return encode(value.getEncoded());
     }
 
