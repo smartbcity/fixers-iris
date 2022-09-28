@@ -12,7 +12,7 @@ import java.util.UUID
 
 class VerifiableCredentialSigner {
     companion object {
-        fun <T> sign(id: String, issuer: String, subject: T, privateKey: String): VerifiableCredential {
+        fun <T> sign(id: String, issuer: String, subject: T, privateKey: String, keyName: String): VerifiableCredential {
             val created = LocalDateTime.now()
             val nonce: String = UUID.randomUUID().toString()
 
@@ -29,7 +29,7 @@ class VerifiableCredentialSigner {
                 .withCreated(created)
                 .withChallenge(nonce)
                 .withProofPurpose("assertionMethod")
-                .withVerificationMethod(issuer)
+                .withVerificationMethod("$issuer#$keyName")
 
             val priv = privateKey.toRSAPrivateKey()
 
@@ -40,14 +40,5 @@ class VerifiableCredentialSigner {
         private fun String.toRSAPrivateKey(): RSAPrivateKey? {
             return RSAKeyPairDecoderBase64.decodePrivateKey(this)
         }
-
-//        private fun String.toRSAPrivateKey(): JRSAPrivateKey {
-//            val rpem = PemReader(reader())
-//            val pem = rpem.readPemObject()
-//            val key = RSAPrivateKey.getInstance(pem.content)
-//            val kf = KeyFactory.getInstance("RSA")
-//            val privSpec = RSAPrivateCrtKeySpec(key.modulus, key.publicExponent, key.privateExponent, key.prime1, key.prime2, key.exponent1, key.exponent2, key.coefficient)
-//            return kf.generatePrivate(privSpec) as JRSAPrivateKey
-//        }
     }
 }

@@ -4,11 +4,14 @@ import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.jsonld.reader.JsonField;
 import city.smartb.iris.jsonld.reader.JsonFieldReader;
 import city.smartb.iris.ldproof.LdProof;
+import city.smartb.iris.vc.deserializer.VerifiableCredentialDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+@JsonDeserialize(using = VerifiableCredentialDeserializer.class)
 public class VerifiableCredential extends JsonLdObject {
 
     public static VerifiableCredential from(LinkedHashMap<String, Object> json) {

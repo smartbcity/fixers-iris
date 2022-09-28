@@ -32,9 +32,9 @@ open class VaultCreateVerifiableCredentialQueryFunctionImpl(
         val vaultResponse = VaultGetKeyQuery(query.keyName).invokeWith(vaultGetKeyQueryFunction).vaultRawResponse
             ?: return@f2Function VaultCreateVerifiableCredentialQueryResult(null)
 
-        val privKey = vaultResponse!!.getPrivateKey()
+        val privKey = vaultResponse.getPrivateKey()
 
-        val vc = VerifiableCredentialSigner.sign(query.id, query.issuer, query.subject, privKey)
+        val vc = VerifiableCredentialSigner.sign(query.id, query.issuer, query.subject, privKey, query.keyName)
 
         VaultCreateVerifiableCredentialQueryResult(vc.asJson())
     }

@@ -17,7 +17,7 @@ typealias VaultVerifyVerifiableCredentialQueryFunction = F2Function<VaultVerifyV
 
 class VaultVerifyVerifiableCredentialQuery(
     val keyName: String,
-    val vc: LinkedHashMap<String, Any>
+    val vc: VerifiableCredential
 )
 
 class VaultVerifyVerifiableCredentialQueryResult(
@@ -35,8 +35,7 @@ open class VaultVerifyVerifiableCredentialQueryFunctionImpl(
 
         val pubKey = RSAKeyPairDecoderBase64.decodePublicKey(vaultResponse!!.getPublicKey())
 
-        val vc = VerifiableCredential(query.vc)
-        val verified = VCVerifier().verify(vc, Verifier.rs256Verifier(pubKey))
+        val verified = VCVerifier().verify(query.vc, Verifier.rs256Verifier(pubKey))
 
         VaultVerifyVerifiableCredentialQueryResult(verified)
     }
