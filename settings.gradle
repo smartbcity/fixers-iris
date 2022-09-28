@@ -20,3 +20,5 @@ include 'iris-signer:iris-signer-core'
 include 'iris-signer:iris-signer-client'
 
 include 'iris-bdd'
+
+include 'iris-registrar'

@@ -25,3 +25,5 @@ include(
 )
 
 include ("iris-bdd")
+
+include ("iris-registrar")
