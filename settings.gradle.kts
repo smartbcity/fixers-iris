@@ -23,3 +23,5 @@ include(
     "iris-signer:iris-signer-core",
     "iris-signer:iris-signer-client"
 )
+
+include ("iris-bdd")

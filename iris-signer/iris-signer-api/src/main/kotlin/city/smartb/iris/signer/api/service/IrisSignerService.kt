@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class IrisSignerService(
-    private val vaultVerifiableCredentialQueryFunction: VaultCreateVerifiableCredentialQueryFunction,
+    private val vaultCreateVerifiableCredentialQueryFunction: VaultCreateVerifiableCredentialQueryFunction,
     private val vaultCreateKeyCommandFunction: VaultCreateKeyCommandFunction,
     private val vaultGetKeyQueryFunction: VaultGetKeyQueryFunction,
     private val vaultVerifyVerifiableCredentialQueryFunction: VaultVerifyVerifiableCredentialQueryFunction
@@ -22,7 +22,7 @@ class IrisSignerService(
     fun getKey() = vaultGetKeyQueryFunction
 
     @Bean
-    fun signPayload() = vaultVerifiableCredentialQueryFunction
+    fun signPayload() = vaultCreateVerifiableCredentialQueryFunction
 
     @Bean
     fun verifyVerifiableCredential() = vaultVerifyVerifiableCredentialQueryFunction

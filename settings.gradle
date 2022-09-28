@@ -18,3 +18,5 @@ include 'iris-vc'
 include 'iris-signer:iris-signer-api'
 include 'iris-signer:iris-signer-core'
 include 'iris-signer:iris-signer-client'
+
+include 'iris-bdd'
