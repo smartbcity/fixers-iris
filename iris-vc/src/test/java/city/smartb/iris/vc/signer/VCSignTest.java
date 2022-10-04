@@ -55,13 +55,13 @@ class VCSignTest {
                 .withProofPurpose("ProofPurpose")
                 .withVerificationMethod("VerificationMethod");
 
-        KeyPair pair = RSAKeyPairReader.loadKeyPair("userAgentUnitTest");
-        Signer signer = Signer.rs256Signer((RSAPrivateKey) pair.getPrivate());
+        KeyPair pair = RSAKeyPairReader.INSTANCE.loadKeyPair("userAgentUnitTest");
+        Signer signer = Signer.Companion.rs256Signer((RSAPrivateKey) pair.getPrivate());
 
         VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
         Assertions.assertThat(cred.getProof()).isNotNull();
-        Assertions.assertThat(cred.getProof().getJws()).isEqualTo("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..FBbPaEcpojgK5z6g-Nog7nvhrgnGSZF_fOWN_PYVovk85XmjpYBAEYld_Z9asrR9hniWd0E7Y4KaLw4dMuVZhF9gF2z5ejCld4S4bQQQB0wzjBYxNCfrDhE6kms8ok20JNBh1HgKK3wPPab0j3d2frP1EhGa_7tOfmYplmjlIhFIruRovj10JIRSWR4jhz4ceZD86In2KPOtnz85ERbcAh5qywO0UpU40U2t0t-RVMHmEwePsd80hG1B27uVplBonjCccXJpzPlfkXhla4LMRRsOkVw19pFqHXMRFGP6Sl8Ock9qPxS_7krD7mHgKbHH4Xa7IZAMZTPJLFfUA_szWA");
+        Assertions.assertThat(cred.getProof().getJws()).isEqualTo("eyJiNjQiOmZhbHNlLCJjcml0IjpbImI2NCJdLCJhbGciOiJSUzI1NiJ9..SPmzzdcRYtaoX2H6CqNNXHcTWRx8rJrkZNShxWv7kYov2suNawKR-_jtjff2tpoGhy8pRhljWeDojOm5beW3olY8I66fgMulADF3AIwZDD_KVPpRRCVJ0a2kf7OHX7RHtj9y3QKLcAb_hl3QK-ssnktzLF59CuvlMc1lnvmXTFE0i_BQhqeY_UTqi1vTYLCawOwTjUoC0EsvEfeLMCjqcLS73GoI_vK_IAQk4YZ4IEiqyrfxDhF715t7kMn6YpKmzlNTR9QLEq4qbY3lNRfLnpxw-lysjfu0oMPUtr5gf576u4-EivETE7IR_RoA2cBOhMWEd6Kp-YNFPeLddAQiYw");
         Assertions.assertThat(cred.getProof().getChallenge()).isEqualTo("Chalenges");
         Assertions.assertThat(cred.getProof().getCreated()).isEqualTo("2020-05-25T11:37:24.293");
         Assertions.assertThat(cred.getProof().getDomain()).isEqualTo("smartb.city");
@@ -89,12 +89,12 @@ class VCSignTest {
                 .withProofPurpose("ProofPurpose")
                 .withVerificationMethod("VerificationMethod");
 
-        KeyPair pair = RSAKeyPairReader.loadKeyPair("userAgentUnitTest");
-        Signer signer = Signer.rs256Signer((RSAPrivateKey) pair.getPrivate());
+        KeyPair pair = RSAKeyPairReader.INSTANCE.loadKeyPair("userAgentUnitTest");
+        Signer signer = Signer.Companion.rs256Signer((RSAPrivateKey) pair.getPrivate());
 
         VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
-        Verifier verifier = Verifier.rs256Verifier((RSAPublicKey) pair.getPublic());
+        Verifier verifier = Verifier.Companion.rs256Verifier((RSAPublicKey) pair.getPublic());
         Boolean isValid = vcVerifier.verify(cred, verifier);
 
         Assertions.assertThat(isValid).isTrue();
@@ -121,12 +121,12 @@ class VCSignTest {
                 .withProofPurpose("ProofPurpose")
                 .withVerificationMethod("VerificationMethod");
 
-        KeyPair pair = RSAKeyPairReader.loadKeyPair("userAgentUnitTest");
-        Signer signer = Signer.rs256Signer((RSAPrivateKey) pair.getPrivate());
+        KeyPair pair = RSAKeyPairReader.INSTANCE.loadKeyPair("userAgentUnitTest");
+        Signer signer = Signer.Companion.rs256Signer((RSAPrivateKey) pair.getPrivate());
 
         VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
-        Verifier verifier = Verifier.rs256Verifier((RSAPublicKey) pair.getPublic());
+        Verifier verifier = Verifier.Companion.rs256Verifier((RSAPublicKey) pair.getPublic());
         Boolean isValid = vcVerifier.verify(cred, verifier);
 
         Assertions.assertThat(isValid).isTrue();

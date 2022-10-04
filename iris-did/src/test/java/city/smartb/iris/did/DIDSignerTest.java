@@ -32,8 +32,8 @@ class DIDSignerTest {
                 .withDomain("smartb.city")
                 .withProofPurpose("ProofPurpose")
                 .withVerificationMethod("VerificationMethod");
-        KeyPair pair = RSAKeyPairReader.loadKeyPair("userAgentUnitTest");
-        Signer signer = Signer.rs256Signer((RSAPrivateKey) pair.getPrivate());
+        KeyPair pair = RSAKeyPairReader.INSTANCE.loadKeyPair("userAgentUnitTest");
+        Signer signer = Signer.Companion.rs256Signer((RSAPrivateKey) pair.getPrivate());
         DIDDocument cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
         Assertions.assertThat(cred.getProof()).isNotNull();

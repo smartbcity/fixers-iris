@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    api(project(":iris-crypto:iris-crypto-rsa"))
+    api(project(":iris-crypto:iris-crypto-rsa-key"))
 
     api("com.nimbusds:nimbus-jose-jwt:${Versions.joseJwtVersion}")
     api("org.bouncycastle:bcprov-jdk15on:${Versions.bouncycastleVersion}")

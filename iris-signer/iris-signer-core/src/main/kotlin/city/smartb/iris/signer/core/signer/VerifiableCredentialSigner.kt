@@ -37,7 +37,7 @@ class VerifiableCredentialSigner {
             return VCSign().sign(vcBuild, proofBuilder, Signer.rs256Signer(priv))
         }
 
-        private fun String.toRSAPrivateKey(): RSAPrivateKey? {
+        private fun String.toRSAPrivateKey(): RSAPrivateKey {
             return RSAKeyPairDecoderBase64.decodePrivateKey(this)
         }
     }

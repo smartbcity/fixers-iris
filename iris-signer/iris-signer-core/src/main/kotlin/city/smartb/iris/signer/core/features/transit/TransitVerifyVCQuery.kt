@@ -47,6 +47,7 @@ open class TransitVerifyVCQueryFunctionImpl(
         println(canonicalizedDocument)
         println("PROOF")
         println(canonicalizedProof)
+
         val requestPayload = mapOf(
             "input" to Base64.getEncoder().encodeToString(signatureInput),
             "signature_algorithm" to "pkcs1v15",

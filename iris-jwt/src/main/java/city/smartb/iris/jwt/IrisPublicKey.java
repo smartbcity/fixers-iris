@@ -23,7 +23,7 @@ public class IrisPublicKey {
 
     public static IrisPublicKey parse(String value) throws InvalidJwtException {
         try {
-            RSAPublicKey pubKey  = RSAKeyPairDecoderBase64.decodePublicKey(value);
+            RSAPublicKey pubKey  = RSAKeyPairDecoderBase64.INSTANCE.decodePublicKey(value);
             return new IrisPublicKey(pubKey);
         } catch (Exception e) {
             throw new InvalidJwtException("Unparsable jwt public key: "+value, e);
