@@ -1,23 +1,24 @@
 package city.smartb.iris.ldproof.util;
 
-import java.io.StringReader;
-import java.security.NoSuchAlgorithmException;
-import java.util.stream.Collectors;
-
+import city.smartb.iris.jsonld.JsonLdConsts;
 import com.apicatalog.jsonld.JsonLd;
 import com.apicatalog.jsonld.JsonLdError;
 import com.apicatalog.jsonld.document.JsonDocument;
 import com.apicatalog.rdf.RdfDataset;
 import com.apicatalog.rdf.RdfNQuad;
 import com.apicatalog.rdf.RdfValue;
-import com.fasterxml.jackson.core.JsonProcessingException;
+import com.apicatalog.rdf.io.nquad.NQuadsWriter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import city.smartb.iris.jsonld.JsonLdConsts;
-
+import foundation.identity.jsonld.JsonLDException;
 import io.setl.rdf.normalization.RdfNormalize;
 import jakarta.json.JsonStructure;
+
+import java.io.IOException;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.security.NoSuchAlgorithmException;
 
 public class CanonicalizationUtil {
 
@@ -35,21 +36,20 @@ public class CanonicalizationUtil {
 			JsonStructure context = (JsonStructure) json.getJsonContent().get().asJsonObject().get(JsonLdConsts.CONTEXT);
 
 			RdfDataset rdf = JsonLd.toRdf(json).context(context).get();
-			RdfDataset rdfNormalized = RdfNormalize.normalize(rdf, "urdna2015");
-
-			return stringify(rdfNormalized);
-		} catch (JsonProcessingException | JsonLdError | NoSuchAlgorithmException e) {
+			return normalize(rdf, "urdna2015");
+		} catch (JsonLDException | JsonLdError | NoSuchAlgorithmException | IOException e) {
 			e.printStackTrace();
-			return null;
+			throw new RuntimeException(e);
 		}
 	}
 
-	private static String stringify(RdfDataset rdf) {
-		return rdf.toList()
-			.stream()
-			.map(CanonicalizationUtil::stringify)
-			.sorted()
-			.collect(Collectors.joining());
+	public static String normalize(RdfDataset rdf, String algorithm) throws JsonLDException, NoSuchAlgorithmException, IOException {
+		RdfDataset rdfDataset = rdf;
+		rdfDataset = RdfNormalize.normalize(rdfDataset, algorithm);
+		StringWriter stringWriter = new StringWriter();
+		NQuadsWriter nQuadsWriter = new NQuadsWriter(stringWriter);
+		nQuadsWriter.write(rdfDataset);
+		return stringWriter.getBuffer().toString();
 	}
 
 	private static String stringify(RdfNQuad quad) {
