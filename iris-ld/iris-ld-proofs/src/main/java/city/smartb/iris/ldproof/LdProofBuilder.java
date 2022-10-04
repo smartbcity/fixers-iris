@@ -7,6 +7,7 @@ import city.smartb.iris.jsonld.JsonLdConsts;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +41,11 @@ public class LdProofBuilder {
     }
 
     public LdProofBuilder withCreated(LocalDateTime created) {
+        withCreated(created.toString());
+        return this;
+    }
+
+    public LdProofBuilder withCreated(String created) {
         json.put(LdProof.JSON_LD_CREATED, created);
         return this;
     }
@@ -57,6 +63,20 @@ public class LdProofBuilder {
     public LdProofBuilder withDomain(String domain) {
         json.put(LdProof.JSON_LD_DOMAIN, domain);
         return this;
+    }
+
+    public LdProofBuilder withType(String type) {
+        json.put(LdProof.JSON_LD_TYPE, type);
+        return this;
+    }
+
+    public LdProofBuilder withContext(List<String> context) {
+        json.put(JsonLdObject.JSON_LD_CONTEXT, context);
+        return this;
+    }
+
+    public LdProofBuilder withContextDefault() {
+        return withContext(Collections.singletonList(LdProof.JSON_LD_CONTEXT_SECURITY_V2));
     }
 
     public String canonicalize() {
