@@ -27,7 +27,7 @@ public class VerifiableCredentialDeserializer extends StdDeserializer<Verifiable
         JsonNode node = jp.getCodec().readTree(jp);
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> result = mapper.convertValue(node, new TypeReference<Map<String, Object>>(){});
+        Map<String, Object> result = mapper.convertValue(node, new TypeReference<>(){});
 
         return new VerifiableCredential(result);
     }

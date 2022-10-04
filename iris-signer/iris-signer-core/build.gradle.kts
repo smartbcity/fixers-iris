@@ -11,4 +11,6 @@ dependencies {
     api("city.smartb.f2:f2-spring-boot-starter-function-http:${Versions.f2}")
 
     api("org.springframework.vault:spring-vault-core:${Versions.springVault}")
+
+    api("info.weboftrust:ld-signatures-java:1.0.0")
 }

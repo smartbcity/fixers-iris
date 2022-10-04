@@ -2,4 +2,8 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 city.smartb.iris.signer.core.features.vc.VaultCreateVerifiableCredentialQueryFunctionImpl, \
 city.smartb.iris.signer.core.features.key.VaultCreateKeyCommandFunctionImpl, \
 city.smartb.iris.signer.core.features.key.VaultGetKeyCommandFunctionImpl, \
-city.smartb.iris.signer.core.features.vc.VaultVerifyVerifiableCredentialQueryFunctionImpl
+city.smartb.iris.signer.core.features.vc.VaultVerifyVerifiableCredentialQueryFunctionImpl, \
+city.smartb.iris.signer.core.features.transit.TransitCreateKeyCommandFunctionImpl, \
+city.smartb.iris.signer.core.features.transit.TransitGetKeyQueryFunctionImpl, \
+city.smartb.iris.signer.core.features.transit.TransitSignPayloadCommandFunctionImpl, \
+city.smartb.iris.signer.core.features.transit.TransitVerifyVCQueryFunctionImpl
