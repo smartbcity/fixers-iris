@@ -1,6 +1,6 @@
 package city.smartb.iris.ldproof.signer;
 
-import city.smartb.iris.crypto.rsa.signer.Signer;
+import city.smartb.iris.crypto.dsl.signer.Signer;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;

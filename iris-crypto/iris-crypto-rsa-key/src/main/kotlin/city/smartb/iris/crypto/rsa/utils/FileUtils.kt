@@ -29,4 +29,12 @@ object FileUtils {
         val url = getUrl(filename)
         return InputStreamReader(url.openStream())
     }
+
+    fun saveFile(filename: String, content: String, forceDir: Boolean = false) {
+        if (forceDir) {
+            File(filename.split("/").dropLast(1).joinToString("/")).mkdir()
+        }
+
+        File(filename).writeText(content)
+    }
 }

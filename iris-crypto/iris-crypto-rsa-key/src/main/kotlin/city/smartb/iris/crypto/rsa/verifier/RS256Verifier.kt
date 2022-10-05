@@ -1,5 +1,6 @@
 package city.smartb.iris.crypto.rsa.verifier
 
+import city.smartb.iris.crypto.dsl.verifier.Verifier
 import com.nimbusds.jose.JWSAlgorithm
 import java.security.GeneralSecurityException
 import java.security.Signature

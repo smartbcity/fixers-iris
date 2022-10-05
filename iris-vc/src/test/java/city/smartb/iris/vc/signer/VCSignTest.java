@@ -10,6 +10,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import city.smartb.iris.crypto.dsl.signer.Signer;
+import city.smartb.iris.crypto.dsl.verifier.Verifier;
+import city.smartb.iris.crypto.rsa.signer.RS256Signer;
+import city.smartb.iris.crypto.rsa.verifier.RS256Verifier;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -17,8 +21,6 @@ import com.google.common.collect.ImmutableList;
 
 import city.smartb.iris.crypto.rsa.RSAKeyPairReader;
 import city.smartb.iris.crypto.rsa.exception.InvalidRsaKeyException;
-import city.smartb.iris.crypto.rsa.signer.Signer;
-import city.smartb.iris.crypto.rsa.verifier.Verifier;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import city.smartb.iris.vc.VerifiableCredential;
 import city.smartb.iris.vc.VerifiableCredentialBuilder;
@@ -56,7 +58,7 @@ class VCSignTest {
                 .withVerificationMethod("VerificationMethod");
 
         KeyPair pair = RSAKeyPairReader.INSTANCE.loadKeyPair("userAgentUnitTest");
-        Signer signer = Signer.Companion.rs256Signer((RSAPrivateKey) pair.getPrivate());
+        Signer signer = new RS256Signer((RSAPrivateKey) pair.getPrivate());
 
         VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
@@ -90,11 +92,11 @@ class VCSignTest {
                 .withVerificationMethod("VerificationMethod");
 
         KeyPair pair = RSAKeyPairReader.INSTANCE.loadKeyPair("userAgentUnitTest");
-        Signer signer = Signer.Companion.rs256Signer((RSAPrivateKey) pair.getPrivate());
+        Signer signer = new RS256Signer((RSAPrivateKey) pair.getPrivate());
 
         VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
-        Verifier verifier = Verifier.Companion.rs256Verifier((RSAPublicKey) pair.getPublic());
+        Verifier verifier = new RS256Verifier((RSAPublicKey) pair.getPublic());
         Boolean isValid = vcVerifier.verify(cred, verifier);
 
         Assertions.assertThat(isValid).isTrue();
@@ -122,11 +124,11 @@ class VCSignTest {
                 .withVerificationMethod("VerificationMethod");
 
         KeyPair pair = RSAKeyPairReader.INSTANCE.loadKeyPair("userAgentUnitTest");
-        Signer signer = Signer.Companion.rs256Signer((RSAPrivateKey) pair.getPrivate());
+        Signer signer = new RS256Signer((RSAPrivateKey) pair.getPrivate());
 
         VerifiableCredential cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
-        Verifier verifier = Verifier.Companion.rs256Verifier((RSAPublicKey) pair.getPublic());
+        Verifier verifier = new RS256Verifier((RSAPublicKey) pair.getPublic());
         Boolean isValid = vcVerifier.verify(cred, verifier);
 
         Assertions.assertThat(isValid).isTrue();

@@ -6,7 +6,13 @@ pluginManagement {
 
 rootProject.name = 'iris-sdk'
 
-include 'iris-crypto:iris-crypto-rsa-key'
+include (
+    'iris-crypto:iris-crypto-rsa-key',
+    'iris-crypto:iris-crypto-hc-vault-kv',
+    'iris-crypto:iris-crypto-hc-vault-transit',
+    'iris-crypto:iris-crypto-hc-vault',
+    'iris-crypto:iris-crypto-dsl'
+)
 
 include 'iris-ld:iris-ld-jsonld',
         'iris-ld:iris-ld-proofs'

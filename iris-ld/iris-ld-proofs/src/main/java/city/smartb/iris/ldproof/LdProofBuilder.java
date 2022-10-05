@@ -1,6 +1,6 @@
 package city.smartb.iris.ldproof;
 
-import city.smartb.iris.crypto.rsa.signer.Signer;
+import city.smartb.iris.crypto.dsl.signer.Signer;
 import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.ldproof.util.CanonicalizationUtil;
 import city.smartb.iris.jsonld.JsonLdConsts;

@@ -1,6 +1,6 @@
 package city.smartb.iris.ldproof.verifier;
 
-import city.smartb.iris.crypto.rsa.verifier.Verifier;
+import city.smartb.iris.crypto.dsl.verifier.Verifier;
 import city.smartb.iris.ldproof.LdJsonObject;
 import city.smartb.iris.ldproof.LdJsonObjectBuilder;
 import city.smartb.iris.ldproof.LdProof;

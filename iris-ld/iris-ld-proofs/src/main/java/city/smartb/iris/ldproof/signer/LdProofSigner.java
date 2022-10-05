@@ -3,12 +3,12 @@ package city.smartb.iris.ldproof.signer;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 
+import city.smartb.iris.crypto.dsl.signer.Signer;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
 
-import city.smartb.iris.crypto.rsa.signer.Signer;
 import city.smartb.iris.ldproof.LdJsonObjectBuilder;
 import city.smartb.iris.ldproof.LdProof;
 import city.smartb.iris.ldproof.LdProofBuilder;

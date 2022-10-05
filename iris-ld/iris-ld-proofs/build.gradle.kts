@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-	api(project(":iris-crypto:iris-crypto-rsa-key"))
+	api(project(":iris-crypto:iris-crypto-dsl"))
 	api(project(":iris-ld:iris-ld-jsonld"))
 
 	implementation("com.apicatalog:titanium-json-ld:1.1.0")

@@ -1,8 +1,9 @@
 package city.smartb.iris.did;
 
+import city.smartb.iris.crypto.dsl.signer.Signer;
 import city.smartb.iris.crypto.rsa.RSAKeyPairReader;
 import city.smartb.iris.crypto.rsa.exception.InvalidRsaKeyException;
-import city.smartb.iris.crypto.rsa.signer.Signer;
+import city.smartb.iris.crypto.rsa.signer.RS256Signer;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ class DIDSignerTest {
                 .withProofPurpose("ProofPurpose")
                 .withVerificationMethod("VerificationMethod");
         KeyPair pair = RSAKeyPairReader.INSTANCE.loadKeyPair("userAgentUnitTest");
-        Signer signer = Signer.Companion.rs256Signer((RSAPrivateKey) pair.getPrivate());
+        Signer signer = new RS256Signer((RSAPrivateKey) pair.getPrivate());
         DIDDocument cred = vcSign.sign(vcBuild, proofBuilder, signer);
 
         Assertions.assertThat(cred.getProof()).isNotNull();

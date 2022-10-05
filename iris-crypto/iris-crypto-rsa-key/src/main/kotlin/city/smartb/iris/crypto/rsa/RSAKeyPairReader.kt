@@ -84,17 +84,6 @@ object RSAKeyPairReader {
         }
     }
 
-    @Throws(InvalidRsaKeyException::class)
-    fun generateRSAKey(): KeyPair {
-        return try {
-            val kpg = KeyPairGenerator.getInstance("RSA")
-            kpg.initialize(2048)
-            kpg.generateKeyPair()
-        } catch (e: NoSuchAlgorithmException) {
-            throw InvalidRsaKeyException("RSA key can't be generated", e)
-        }
-    }
-
     @Throws(IOException::class)
     private fun getPemObject(filename: String): PemObject {
         val reader: Reader = FileUtils.getReader(filename)

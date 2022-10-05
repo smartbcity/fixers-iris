@@ -1,6 +1,6 @@
 package city.smartb.iris.ldproof.crypto;
 
-import city.smartb.iris.crypto.rsa.signer.Signer;
+import city.smartb.iris.crypto.dsl.signer.Signer;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import city.smartb.iris.ldproof.signer.LdProofSigner;
 

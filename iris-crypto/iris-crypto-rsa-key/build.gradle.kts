@@ -4,7 +4,5 @@ plugins {
 }
 
 dependencies {
-    api("com.google.guava:guava:${Versions.guava}")
-    api("com.nimbusds:nimbus-jose-jwt:${Versions.joseJwtVersion}")
-    api("org.bouncycastle:bcprov-jdk15on:${Versions.bouncycastleVersion}")
+    implementation(project(":iris-crypto:iris-crypto-dsl"))
 }
