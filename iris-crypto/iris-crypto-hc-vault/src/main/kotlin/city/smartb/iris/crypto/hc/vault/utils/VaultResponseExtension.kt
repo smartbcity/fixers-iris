@@ -15,3 +15,9 @@ fun VaultResponse.getPublicKey(): String {
 fun VaultResponse.getSignatureValue(): String {
     return this.data!!.get("signature")!! as String
 }
+
+fun VaultResponse.getTransitPublicKey(): String {
+    val keys = this.data!!.get("keys") as Map<String, Any>
+    val key = keys.get("1") as Map<String, String>
+    return key["public_key"] ?: ""
+}

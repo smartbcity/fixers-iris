@@ -3,9 +3,8 @@ package city.smartb.iris.signer.core.features
 import city.smartb.iris.crypto.dsl.signer.Signer
 import city.smartb.iris.crypto.hc.vault.kv.signer.VaultKvSigner
 import city.smartb.iris.crypto.hc.vault.transit.signer.VaultTransitSigner
-import city.smartb.iris.crypto.rsa.RSAKeyPairDecoderBase64
+import city.smartb.iris.crypto.rsa.RSAKeyPairReader.loadKeyPair
 import city.smartb.iris.crypto.rsa.signer.RS256Signer
-import city.smartb.iris.crypto.rsa.utils.FileUtils
 import city.smartb.iris.signer.core.signer.VerifiableCredentialSigner
 import city.smartb.iris.signer.core.utils.RSA_KEYS_DIRECTORY
 import f2.dsl.fnc.F2Function
@@ -22,24 +21,24 @@ class SignCommand(
     val issuer: String,
     val subject: Any,
     val id: String,
-    val signer: String
+    val type: String,
 )
 
 class SignCommandResult(
-    val vc: Any?
+    val vc: Any?,
 )
 
 @Configuration
 open class SignCommandFunctionImpl(
-    private val vaultOperations: VaultOperations
+    private val vaultOperations: VaultOperations,
 ) {
 
     @Bean
     open fun signCommandFunction(): SignCommandFunction = f2Function { query ->
-        val signer = getSigner(query.signer, query.keyName)
+        val signer = getSigner(query.type, query.keyName)
             ?: return@f2Function SignCommandResult(null) // Key Or Signer errors
 
-        val vc = VerifiableCredentialSigner.sign(query.id, query.issuer, query.subject, signer)
+        val vc = VerifiableCredentialSigner.sign(query.id, query.issuer, query.subject, signer, query.type, query.keyName)
 
         SignCommandResult(vc.asJson())
     }
@@ -57,6 +56,7 @@ open class SignCommandFunctionImpl(
     }
 
     private fun getRsaPrivateKey(keyName: String): RSAPrivateKey {
-        return RSAKeyPairDecoderBase64.decodePrivateKey(FileUtils.getFile("$RSA_KEYS_DIRECTORY/$keyName").readText())
+        val pair = loadKeyPair("$RSA_KEYS_DIRECTORY/$keyName")
+        return pair.private as RSAPrivateKey
     }
 }

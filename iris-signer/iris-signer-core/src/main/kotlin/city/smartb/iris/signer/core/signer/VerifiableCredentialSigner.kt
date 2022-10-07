@@ -10,7 +10,7 @@ import java.util.UUID
 
 class VerifiableCredentialSigner {
     companion object {
-        fun <T> sign(id: String, issuer: String, subject: T, signer: Signer): VerifiableCredential {
+        fun <T> sign(id: String, issuer: String, subject: T, signer: Signer, type: String, key: String): VerifiableCredential {
             val created = LocalDateTime.now()
             val nonce: String = UUID.randomUUID().toString()
 
@@ -27,7 +27,7 @@ class VerifiableCredentialSigner {
                 .withCreated(created)
                 .withChallenge(nonce)
                 .withProofPurpose("assertionMethod")
-                .withVerificationMethod("$issuer")
+                .withVerificationMethod("http://localhost:8082/api/resolvekey?type=$type&key=$key")
 
             return VCSign().sign(vcBuild, proofBuilder, signer)
         }
