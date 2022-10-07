@@ -19,7 +19,7 @@ class VaultTransitVerifier(
             "input" to Base64.getEncoder().encodeToString(content),
             "signature_algorithm" to "pkcs1v15",
             "prehashed" to false,
-            "signature" to Base64URL.encode(signature).decodeToString()
+            "signature" to "vault:v1:${Base64.getEncoder().encodeToString(signature)}"
         )
 
         val response = vaultOperations.write("transit/verify/${vaultKeyName}/sha2-256", requestPayload)

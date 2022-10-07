@@ -25,6 +25,6 @@ class VaultTransitSigner(
         val response = vaultOperations.write("transit/sign/$vaultKeyName/sha2-256", requestPayload)
         val signature = response!!.getSignatureValue()
 
-        return signature.toByteArray()
+        return Base64.getDecoder().decode(signature.removePrefix("vault:v1:"))
     }
 }
