@@ -9,4 +9,6 @@ vault:
   scheme: http
   host: localhost
   port: 8200
-  token: ***REMOVED***
+  token: hvs.gJWeTXesq3iX4z7euuiUNsGC
+
+host: localhost

@@ -12,8 +12,8 @@ public class DIDAuthentication {
 		if(json instanceof String) {
 			return (String) json;
 		}
-		if(json instanceof DIDPublicKey) {
-			return ((DIDPublicKey) json).getId();
+		if(json instanceof DIDVerificationMethod) {
+			return ((DIDVerificationMethod) json).getId();
 		}
 		return null;
 	}

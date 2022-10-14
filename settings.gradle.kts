@@ -27,9 +27,13 @@ include( "iris-vc")
 include(
     "iris-signer:iris-signer-api",
     "iris-signer:iris-signer-core",
-    "iris-signer:iris-signer-client"
+    "iris-signer:iris-signer-client",
+    "iris-signer:iris-signer-domain"
 )
 
 include ("iris-bdd")
 
-include ("iris-registrar")
+include (
+    "iris-registrar:iris-registrar-app",
+    "iris-registrar:iris-registrar-domain"
+)

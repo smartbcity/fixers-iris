@@ -1,8 +1,9 @@
 package city.smartb.iris.did;
 
+import city.smartb.iris.did.model.ControledJsonLdObject;
 import city.smartb.iris.did.model.DIDAuthentication;
-import city.smartb.iris.did.model.DIDPublicKey;
 import city.smartb.iris.did.model.DIDService;
+import city.smartb.iris.did.model.DIDVerificationMethod;
 import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.jsonld.reader.JsonFieldReader;
 import city.smartb.iris.ldproof.LdProof;
@@ -36,15 +37,15 @@ public class DIDDocumentBuilder extends JsonLdObject {
         return this;
     }
 
-    public DIDDocumentBuilder withPublicKeys(List<DIDPublicKey> keys) {
-        List<Map<String, Object>> keysJson = keys.parallelStream().map(publicKey -> publicKey.asJson()).collect(Collectors.toList());
-        jsonLdObject.put(DIDDocument.JSON_LD_PUBLICKEY, keysJson);
+    public DIDDocumentBuilder withVerificationMethods(List<DIDVerificationMethod> methods) {
+        List<Object> methodsJson = methods.parallelStream().map(method -> method.asJson()).collect(Collectors.toList());
+        jsonLdObject.put(DIDDocument.JSON_LD_VERIFICATION_METHOD, methodsJson);
         return this;
     }
 
-    public DIDDocumentBuilder withPublicKey(DIDPublicKey key) {
-       List<DIDPublicKey> keys = Collections.singletonList(key);
-       return this.withPublicKeys(keys);
+    public DIDDocumentBuilder withVerificationMethod(DIDVerificationMethod method) {
+        List<DIDVerificationMethod> methods = Collections.singletonList(method);
+        return this.withVerificationMethods(methods);
     }
 
     public DIDDocumentBuilder withServices(List<DIDService> services) {
@@ -60,13 +61,18 @@ public class DIDDocumentBuilder extends JsonLdObject {
 
     public DIDDocumentBuilder withAuthentications(List<DIDAuthentication> authentications) {
         List<Object> authenticationsJson = authentications.parallelStream().map(authentication -> authentication.toJSON()).collect(Collectors.toList());
-        jsonLdObject.put(DIDDocument.JSON_LD_SERVICE, authenticationsJson);
+        jsonLdObject.put(DIDDocument.JSON_LD_AUTHENTICATION, authenticationsJson);
         return this;
     }
 
     public DIDDocumentBuilder withAuthentication(DIDAuthentication authentication) {
         List<DIDAuthentication> authentications = Collections.singletonList(authentication);
         return this.withAuthentications(authentications);
+    }
+
+    public DIDDocumentBuilder withController(String controller) {
+        jsonLdObject.put(ControledJsonLdObject.JSON_LD_CONTROLER, controller);
+        return this;
     }
 
     public List<DIDAuthentication> getProof() {

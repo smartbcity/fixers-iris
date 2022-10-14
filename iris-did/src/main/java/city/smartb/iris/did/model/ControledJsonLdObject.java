@@ -1,8 +1,11 @@
 package city.smartb.iris.did.model;
 
+import city.smartb.iris.did.DIDDocumentBuilder;
 import city.smartb.iris.jsonld.JsonLdObject;
 import city.smartb.iris.jsonld.reader.JsonFieldReader;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public abstract class ControledJsonLdObject extends JsonLdObject {
@@ -20,5 +23,4 @@ public abstract class ControledJsonLdObject extends JsonLdObject {
 	public String getController() {
 		return this.get(JSON_LD_CONTROLER).asString();
 	}
-
 }

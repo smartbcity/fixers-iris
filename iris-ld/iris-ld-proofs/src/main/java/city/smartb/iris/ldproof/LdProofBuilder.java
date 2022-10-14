@@ -50,6 +50,11 @@ public class LdProofBuilder {
         return this;
     }
 
+    public LdProofBuilder withCreatedNow() {
+        withCreated(LocalDateTime.now());
+        return this;
+    }
+
     public LdProofBuilder withVerificationMethod(String verificationMethod) {
         json.put(LdProof.JSON_LD_VERIFICATION_METHOD, verificationMethod);
         return this;

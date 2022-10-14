@@ -5,12 +5,12 @@ plugins {
 
 dependencies {
     api(project(":iris-vc"))
-    api(project(":iris-crypto:iris-crypto-rsa-key"))
-    api(project(":iris-crypto:iris-crypto-hc-vault-kv"))
-    api(project(":iris-crypto:iris-crypto-hc-vault-transit"))
-    api(project(":iris-bdd"))
+    implementation(project(":iris-crypto:iris-crypto-rsa-key"))
+    implementation(project(":iris-crypto:iris-crypto-hc-vault-kv"))
+    implementation(project(":iris-crypto:iris-crypto-hc-vault-transit"))
+    implementation(project(":iris-bdd"))
 
-    api("city.smartb.f2:f2-spring-boot-starter-function-http:${Versions.f2}")
+    api(project(":iris-signer:iris-signer-domain"))
 
     api("info.weboftrust:ld-signatures-java:1.0.0")
 }

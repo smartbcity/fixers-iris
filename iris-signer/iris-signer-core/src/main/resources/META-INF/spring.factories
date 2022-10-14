@@ -1,5 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-city.smartb.iris.signer.core.features.SignCommandFunctionImpl, \
-city.smartb.iris.signer.core.features.VerifyCommandFunctionImpl, \
+city.smartb.iris.signer.core.features.SignQueryFunctionImpl, \
+city.smartb.iris.signer.core.features.VerifyQueryFunctionImpl, \
 city.smartb.iris.signer.core.features.CreateKeyCommandFunctionImpl, \
 city.smartb.iris.signer.core.features.GetKeyQueryFunctionImpl

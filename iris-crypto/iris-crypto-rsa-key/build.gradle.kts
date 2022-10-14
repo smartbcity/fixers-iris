@@ -4,5 +4,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":iris-crypto:iris-crypto-dsl"))
+    api(project(":iris-crypto:iris-crypto-dsl"))
 }
