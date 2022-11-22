@@ -10,9 +10,7 @@ import city.smartb.iris.ldproof.LdProof;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,13 +33,33 @@ public class DIDDocument extends ControledJsonLdObject {
 	}
 
 	public List<DIDVerificationMethod> getVerificationMethod() {
-		return this.get(JSON_LD_VERIFICATION_METHOD).asListObjects(DIDVerificationMethod.class);
+		List<DIDVerificationMethod> methods = this.get(JSON_LD_VERIFICATION_METHOD).asListObjects(DIDVerificationMethod.class);
+		if (methods == null) {
+			return new ArrayList<>();
+		} else {
+			return methods;
+		}
 	}
 
-	public DIDDocument setVerificationMethod(DIDVerificationMethod method) {
-		List<DIDVerificationMethod> methods = Collections.singletonList(method);
-		List<Object> methodsJson = methods.parallelStream().map(it -> it.toJSON()).collect(Collectors.toList());
-		jsonLdObject.put(DIDDocument.JSON_LD_VERIFICATION_METHOD, methodsJson);
+	public DIDDocument addVerificationMethod(DIDVerificationMethod method) {
+		List<DIDVerificationMethod> list = getVerificationMethod();
+		list.add(method);
+		jsonLdObject.put(DIDDocument.JSON_LD_VERIFICATION_METHOD, list);
+		return this;
+	}
+
+	public DIDDocument removeVerificationMethod(String id) {
+		List<DIDVerificationMethod> list = this.get(DIDDocument.JSON_LD_VERIFICATION_METHOD)
+				.asListObjects(DIDVerificationMethod.class);
+
+		DIDVerificationMethod item = list
+				.stream()
+				.filter(it -> it.getId().equals(id))
+				.collect(Collectors.toList())
+				.get(0);
+
+		list.remove(item);
+		jsonLdObject.put(DIDDocument.JSON_LD_VERIFICATION_METHOD, list);
 		return this;
 	}
 

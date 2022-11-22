@@ -14,6 +14,7 @@ allprojects {
     group = "city.smartb.iris"
     version = System.getenv("VERSION") ?: "experimental-SNAPSHOT"
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url = uri("https://oss.sonatype.org/service/local/repositories/releases/content") }
         maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }

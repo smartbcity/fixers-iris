@@ -1,0 +1,33 @@
+server:
+  port: 8083
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-ignored-properties: false
+      fail-on-null-creator-properties: false
+  webflux:
+    base-path: /1.0
+
+vault:
+  scheme: http
+  host: 51.15.215.149
+  port: 8200
+  token: hvs.RHB1FOV4FE1n2OIrhGx4JPnj
+
+ssm:
+  signer:
+    user:
+      name: ssm-admin
+      key: user/ssm-admin
+    admin:
+      name: ssm-admin
+      key: user/ssm-admin
+  couchdb:
+    url: http://51.15.215.149:5984
+    username: couchdb
+    password: couchdb
+    serviceName: s2-sample-did
+  chaincode:
+    url: http://51.15.215.149:9090

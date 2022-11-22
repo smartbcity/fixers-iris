@@ -27,7 +27,7 @@ object RSAKeyPairReader {
     }
 
     @Throws(InvalidRsaKeyException::class)
-    fun loadPrivateKey(filename: String): PrivateKey {
+    fun loadPrivateKey(filename: String): PrivateKey{
         return try {
             val pem = getPemObject(filename)
             val key = RSAPrivateKey.getInstance(pem.content)

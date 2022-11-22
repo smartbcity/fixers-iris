@@ -14,6 +14,7 @@ object PluginVersions {
 object Versions {
     val s2 = PluginVersions.fixers
     val f2 = PluginVersions.fixers
+    val ssm = PluginVersions.fixers
 
     const val guava = "31.0.1-jre"
     const val jacksonVersion = "2.13.0"

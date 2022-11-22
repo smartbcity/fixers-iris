@@ -27,10 +27,6 @@ public class DIDDocumentDeserializer extends StdDeserializer<DIDDocument> {
 
         ObjectMapper mapper = new ObjectMapper();
 
-//        List<Object> result = new LinkedHashMap<>();
-//        node.forEach( it ->
-//                result.
-//        );
         Map<String, Object> result = mapper.convertValue(node, new TypeReference<Map<String, Object>>(){});
 
         return new DIDDocument(result);

@@ -33,7 +33,11 @@ include(
 
 include ("iris-bdd")
 
+include ("iris-registrar",)
+
+include ("iris-resolver")
+
 include (
-    "iris-registrar:iris-registrar-app",
-    "iris-registrar:iris-registrar-domain"
+    "iris-s2:iris-s2-app",
+    "iris-s2:iris-s2-domain"
 )

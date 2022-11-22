@@ -28,8 +28,12 @@ include 'iris-signer:iris-signer-domain'
 
 include 'iris-bdd'
 
-include 'iris-registrar:iris-registrar-app'
-include 'iris-registrar:iris-registrar-domain'
+include 'iris-registrar'
+
+include 'iris-resolver'
+
+include 'iris-s2:iris-s2-app'
+include 'iris-s2:iris-s2-domain'
 
 include (
         'iris-commons:iris-commons-domain'
