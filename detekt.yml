@@ -206,7 +206,7 @@ exceptions:
       - Throwable
     allowedExceptionNameRegex: "^(_|e|(ignore|expected|error).*)"
   TooGenericExceptionThrown:
-    active: true
+    active: false
     exceptionNames:
       - Error
       - Exception

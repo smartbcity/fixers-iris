@@ -13,15 +13,6 @@ import kotlinx.serialization.Serializable
 typealias DidAddVerificationMethodCommandFunction = F2Function<DidAddVerificationMethodCommand, DidAddVerificationMethodEvent>
 
 /**
- * Test comment DidAddVerificationMethodCommandPayload
- */
-@JsExport
-@JsName("DidAddVerificationMethodCommandPayload")
-class DidAddVerificationMethodCommandPayload(
-    val id: DidId,
-)
-
-/**
  * Test comment DidAddVerificationMethodCommand
  */
 @Serializable
@@ -29,8 +20,11 @@ class DidAddVerificationMethodCommandPayload(
 @JsName("DidAddVerificationMethodCommand")
 data class DidAddVerificationMethodCommand(
     override val id: DidId,
-    val publicKey: String?,
-    val type: String
+    val controller: String,
+    val keyId: String,
+    val publicKey: String,
+    val type: String,
+    val purpose: List<String>
 ) : DidCommand
 
 /**

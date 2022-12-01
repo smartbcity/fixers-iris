@@ -1,10 +1,10 @@
 package city.smartb.iris.crypto.hc.vault.kv.signer
 
 import city.smartb.iris.crypto.dsl.signer.Signer
+import city.smartb.iris.crypto.hc.vault.utils.getPrivateKey
 import city.smartb.iris.crypto.rsa.RSAKeyPairDecoderBase64
 import city.smartb.iris.crypto.rsa.exception.InvalidRsaKeyException
 import city.smartb.iris.crypto.rsa.signer.RS256Signer
-import city.smartb.iris.crypto.hc.vault.utils.getPrivateKey
 import com.nimbusds.jose.JWSAlgorithm
 import java.security.GeneralSecurityException
 import java.security.interfaces.RSAPrivateKey
@@ -27,6 +27,7 @@ class VaultKvSigner(
     }
 
     private fun getPrivateKey(vaultKvKeyName: String): RSAPrivateKey {
+        // TODO Handle private key accessibility/authentication
         val response = vaultOperations.read("secret/data/$vaultKvKeyName")
             ?: throw InvalidRsaKeyException("Vault key not found")
 

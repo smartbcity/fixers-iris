@@ -44,26 +44,31 @@ open class DidCreateCommandFunctionImpl(
 
     private suspend fun createDIDDocument(): DIDDocument {
         val did = generateDID()
-        val keyId = IrisRegistrarSigner().generateKeyId(did)
+//        val keyId = IrisRegistrarSigner().generateKeyId(did)
 
-        val publicRSAKey = irisSignerService.generateRsaVaultKey().invoke(GenerateRsaVaultKeyCommand(
-            keyId = keyId
-        )).publicKey
+//        val publicRSAKey = irisSignerService.generateRsaVaultKey().invoke(GenerateRsaVaultKeyCommand(
+//            keyId = keyId
+//        )).publicKey
 
-        val verificationMethod = DIDVerificationMethodBuilder
-            .create()
-            .withId(keyId)
-            .withController(did)
-            .withType(DIDVerificationMethod.RSA_VERIFICATION_2018)
-            .withPublicKey(publicRSAKey)
-            .build()
+//        val verificationMethod = DIDVerificationMethodBuilder
+//            .create()
+//            .withId(keyId)
+//            .withController(did)
+//            .withType(DIDVerificationMethod.RSA_VERIFICATION_2018)
+//            .withPublicKey(publicRSAKey)
+//            .build()
 
         val vcBuild = DIDDocumentBuilder
             .create()
             .withId(did)
             .withController(did)
-            .withVerificationMethod(verificationMethod)
-            .withAuthentication(buildDIDAuthenticationFromKeyId(keyId))
+            .withServices(emptyList())
+            .withVerificationMethods(emptyList())
+            .withAuthentications(emptyList())
+            .withCapabilityDelegations(emptyList())
+            .withCapabilityInvocations(emptyList())
+            .withAssertionMethods(emptyList())
+            .withKeyAgreements(emptyList())
 
         val proofBuilder = LdProofBuilder.builder()
             .withChallenge("Challenges")

@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":iris-crypto:iris-crypto-rsa-key"))
+    implementation(project(":iris-crypto:iris-crypto-key-rsa"))
     implementation(project(":iris-crypto:iris-crypto-dsl"))
     api(project(":iris-crypto:iris-crypto-hc-vault"))
 }

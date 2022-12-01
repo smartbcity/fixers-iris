@@ -7,7 +7,7 @@ pluginManagement {
 rootProject.name = 'iris-sdk'
 
 include (
-    'iris-crypto:iris-crypto-rsa-key',
+    'iris-crypto:iris-crypto-key-rsa',
     'iris-crypto:iris-crypto-hc-vault-kv',
     'iris-crypto:iris-crypto-hc-vault-transit',
     'iris-crypto:iris-crypto-hc-vault',
@@ -15,14 +15,14 @@ include (
 )
 
 include 'iris-ld:iris-ld-jsonld',
-        'iris-ld:iris-ld-proofs'
+        'iris-ld:iris-ld-proofs',
+        'iris-ld:iris-did',
+        'iris-ld:iris-vc'
 
 include 'iris-jwt'
-include 'iris-did'
-include 'iris-vc'
 
 include 'iris-signer:iris-signer-api'
-include 'iris-signer:iris-signer-core'
+include 'iris-signer:iris-signer-lib'
 include 'iris-signer:iris-signer-client'
 include 'iris-signer:iris-signer-domain'
 
@@ -32,9 +32,10 @@ include 'iris-registrar'
 
 include 'iris-resolver'
 
+include 'iris-vault:iris-vault-app'
+include 'iris-vault:iris-vault-app-domain'
+include 'iris-vault:iris-vault-client'
+include 'iris-vault:iris-vault-domain'
+
 include 'iris-s2:iris-s2-app'
 include 'iris-s2:iris-s2-domain'
-
-include (
-        'iris-commons:iris-commons-domain'
-)

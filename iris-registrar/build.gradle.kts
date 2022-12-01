@@ -4,10 +4,10 @@ plugins {
 }
 
 dependencies {
-	api(project(":iris-did"))
+	api(project(":iris-ld:iris-did"))
 	api(project(":iris-bdd"))
 
-	implementation(project(":iris-signer:iris-signer-core"))
+	implementation(project(":iris-signer:iris-signer-lib"))
 
 	api(project(":iris-s2:iris-s2-app"))
 	api(project(":iris-s2:iris-s2-domain"))

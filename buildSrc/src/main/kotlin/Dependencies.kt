@@ -9,6 +9,7 @@ object PluginVersions {
     val d2 = fixers
     const val kotlin = FixersPluginVersions.kotlin
     const val springBoot = FixersPluginVersions.springBoot
+    val i2 = fixers
 }
 
 object Versions {

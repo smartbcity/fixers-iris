@@ -1,0 +1,19 @@
+server:
+  port: 8085
+
+spring:
+  jackson:
+    default-property-inclusion: non_null
+    deserialization:
+      fail-on-ignored-properties: false
+      fail-on-null-creator-properties: false
+
+vault:
+  scheme: http
+  host: 51.15.215.149
+  port: 8200
+  token: hvs.RHB1FOV4FE1n2OIrhGx4JPnj
+  baseUrl: http:51.15.215.149:8200
+
+i2:
+  issuers:

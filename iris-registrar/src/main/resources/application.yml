@@ -7,8 +7,8 @@ spring:
     deserialization:
       fail-on-ignored-properties: false
       fail-on-null-creator-properties: false
-  webflux:
-    base-path: /1.0
+#  webflux:
+#    base-path: /1.0
 
 vault:
   scheme: http

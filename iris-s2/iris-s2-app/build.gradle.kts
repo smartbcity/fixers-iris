@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-	api(project(":iris-did"))
+	api(project(":iris-ld:iris-did"))
 	api(project(":iris-bdd"))
 	api(project(":iris-s2:iris-s2-domain"))
 

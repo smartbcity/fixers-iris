@@ -1,7 +1,9 @@
 package city.smartb.iris.registrar.features
 
 import city.smartb.iris.crypto.rsa.RSAKeyPairDecoderBase64
+import city.smartb.iris.did.DIDDocument
 import city.smartb.iris.did.DIDVerificationMethodBuilder
+import city.smartb.iris.did.model.DIDAuthentication
 import city.smartb.iris.did.model.DIDVerificationMethod
 import city.smartb.iris.registrar.signer.IrisRegistrarSigner
 import city.smartb.iris.s2.config.DidS2Aggregate
@@ -9,10 +11,12 @@ import city.smartb.iris.s2.domain.DidState
 import city.smartb.iris.s2.domain.commands.DidAddVerificationMethodCommand
 import city.smartb.iris.s2.domain.commands.DidAddVerificationMethodCommandFunction
 import city.smartb.iris.s2.domain.commands.DidAddVerificationMethodEvent
+import city.smartb.iris.s2.entity.DidEntity
 import city.smartb.iris.signer.core.IrisSignerService
 import city.smartb.iris.signer.domain.features.GenerateRsaVaultKeyCommand
 import f2.dsl.fnc.f2Function
 import f2.dsl.fnc.invoke
+import java.security.PublicKey
 import java.security.interfaces.RSAPublicKey
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -30,17 +34,22 @@ open class DidAddVerificationMethodCommandFunctionImpl(
 
     private suspend fun addVerificationMethod(cmd: DidAddVerificationMethodCommand):
             DidAddVerificationMethodEvent = didS2Aggregate.doTransition(cmd) {
-        val keyId = IrisRegistrarSigner().generateKeyId(cmd.id)
-        val pubKey = getPublicKey(cmd, keyId)
+
+        val pubKey = getPublicKey(cmd.publicKey, cmd.type)
+        val keyId = "${cmd.id}#${cmd.keyId}"
+
         val verificationMethod = DIDVerificationMethodBuilder
             .create()
             .withId(keyId)
-            .withController(cmd.id)
-            .withType(DIDVerificationMethod.RSA_VERIFICATION_2018)
+            .withController(cmd.controller)
+            .withType(cmd.type)
             .withPublicKey(pubKey)
             .build()
 
         this.document.addVerificationMethod(verificationMethod)
+
+        // Add purpose
+        this.addPurpose(cmd.purpose, keyId)
 
         this.state = DidState.Created().position
 
@@ -53,13 +62,32 @@ open class DidAddVerificationMethodCommandFunctionImpl(
         )
     }
 
-    private suspend fun getPublicKey(cmd: DidAddVerificationMethodCommand, keyId: String): RSAPublicKey {
-        return if (cmd.publicKey.isNullOrBlank()) {
-            irisSignerService.generateRsaVaultKey()
-                .invoke(GenerateRsaVaultKeyCommand(keyId = keyId)).publicKey
+    private fun DidEntity.addPurpose(purposes: List<String>, keyId: String) {
+        if (purposes.contains(DIDDocument.JSON_LD_ASSERTION_METHOD)) {
+            this.document.addAssertionMethod(keyId)
         }
-        else {
-            parsePublicKey(cmd.publicKey!!)
+
+        if (purposes.contains(DIDDocument.JSON_LD_AUTHENTICATION)) {
+            this.document.addAuthentication(keyId)
+        }
+
+        if (purposes.contains(DIDDocument.JSON_LD_CAPABILITY_DELEGATION)) {
+            this.document.addCapabilityDelegation(keyId)
+        }
+
+        if (purposes.contains(DIDDocument.JSON_LD_CAPABILITY_INVOCATION)) {
+            this.document.addCapabilityInvocation(keyId)
+        }
+
+        if (purposes.contains(DIDDocument.JSON_LD_KEY_AGREEMENT)) {
+            this.document.addKeyAgreement(keyId)
+        }
+    }
+
+    private fun getPublicKey(publicKey: String, type: String): PublicKey {
+        return when (type) {
+            DIDVerificationMethod.RSA_VERIFICATION_2018 -> parsePublicKey(publicKey)
+            else -> { throw Exception("Error parsing public key")}
         }
     }
 
