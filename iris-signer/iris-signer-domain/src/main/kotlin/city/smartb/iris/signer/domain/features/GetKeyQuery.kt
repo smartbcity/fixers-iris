@@ -6,9 +6,9 @@ typealias GetKeyQueryFunction = F2Function<GetKeyQuery, GetKeyQueryResult>
 
 class GetKeyQuery(
     val keyName: String,
-    val type: String
+    val method: String
 )
 
 class GetKeyQueryResult(
-    val publicKey: String?
+    val publicKey: String
 )

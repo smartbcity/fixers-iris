@@ -6,9 +6,8 @@ plugins {
 dependencies {
 	api(project(":iris-bdd"))
 
-	api(project(":iris-vault:iris-vault-domain"))
-
 	implementation("org.springframework.vault:spring-vault-core:${Versions.springVault}") // for types
+	implementation("city.smartb.i2:i2-spring-boot-starter-auth:${PluginVersions.i2}") // to retrieve jwt in current context
 
 	api("city.smartb.im:im-commons-domain:0.5.0") // for http client
 

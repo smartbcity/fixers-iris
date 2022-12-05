@@ -5,27 +5,26 @@ import city.smartb.iris.crypto.rsa.RSAKeyPairGenerator
 import city.smartb.iris.crypto.rsa.utils.FileUtils
 import city.smartb.iris.signer.core.utils.RESOURCES_PATH
 import city.smartb.iris.signer.core.utils.RSA_KEYS_DIRECTORY
-import city.smartb.iris.signer.domain.features.CreateKeyCommand
 import city.smartb.iris.signer.domain.features.CreateKeyCommandFunction
 import city.smartb.iris.signer.domain.features.CreateKeyCommandResult
-import f2.dsl.fnc.F2Function
+import city.smartb.iris.vault.client.VaultClient
+import city.smartb.iris.vault.domain.commands.TransitKeyAddCommand
 import f2.dsl.fnc.f2Function
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.vault.core.VaultOperations
 
 @Configuration
 open class CreateKeyCommandFunctionImpl(
-    private val vaultOperations: VaultOperations
+    private val vaultClient: VaultClient
 ) {
     @Bean
-    open fun createKeyCommandFunction(): CreateKeyCommandFunction = f2Function { query ->
-        when(query.type) {
-            "RsaKey" -> createRsaKey(query.keyName)
-            "HcVaultKV" -> createHcVaultKVKey(query.keyName)
-            "HcVaultTransit" -> createHcVaultTransitKey(query.keyName)
+    open fun createKeyCommandFunction(): CreateKeyCommandFunction = f2Function { command ->
+        when(command.method) {
+//            "RsaKey" -> createRsaKey(query.keyName)
+//            "HcVaultKV" -> createHcVaultKVKey(query.keyName)
+            "transit" -> createHcVaultTransitKey(command.keyName, command.type)
             else -> {}
         }
 
@@ -33,18 +32,21 @@ open class CreateKeyCommandFunctionImpl(
     }
 
     private fun createHcVaultKVKey(keyName: String) {
-        val keys = RSAKeyPairGenerator.generate2048Pair()
-
-        val pubKey = RSAKeyPairEncoderBase64.encodePublicKey(keys.public as RSAPublicKey)
-        val privKey = RSAKeyPairEncoderBase64.encodePrivateKey(keys.private as RSAPrivateKey)
-
-        val map = mapOf("pubKey" to pubKey, "privKey" to privKey)
-
-        vaultOperations.write("secret/data/$keyName", mapOf("data" to map))
+//        val keys = RSAKeyPairGenerator.generate2048Pair()
+//
+//        val pubKey = RSAKeyPairEncoderBase64.encodePublicKey(keys.public as RSAPublicKey)
+//        val privKey = RSAKeyPairEncoderBase64.encodePrivateKey(keys.private as RSAPrivateKey)
+//
+//        val map = mapOf("pubKey" to pubKey, "privKey" to privKey)
+//
+//        vaultOperations.write("secret/data/$keyName", mapOf("data" to map))
     }
 
-    private fun createHcVaultTransitKey(keyName: String) {
-        vaultOperations.write("transit/keys/$keyName", mapOf("type" to "rsa-2048"))
+    private suspend fun createHcVaultTransitKey(keyName: String, type: String) {
+        vaultClient.transitKeyAdd(TransitKeyAddCommand(
+            keyName = keyName,
+            type = type
+        ))
     }
 
     private fun createRsaKey(keyName: String) {

@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":iris-ld:iris-vc"))
+    api(project(":iris-ld:iris-ld-proofs"))
 
     api("city.smartb.f2:f2-spring-boot-starter-function-http:${Versions.f2}")
 }

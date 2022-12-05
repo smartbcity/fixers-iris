@@ -1,8 +1,8 @@
 package city.smartb.iris.ldproof.verifier;
 
 import city.smartb.iris.crypto.dsl.verifier.Verifier;
-import city.smartb.iris.ldproof.LdJsonObject;
-import city.smartb.iris.ldproof.LdJsonObjectBuilder;
+import city.smartb.iris.ldproof.VerifiableJsonLd;
+import city.smartb.iris.ldproof.VerifiableJsonLdBuilder;
 import city.smartb.iris.ldproof.LdProof;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import city.smartb.iris.ldproof.util.JWSUtil;
@@ -24,12 +24,22 @@ public abstract class LdProofVerifier {
         this.verifier = verifier;
     }
 
+    public boolean verify(VerifiableJsonLd jsonLdWithProof) throws GeneralSecurityException {
+        return verify(jsonLdWithProof.asJson());
+    }
+
+    public boolean verify(Map<String, Object> jsonLdObject) throws GeneralSecurityException {
+        VerifiableJsonLd ldObject = new VerifiableJsonLd(jsonLdObject);
+        LdProof proofs = ldObject.getProof();
+        return this.verify(jsonLdObject, proofs);
+    }
+
    public boolean verify(Map<String, Object> jsonLdObject, LdProof ldProof) throws GeneralSecurityException {
 
         LdProofBuilder builder = LdProofBuilder.fromLdProof(ldProof);
         String canonicalizedProof = builder.canonicalize();
 
-        String canonicalizedDocument = LdJsonObjectBuilder.builder(jsonLdObject).buildCanonicalizedDocument();
+        String canonicalizedDocument = VerifiableJsonLdBuilder.builder(jsonLdObject).buildCanonicalizedDocument();
 
         byte[] signingInput = new byte[64];
         System.arraycopy(SHAUtil.sha256(canonicalizedProof), 0, signingInput, 0, 32);
@@ -40,12 +50,6 @@ public abstract class LdProofVerifier {
         // done
 
         return verify;
-    }
-
-    public boolean verify(Map<String, Object> jsonLdObject) throws GeneralSecurityException {
-        LdJsonObject ldObject = new LdJsonObject(jsonLdObject);
-        LdProof proofs = ldObject.getProof();
-        return this.verify(jsonLdObject, proofs);
     }
 
     private boolean verify(byte[] signingInput, LdProof ldProof) throws GeneralSecurityException {

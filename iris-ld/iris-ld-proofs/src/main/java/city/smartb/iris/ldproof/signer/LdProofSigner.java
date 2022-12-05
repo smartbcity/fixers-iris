@@ -9,7 +9,7 @@ import com.nimbusds.jose.JWSHeader;
 import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.util.Base64URL;
 
-import city.smartb.iris.ldproof.LdJsonObjectBuilder;
+import city.smartb.iris.ldproof.VerifiableJsonLdBuilder;
 import city.smartb.iris.ldproof.LdProof;
 import city.smartb.iris.ldproof.LdProofBuilder;
 import city.smartb.iris.ldproof.util.JWSUtil;
@@ -28,7 +28,7 @@ public abstract class LdProofSigner {
 		this.ldProofBuilder = ldProofBuilder;
 	}
 
-	public LdProof sign(LdJsonObjectBuilder jsonLdObject) throws GeneralSecurityException {
+	public LdProof sign(VerifiableJsonLdBuilder jsonLdObject) throws GeneralSecurityException {
 		String canonicalizedDocument = jsonLdObject.buildCanonicalizedDocument();
 		String canonicalizedProofOptions = ldProofBuilder.canonicalize(signer);
 		String jws = sign(canonicalizedDocument, canonicalizedProofOptions);

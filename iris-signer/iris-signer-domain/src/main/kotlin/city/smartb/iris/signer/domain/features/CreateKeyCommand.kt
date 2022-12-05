@@ -6,7 +6,8 @@ typealias CreateKeyCommandFunction = F2Function<CreateKeyCommand, CreateKeyComma
 
 class CreateKeyCommand(
     val keyName: String,
-    val type: String
+    val type: String,
+    val method: String // kv, transit or anything else
 )
 
 class CreateKeyCommandResult

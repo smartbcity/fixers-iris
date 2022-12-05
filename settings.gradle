@@ -8,9 +8,7 @@ rootProject.name = 'iris-sdk'
 
 include (
     'iris-crypto:iris-crypto-key-rsa',
-    'iris-crypto:iris-crypto-hc-vault-kv',
     'iris-crypto:iris-crypto-hc-vault-transit',
-    'iris-crypto:iris-crypto-hc-vault',
     'iris-crypto:iris-crypto-dsl'
 )
 
@@ -35,6 +33,7 @@ include 'iris-resolver'
 include 'iris-vault:iris-vault-app'
 include 'iris-vault:iris-vault-app-domain'
 include 'iris-vault:iris-vault-client'
+include 'iris-vault:iris-vault-auth-client'
 include 'iris-vault:iris-vault-domain'
 
 include 'iris-s2:iris-s2-app'

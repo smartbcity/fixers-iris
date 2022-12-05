@@ -6,9 +6,13 @@ spring:
     base-path: /api
 
 vault:
-  scheme: http
-  host: localhost
-  port: 8200
-  token: hvs.gJWeTXesq3iX4z7euuiUNsGC
+  baseUrl: http://localhost:8200
 
-host: localhost
+i2:
+  issuers:
+    -
+      name: vault
+      authUrl: https://auth.smart-b.io/auth/
+      realm: vault-test
+      im:
+        clientId: vault

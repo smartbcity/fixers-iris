@@ -3,9 +3,10 @@ package city.smartb.iris.signer.core.features
 import city.smartb.iris.crypto.dsl.verifier.Verifier
 import city.smartb.iris.crypto.rsa.RSAKeyPairDecoderBase64
 import city.smartb.iris.crypto.rsa.verifier.RS256Verifier
+import city.smartb.iris.ldproof.VerifiableJsonLd
+import city.smartb.iris.ldproof.crypto.RsaSignature2018LdProofVerifier
 import city.smartb.iris.signer.domain.features.VerifyQueryFunction
 import city.smartb.iris.signer.domain.features.VerifyQueryResult
-import city.smartb.iris.vc.signer.VCVerifier
 import f2.dsl.fnc.f2Function
 import java.net.URI
 import java.net.http.HttpClient
@@ -18,15 +19,20 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 open class VerifyQueryFunctionImpl
 {
+    // Allow verifier to resolve towards vault keys - currently only supporting key coming from system file
     @Bean
     open fun verifyQueryFunction(): VerifyQueryFunction = f2Function { query ->
-        val proofType = query.vc.proof.type
-        val keyUrl = query.vc.proof.verificationMethod
+        val proofType = query.jsonLd.proof.type
+        val keyUrl = query.jsonLd.proof.verificationMethod
 
         val verifier = getVerifier(proofType, keyUrl)
-        val verified = VCVerifier().verify(query.vc, verifier)
 
-        VerifyQueryResult(verified)
+        VerifyQueryResult(verify(query.jsonLd, verifier))
+    }
+
+    private fun verify(jsonLdWithProof: VerifiableJsonLd, verifier: Verifier?): Boolean {
+        val ldSigner = RsaSignature2018LdProofVerifier(verifier)
+        return ldSigner.verify(jsonLdWithProof)
     }
 
     private fun getRsaPublicKey(url: String): RSAPublicKey {

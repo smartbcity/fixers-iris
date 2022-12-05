@@ -3,11 +3,17 @@ package city.smartb.iris.jsonld;
 import city.smartb.iris.jsonld.reader.JsonField;
 import city.smartb.iris.jsonld.jackson.JsonFieldJackson;
 import city.smartb.iris.jsonld.reader.JsonFieldReader;
+import city.smartb.iris.jsonld.serializer.JsonLdObjectDeserializer;
+import city.smartb.iris.jsonld.serializer.JsonLdObjectSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+@JsonDeserialize(using = JsonLdObjectDeserializer.class)
+@JsonSerialize(using = JsonLdObjectSerializer.class)
 public class JsonLdObject {
 
     public static final String JSON_LD_CONTEXT = "@context";

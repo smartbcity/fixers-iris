@@ -5,5 +5,5 @@ plugins {
 
 dependencies {
     implementation(project(":iris-crypto:iris-crypto-dsl"))
-    api(project(":iris-crypto:iris-crypto-hc-vault"))
+    implementation(project(":iris-vault:iris-vault-client"))
 }

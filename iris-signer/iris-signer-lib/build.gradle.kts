@@ -4,13 +4,13 @@ plugins {
 }
 
 dependencies {
-    api(project(":iris-ld:iris-vc"))
-    implementation(project(":iris-crypto:iris-crypto-key-rsa"))
-    implementation(project(":iris-crypto:iris-crypto-hc-vault-kv"))
-    implementation(project(":iris-crypto:iris-crypto-hc-vault-transit"))
     implementation(project(":iris-bdd"))
+    implementation(project(":iris-crypto:iris-crypto-key-rsa"))
+    implementation(project(":iris-crypto:iris-crypto-hc-vault-transit"))
 
     api(project(":iris-signer:iris-signer-domain"))
+
+    api(project(":iris-vault:iris-vault-client"))
 
     api("info.weboftrust:ld-signatures-java:1.0.0")
 }

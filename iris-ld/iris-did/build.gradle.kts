@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-    api(project(":iris-crypto:iris-crypto-key-rsa"))
     api(project(":iris-ld:iris-ld-proofs"))
     api(project(":iris-ld:iris-ld-jsonld"))
 }

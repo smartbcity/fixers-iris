@@ -11,9 +11,7 @@ rootProject.name = "iris-sdk"
 
 include(
     "iris-crypto:iris-crypto-key-rsa",
-    "iris-crypto:iris-crypto-hc-vault-kv",
     "iris-crypto:iris-crypto-hc-vault-transit",
-    "iris-crypto:iris-crypto-hc-vault",
     "iris-crypto:iris-crypto-dsl"
 )
 
@@ -43,6 +41,7 @@ include (
     "iris-vault:iris-vault-app",
     "iris-vault:iris-vault-app-domain",
     "iris-vault:iris-vault-client",
+    "iris-vault:iris-vault-auth-client",
     "iris-vault:iris-vault-domain"
 )
 

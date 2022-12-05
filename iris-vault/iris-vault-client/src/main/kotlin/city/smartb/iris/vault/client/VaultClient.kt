@@ -1,6 +1,5 @@
 package city.smartb.iris.vault.client
 
-import city.smartb.i2.spring.boot.auth.AuthenticationProvider
 import city.smartb.im.commons.http.ClientJvm
 import city.smartb.iris.vault.client.config.VaultConfig
 import city.smartb.iris.vault.client.exception.TransitKeyTypeNotFoundException
@@ -17,19 +16,16 @@ import city.smartb.iris.vault.domain.queries.SecretGet
 import city.smartb.iris.vault.domain.queries.SecretGetQuery
 import city.smartb.iris.vault.domain.queries.TransitPublicKeyGet
 import city.smartb.iris.vault.domain.queries.TransitPublicKeyGetQuery
-import io.ktor.client.call.body
-import io.ktor.client.request.request
-import io.ktor.http.HttpMethod
-import org.springframework.stereotype.Service
 import org.springframework.vault.support.VaultResponse
+import org.springframework.vault.support.VaultResponseSupport
 
-@Service
 class VaultClient(
+    override var generateBearerToken: suspend () -> String? = { null },
+    private val getVaultEntityId: suspend () -> String? = { null },
     vaultConfig: VaultConfig
 ): ClientJvm(vaultConfig.baseUrl) {
 
     companion object {
-        const val LOGIN_PATH = "v1/auth/jwt/login"
         const val SECRET_PATH = "v1/secret/data"
         const val TRANSIT_KEYS_PATH = "v1/transit/keys"
         const val TRANSIT_SIGN_PATH = "v1/transit/sign"
@@ -85,47 +81,21 @@ class VaultClient(
         return TransitVerified(response.data?.get("valid") as Boolean)
     }
 
-    /**
-     * Authentication
-     */
-    suspend fun getVaultEntityId(): String? {
-        val jwt = AuthenticationProvider.getPrincipal()?.tokenValue
-        val body = mapOf("role" to "user", "jwt" to jwt)
-        val response = post<VaultResponse>(LOGIN_PATH, body as Any, false)
-        return response.requiredAuth["entity_id"] as String?
-    }
-
-    override var generateBearerToken = suspend {
-        val jwt = AuthenticationProvider.getPrincipal()?.tokenValue
-        val body = mapOf("role" to "user", "jwt" to jwt)
-        val response = post<VaultResponse>(LOGIN_PATH, body as Any, false)
-        response.requiredAuth["client_token"] as String?
-    }
-
     private suspend fun buildTransitKeysPath(keyName: String): String {
-        return "$TRANSIT_KEYS_PATH/${getVaultEntityId()}-$keyName"
+        return "$TRANSIT_KEYS_PATH/${vaultEntityId()}-$keyName"
     }
 
     private suspend fun buildTransitSignPath(keyName: String): String {
-        return "$TRANSIT_SIGN_PATH/${getVaultEntityId()}-$keyName"
+        return "$TRANSIT_SIGN_PATH/${vaultEntityId()}-$keyName"
     }
 
     private suspend fun buildTransitVerifyPath(keyName: String): String {
-        return "$TRANSIT_VERIFY_PATH/${getVaultEntityId()}-$keyName"
+        return "$TRANSIT_VERIFY_PATH/${vaultEntityId()}-$keyName"
     }
 
     private suspend fun buildSecretPath(secretPath: String): String {
-        return "$SECRET_PATH/${getVaultEntityId()}/$secretPath"
+        return "$SECRET_PATH/${vaultEntityId()}/$secretPath"
     }
 
-
-    /**
-     * Utils dev function
-     */
-    suspend fun genToken(): String? {
-        val jwt = AuthenticationProvider.getPrincipal()?.tokenValue
-        val body = mapOf("role" to "user", "jwt" to jwt)
-        val response = post<VaultResponse>(LOGIN_PATH, body as Any, false)
-        return response.requiredAuth["client_token"] as String?
-    }
+    private suspend fun vaultEntityId(): String? = getVaultEntityId()
 }

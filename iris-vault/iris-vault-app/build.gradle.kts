@@ -7,7 +7,6 @@ dependencies {
 	api(project(":iris-ld:iris-did"))
 	api(project(":iris-bdd"))
 
-	implementation(project(":iris-crypto:iris-crypto-hc-vault-kv"))
 	implementation(project(":iris-signer:iris-signer-lib"))
 
 	api(project(":iris-vault:iris-vault-app-domain"))
