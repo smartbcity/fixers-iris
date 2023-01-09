@@ -1,3 +1,31 @@
+# Iris vault
+
+## Start app
+
+```
+./gradlew :iris-vault:iris-vault-api-gateway:bootRun
+```
+
+## Generate a valid jwt
+```
+curl -L -X POST 'https://auth.smart-b.io/auth/realms/vault-test/protocol/openid-connect/token' \
+-H 'Content-Type: application/x-www-form-urlencoded' \
+--data-urlencode 'client_id=vault' \
+--data-urlencode 'grant_type=password' \
+--data-urlencode 'scope=openid' \
+--data-urlencode 'username=teddy' \
+--data-urlencode 'password=colisactiv' \
+| jq -r '.access_token'
+```
+
+## Create a did document
+```
+curl --location --request POST 'http://localhost:8085/didCreate' \
+--header 'Authorization: Bearer $TOKEN' \
+--header 'Content-Type: application/json' \
+--data-raw '{}'
+```
+
 # Java Sdk to sign jwt and verifiable-claims
 
 ## Gradle

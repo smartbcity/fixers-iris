@@ -7,6 +7,8 @@ plugins {
     id("city.smartb.fixers.gradle.kotlin.jvm") version PluginVersions.fixers apply false
     id("city.smartb.fixers.gradle.publish") version PluginVersions.fixers apply false
 
+    id("org.springframework.boot") version PluginVersions.springBoot apply false
+
     kotlin("plugin.serialization") version PluginVersions.kotlin apply false
 }
 

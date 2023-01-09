@@ -1,10 +1,6 @@
 server:
   port: 8085
 
-spring:
-  security:
-    strategy: MODE_INHERITABLETHREADLOCAL
-
 i2:
   issuers:
     -
