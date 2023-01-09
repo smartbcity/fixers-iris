@@ -2,6 +2,9 @@ package city.smartb.iris.vault.endpoint
 
 import city.smartb.iris.vault.domain.commands.DidCreateFunction
 import city.smartb.iris.vault.domain.commands.DidPublicKeyAddFunction
+import city.smartb.iris.vault.domain.queries.DidGetFunction
+import city.smartb.iris.vault.domain.queries.SignFunction
+import city.smartb.iris.vault.domain.queries.VerifyFunction
 import city.smartb.iris.vault.lib.IrisVaultFeaturesImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -20,5 +23,14 @@ open class IrisVaultEndpoint(
 
     @Bean
     open fun didPublicKeyAdd(): DidPublicKeyAddFunction = irisVaultFeatures.didPublicKeyAdd()
+
+    @Bean
+    open fun didGet(): DidGetFunction = irisVaultFeatures.didGet()
+
+    @Bean
+    open fun sign(): SignFunction = irisVaultFeatures.sign()
+
+    @Bean
+    open fun verify(): VerifyFunction = irisVaultFeatures.verify()
 
 }

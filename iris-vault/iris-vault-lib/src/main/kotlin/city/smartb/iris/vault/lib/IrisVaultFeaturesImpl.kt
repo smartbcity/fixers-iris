@@ -2,6 +2,7 @@ package city.smartb.iris.vault.lib
 
 import city.smartb.iris.vault.domain.commands.DidCreateFunction
 import city.smartb.iris.vault.domain.commands.DidPublicKeyAddFunction
+import city.smartb.iris.vault.domain.queries.DidGetFunction
 import city.smartb.iris.vault.domain.queries.SignFunction
 import city.smartb.iris.vault.domain.queries.VerifyFunction
 import city.smartb.iris.vault.lib.service.IrisVaultAggregateService
@@ -28,6 +29,11 @@ class IrisVaultFeaturesImpl(
     fun didPublicKeyAdd(): DidPublicKeyAddFunction = f2Function { cmd ->
         logger.debug("didPublicKeyAdd: $cmd")
         irisVaultAggregateService.didPublicKeyAdd(cmd)
+    }
+
+    fun didGet(): DidGetFunction = f2Function { query ->
+        logger.debug("didGet: $query")
+        irisVaultFinderService.didGet(query)
     }
 
     fun verify(): VerifyFunction = f2Function { query ->

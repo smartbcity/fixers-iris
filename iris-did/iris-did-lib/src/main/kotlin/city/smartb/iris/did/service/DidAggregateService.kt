@@ -78,6 +78,8 @@ class DidAggregateService(
         )
     }
 
+
+
     private fun generateDID(): String {
         return "did:smartb:${UUID.randomUUID()}"
     }

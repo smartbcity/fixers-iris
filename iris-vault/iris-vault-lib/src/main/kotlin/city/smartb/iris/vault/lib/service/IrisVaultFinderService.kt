@@ -2,6 +2,9 @@ package city.smartb.iris.vault.lib.service
 
 import city.smartb.iris.did.DidFeaturesImpl
 import city.smartb.iris.keypair.lib.KeypairFeaturesImpl
+import city.smartb.iris.vault.domain.queries.DidGetLibQuery
+import city.smartb.iris.vault.domain.queries.DidGetQuery
+import city.smartb.iris.vault.domain.queries.DidGetResult
 import city.smartb.iris.vault.domain.queries.SignLibQuery
 import city.smartb.iris.vault.domain.queries.SignQuery
 import city.smartb.iris.vault.domain.queries.SignResult
@@ -45,5 +48,12 @@ class IrisVaultFinderService(
         )).verifiableJsonLd
 
         return SignResult(verifiableJsonLd)
+    }
+
+    suspend fun didGet(query: DidGetQuery): DidGetResult {
+        val query = DidGetLibQuery(query.did)
+        return DidGetResult(
+            didDocument = didFeatures.didGet().invoke(query).document
+        )
     }
 }
