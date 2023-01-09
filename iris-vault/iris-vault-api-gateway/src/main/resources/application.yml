@@ -1,0 +1,37 @@
+server:
+  port: 8085
+
+spring:
+  security:
+    strategy: MODE_INHERITABLETHREADLOCAL
+
+i2:
+  issuers:
+    -
+      name: vault
+      authUrl: https://auth.smart-b.io/auth/
+      realm: vault-test
+      im:
+        clientId: vault
+
+vault:
+  baseUrl: http://51.15.215.149:8200
+
+ssm:
+  signer:
+    user:
+      name: ssm-admin
+      key: user/ssm-admin
+    admin:
+      name: ssm-admin
+      key: user/ssm-admin
+  couchdb:
+    url: http://51.15.215.149:5984
+    username: couchdb
+    password: couchdb
+    serviceName: s2-sample-did
+  chaincode:
+    url: http://51.15.215.149:9090
+  channelId: chaincode
+  chaincodeId: sandbox
+  ssmName: ssm

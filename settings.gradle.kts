@@ -25,10 +25,8 @@ include(
 include( "iris-jwt")
 
 include(
-    "iris-signer:iris-signer-api",
-    "iris-signer:iris-signer-lib",
-    "iris-signer:iris-signer-client",
-    "iris-signer:iris-signer-domain"
+    "iris-keypair:iris-keypair-lib",
+    "iris-keypair:iris-keypair-domain"
 )
 
 include ("iris-bdd")
@@ -38,14 +36,19 @@ include ("iris-registrar")
 include ("iris-resolver")
 
 include (
-    "iris-vault:iris-vault-app",
-    "iris-vault:iris-vault-app-domain",
-    "iris-vault:iris-vault-client",
-    "iris-vault:iris-vault-auth-client",
+    "iris-vault:iris-vault-api-gateway",
+    "iris-vault:iris-vault-lib",
     "iris-vault:iris-vault-domain"
 )
 
 include (
-    "iris-s2:iris-s2-app",
-    "iris-s2:iris-s2-domain"
+    "iris-hc-vault:iris-hc-vault-client",
+    "iris-hc-vault:iris-hc-vault-auth-client",
+    "iris-hc-vault:iris-hc-vault-domain"
+)
+
+include (
+    "iris-did:iris-did-s2",
+    "iris-did:iris-did-lib",
+    "iris-did:iris-did-domain"
 )

@@ -18,23 +18,19 @@ include 'iris-ld:iris-ld-jsonld',
         'iris-ld:iris-vc'
 
 include 'iris-jwt'
-
-include 'iris-signer:iris-signer-api'
-include 'iris-signer:iris-signer-lib'
-include 'iris-signer:iris-signer-client'
-include 'iris-signer:iris-signer-domain'
-
 include 'iris-bdd'
 
-include 'iris-registrar'
+include 'iris-keypair:iris-keypair-lib'
+include 'iris-keypair:iris-keypair-domain'
 
-include 'iris-resolver'
-
-include 'iris-vault:iris-vault-app'
-include 'iris-vault:iris-vault-app-domain'
-include 'iris-vault:iris-vault-client'
-include 'iris-vault:iris-vault-auth-client'
+include 'iris-vault:iris-vault-api-gateway'
+include 'iris-vault:iris-vault-lib'
 include 'iris-vault:iris-vault-domain'
 
-include 'iris-s2:iris-s2-app'
-include 'iris-s2:iris-s2-domain'
+include 'iris-hc-vault:iris-hc-vault-client'
+include 'iris-hc-vault:iris-hc-vault-auth-client'
+include 'iris-hc-vault:iris-hc-vault-domain'
+
+include 'iris-did:iris-did-lib'
+include 'iris-did:iris-did-domain'
+include 'iris-did:iris-did-s2'

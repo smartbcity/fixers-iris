@@ -1,6 +1,7 @@
 package city.smartb.iris.did;
 
 import city.smartb.iris.did.deserializer.DIDDocumentDeserializer;
+import city.smartb.iris.did.deserializer.DIDDocumentSerializer;
 import city.smartb.iris.did.model.ControledJsonLdObject;
 import city.smartb.iris.did.model.DIDAuthentication;
 import city.smartb.iris.did.model.DIDService;
@@ -8,6 +9,7 @@ import city.smartb.iris.did.model.DIDVerificationMethod;
 import city.smartb.iris.jsonld.reader.JsonFieldReader;
 import city.smartb.iris.ldproof.LdProof;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -16,6 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @JsonDeserialize(using = DIDDocumentDeserializer.class)
+@JsonSerialize(using = DIDDocumentSerializer.class)
 public class DIDDocument extends ControledJsonLdObject {
 	public static final String MIME_TYPE = "application/did+ld+json";
 	public static final String JSON_LD_SERVICE = "service";
@@ -142,5 +145,11 @@ public class DIDDocument extends ControledJsonLdObject {
 	public LdProof getProof() {
 		Map<String, Object> map = this.get(LdProof.JSON_LD_PROOF).asMap();
 		return LdProof.fromMap(map);
+	}
+
+	public DIDDocument setProof(LdProof proof) {
+		jsonLdObject.remove(LdProof.JSON_LD_PROOF);
+		jsonLdObject.put(LdProof.JSON_LD_PROOF, proof);
+		return this;
 	}
 }

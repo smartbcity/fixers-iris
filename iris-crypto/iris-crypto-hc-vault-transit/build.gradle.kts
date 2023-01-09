@@ -5,5 +5,7 @@ plugins {
 
 dependencies {
     implementation(project(":iris-crypto:iris-crypto-dsl"))
-    implementation(project(":iris-vault:iris-vault-client"))
+    implementation(project(":iris-hc-vault:iris-hc-vault-client"))
+
+    implementation("city.smartb.i2:i2-spring-boot-starter-auth:${PluginVersions.i2}") // to retrieve jwt in current context
 }
