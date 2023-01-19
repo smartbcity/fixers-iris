@@ -5,13 +5,15 @@ import city.smartb.iris.keypair.lib.KeypairFeaturesImpl
 import city.smartb.iris.vault.domain.queries.DidGetLibQuery
 import city.smartb.iris.vault.domain.queries.DidGetQuery
 import city.smartb.iris.vault.domain.queries.DidGetResult
+import city.smartb.iris.vault.domain.queries.DidListLibQuery
+import city.smartb.iris.vault.domain.queries.DidListQuery
+import city.smartb.iris.vault.domain.queries.DidListResult
 import city.smartb.iris.vault.domain.queries.SignLibQuery
 import city.smartb.iris.vault.domain.queries.SignQuery
 import city.smartb.iris.vault.domain.queries.SignResult
 import city.smartb.iris.vault.domain.queries.VerifyLibQuery
 import city.smartb.iris.vault.domain.queries.VerifyQuery
 import city.smartb.iris.vault.domain.queries.VerifyResult
-import f2.dsl.fnc.f2Function
 import f2.dsl.fnc.invoke
 import org.springframework.stereotype.Service
 import s2.spring.utils.logger.Logger
@@ -54,6 +56,13 @@ class IrisVaultFinderService(
         val query = DidGetLibQuery(query.did)
         return DidGetResult(
             didDocument = didFeatures.didGet().invoke(query).document
+        )
+    }
+
+    suspend fun didList(query: DidListQuery): DidListResult {
+        val query = DidListLibQuery()
+        return DidListResult(
+            didDocuments = didFeatures.didList().invoke(query).documents
         )
     }
 }

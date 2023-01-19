@@ -5,6 +5,7 @@ import city.smartb.iris.did.domain.commands.DidProofUpdateFunction
 import city.smartb.iris.did.domain.commands.DidUpdateFunction
 import city.smartb.iris.did.domain.commands.DidVerificationMethodAddFunction
 import city.smartb.iris.did.domain.queries.DidGetFunction
+import city.smartb.iris.did.domain.queries.DidListFunction
 import city.smartb.iris.did.service.DidAggregateService
 import city.smartb.iris.did.service.DidFinderService
 import f2.dsl.fnc.f2Function
@@ -44,5 +45,10 @@ class DidFeaturesImpl(
     fun didGet(): DidGetFunction = f2Function { query ->
         logger.debug("didGet: $query")
         didFinderService.get(query)
+    }
+
+    fun didList(): DidListFunction = f2Function { query ->
+        logger.debug("didList: $query")
+        didFinderService.list(query)
     }
 }
