@@ -12,10 +12,10 @@ import city.smartb.iris.keypair.domain.SignQuery
 import city.smartb.iris.keypair.domain.SignResult
 import city.smartb.iris.keypair.domain.VerifyQuery
 import city.smartb.iris.keypair.domain.VerifyResult
-import city.smartb.iris.ldproof.LdProofBuilder
-import city.smartb.iris.ldproof.VerifiableJsonLdBuilder
-import city.smartb.iris.ldproof.crypto.RsaSignature2018LdProofSigner
-import city.smartb.iris.ldproof.crypto.RsaSignature2018LdProofVerifier
+import city.smartb.iris.ld.ldproof.LdProofBuilder
+import city.smartb.iris.ld.ldproof.VerifiableJsonLdBuilder
+import city.smartb.iris.ld.ldproof.crypto.RsaSignature2018LdProofSigner
+import city.smartb.iris.ld.ldproof.crypto.RsaSignature2018LdProofVerifier
 import city.smartb.iris.vault.client.VaultClient
 import city.smartb.iris.vault.domain.queries.TransitPublicKeyGetQuery
 import java.security.interfaces.RSAPrivateKey
@@ -63,21 +63,20 @@ class KeypairFinderService(
         return SignResult(verifiableJsonLd)
     }
 
-    private fun getSigner(method: String, privateKey: String): Signer? {
+    private fun getSigner(method: String, privateKey: String): Signer {
         return when (method) {
             "rsa" -> RS256Signer(parseRSAPrivateKey(privateKey))
             "transit" -> VaultTransitSigner(privateKey, vaultClient)
             else -> {
-                println("Signer type not found")
-                return null
+                throw Exception("Signer type not found")
             }
         }
     }
 
-    private fun getVerifier(type: String, publicKey: String): Verifier? {
+    private fun getVerifier(type: String, publicKey: String): Verifier {
         return when(type) {
             "RsaSignature2018" -> RS256Verifier(RSAKeyPairDecoderBase64.decodePublicKey(publicKey))
-            else -> null
+            else -> throw Exception("Verifier type not found")
         }
     }
 

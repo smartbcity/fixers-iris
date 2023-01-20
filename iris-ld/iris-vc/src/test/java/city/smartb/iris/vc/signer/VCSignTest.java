@@ -21,9 +21,9 @@
 //
 //import city.smartb.iris.crypto.rsa.RSAKeyPairReader;
 //import city.smartb.iris.crypto.rsa.exception.InvalidRsaKeyException;
-//import city.smartb.iris.ldproof.LdProofBuilder;
-//import city.smartb.iris.vc.VerifiableCredential;
-//import city.smartb.iris.vc.VerifiableCredentialBuilder;
+//import city.smartb.iris.city.smartb.iris.ld.ldproof.LdProofBuilder;
+//import city.smartb.iris.city.smartb.iris.ld.vc.VerifiableCredential;
+//import city.smartb.iris.city.smartb.iris.ld.vc.VerifiableCredentialBuilder;
 //
 //class VCSignTest {
 //

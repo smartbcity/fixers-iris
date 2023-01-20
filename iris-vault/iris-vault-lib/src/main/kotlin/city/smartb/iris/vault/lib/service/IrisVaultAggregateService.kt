@@ -3,10 +3,10 @@ package city.smartb.iris.vault.lib.service
 import city.smartb.iris.did.DidFeaturesImpl
 import city.smartb.iris.did.domain.commands.DidProofUpdateCommand
 import city.smartb.iris.did.domain.commands.DidVerificationMethodAddCommand
-import city.smartb.iris.did.model.DIDVerificationMethod
 import city.smartb.iris.keypair.domain.KeypairCreateCommand
 import city.smartb.iris.keypair.domain.SignQuery
 import city.smartb.iris.keypair.lib.KeypairFeaturesImpl
+import city.smartb.iris.ld.did.DIDVerificationMethod
 import city.smartb.iris.vault.domain.commands.DidCreateCommand
 import city.smartb.iris.vault.domain.commands.DidCreatedEvent
 import city.smartb.iris.vault.domain.commands.DidLibCreateCommand

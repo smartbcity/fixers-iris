@@ -1,4 +1,4 @@
-package city.smartb.iris.resolver.utils
+package city.smartb.iris.did.utils
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.databind.DeserializationFeature

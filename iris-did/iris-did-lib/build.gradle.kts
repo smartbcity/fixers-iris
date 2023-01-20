@@ -9,7 +9,6 @@ dependencies {
 
 	api(project(":iris-did:iris-did-domain"))
 
-	api(project(":iris-ld:iris-did"))
 	api(project(":iris-bdd"))
 
 	api("city.smartb.f2:f2-spring-boot-starter-function-http:${Versions.f2}")

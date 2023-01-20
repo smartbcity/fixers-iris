@@ -1,6 +1,6 @@
 package city.smartb.iris.vault.domain.queries
 
-import city.smartb.iris.ldproof.VerifiableJsonLd
+import city.smartb.iris.ld.ldproof.VerifiableJsonLd
 import f2.dsl.fnc.F2Function
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable

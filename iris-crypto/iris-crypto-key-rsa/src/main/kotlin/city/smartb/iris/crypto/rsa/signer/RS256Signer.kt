@@ -16,7 +16,7 @@ class RS256Signer(
         get() = "RsaSignature2018"
 
     @Throws(GeneralSecurityException::class)
-    override fun sign(content: ByteArray): ByteArray {
+    override suspend fun sign(content: ByteArray): ByteArray {
         val jcaSignature = Signature.getInstance("SHA256withRSA")
         jcaSignature.initSign(rsaPrivateKey)
         jcaSignature.update(content)

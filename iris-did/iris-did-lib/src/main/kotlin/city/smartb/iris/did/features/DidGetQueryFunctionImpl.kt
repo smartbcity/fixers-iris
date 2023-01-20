@@ -2,7 +2,7 @@
 //
 //import city.smartb.iris.did.DIDDocumentBuilder
 //import city.smartb.iris.did.config.SsmConfig
-//import city.smartb.iris.resolver.utils.parseTo
+//import city.smartb.iris.did.utils.parseTo
 //import city.smartb.iris.did.domain.DidState
 //import city.smartb.iris.did.domain.queries.DidGetEvent
 //import city.smartb.iris.did.domain.queries.DidGetQuery

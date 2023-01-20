@@ -1,6 +1,6 @@
 //package city.smartb.iris.did.features
 //
-//import city.smartb.iris.jsonld.JsonLdObject
+//import city.smartb.iris.jsonld.city.smartb.iris.ld.jsonld.JsonLdObject
 //import city.smartb.iris.did.domain.DidState
 //import city.smartb.iris.did.domain.queries.DidDereferenceEvent
 //import city.smartb.iris.did.domain.queries.DidDereferenceQuery
@@ -26,9 +26,9 @@
 //    private suspend fun dereferenceDidDocument(cmd: DidDereferenceQuery): DidDereferenceEvent {
 //        val baseUri = URI.create(cmd.id)
 //
-//        val document = JsonLdObject(didGetQueryFunction.invoke(DidGetQuery(cmd.id)).document)
+//        val document = city.smartb.iris.ld.jsonld.JsonLdObject(didGetQueryFunction.invoke(DidGetQuery(cmd.id)).document)
 //
-////        JsonLdDereferencer.findByIdInJsonLdObject(document, )
+////        city.smartb.iris.ld.jsonld.JsonLdDereferencer.findByIdInJsonLdObject(document, )
 //
 //        return DidDereferenceEvent(
 //            id = cmd.id,

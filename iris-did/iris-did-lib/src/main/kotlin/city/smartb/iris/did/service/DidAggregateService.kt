@@ -1,9 +1,6 @@
 package city.smartb.iris.did.service
 
 import city.smartb.iris.crypto.rsa.RSAKeyPairDecoderBase64
-import city.smartb.iris.did.DIDDocument
-import city.smartb.iris.did.DIDDocumentBuilder
-import city.smartb.iris.did.DIDVerificationMethodBuilder
 import city.smartb.iris.did.domain.DidState
 import city.smartb.iris.did.domain.commands.DidCreateCommand
 import city.smartb.iris.did.domain.commands.DidCreatedEvent
@@ -13,9 +10,12 @@ import city.smartb.iris.did.domain.commands.DidUpdateCommand
 import city.smartb.iris.did.domain.commands.DidUpdatedEvent
 import city.smartb.iris.did.domain.commands.DidVerificationMethodAddCommand
 import city.smartb.iris.did.domain.commands.DidVerificationMethodAddedEvent
-import city.smartb.iris.did.model.DIDVerificationMethod
-import city.smartb.iris.s2.config.DidS2Aggregate
-import city.smartb.iris.s2.entity.DidEntity
+import city.smartb.iris.did.s2.config.DidS2Aggregate
+import city.smartb.iris.did.s2.entity.DidEntity
+import city.smartb.iris.ld.did.DIDDocument
+import city.smartb.iris.ld.did.DIDDocumentBuilder
+import city.smartb.iris.ld.did.DIDVerificationMethod
+import city.smartb.iris.ld.did.DIDVerificationMethodBuilder
 import java.security.PublicKey
 import java.security.interfaces.RSAPublicKey
 import java.util.UUID
@@ -70,7 +70,7 @@ class DidAggregateService(
     }
 
     suspend fun updateProof(cmd: DidProofUpdateCommand): DidProofUpdatedEvent = didS2Aggregate.doTransition(cmd) {
-        this.document.proof = cmd.proof
+        this.document.setProof(cmd.proof)
         this to DidProofUpdatedEvent(
             id = cmd.id,
             type = DidState(this.state),

@@ -5,8 +5,8 @@ import java.security.GeneralSecurityException
 
 interface Signer {
     val algorithm: JWSAlgorithm?
-    val term: String?
+    val term: String
 
     @Throws(GeneralSecurityException::class)
-    fun sign(content: ByteArray): ByteArray
+    suspend fun sign(content: ByteArray): ByteArray
 }
