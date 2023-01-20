@@ -44,7 +44,7 @@ class KeypairFinderService(
         return VerifyResult(ldSigner.verify(query.jsonLd))
     }
 
-    fun sign(query: SignQuery): SignResult {
+    suspend fun sign(query: SignQuery): SignResult {
         val signer = getSigner(query.method, query.privateKey)
 
         val created = LocalDateTime.now()
@@ -53,7 +53,7 @@ class KeypairFinderService(
             .withCreated(created)
             .withChallenge(nonce)
             .withProofPurpose("assertionMethod")
-            .withVerificationMethod("")
+            .withVerificationMethod(query.pathToVerificationKey)
 
         val ldSigner = RsaSignature2018LdProofSigner(signer, proofBuilder)
         val builder = VerifiableJsonLdBuilder.builder(query.jsonLd.asJson())
@@ -63,10 +63,10 @@ class KeypairFinderService(
         return SignResult(verifiableJsonLd)
     }
 
-    private fun getSigner(method: String, privateKey: String): Signer {
+    private fun getSigner(method: String, privateKey: Any): Signer {
         return when (method) {
-            "rsa" -> RS256Signer(parseRSAPrivateKey(privateKey))
-            "transit" -> VaultTransitSigner(privateKey, vaultClient)
+            "rsa" -> RS256Signer(privateKey as RSAPrivateKey)
+            "transit" -> VaultTransitSigner(privateKey as String, vaultClient)
             else -> {
                 throw Exception("Signer type not found")
             }

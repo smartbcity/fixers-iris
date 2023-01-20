@@ -1,11 +1,13 @@
 package city.smartb.iris.vault.lib.service
 
+import city.smartb.iris.crypto.rsa.RSAKeyPairReader
 import city.smartb.iris.did.DidFeaturesImpl
 import city.smartb.iris.did.domain.commands.DidProofUpdateCommand
 import city.smartb.iris.did.domain.commands.DidVerificationMethodAddCommand
 import city.smartb.iris.keypair.domain.KeypairCreateCommand
 import city.smartb.iris.keypair.domain.SignQuery
 import city.smartb.iris.keypair.lib.KeypairFeaturesImpl
+import city.smartb.iris.ld.did.DIDDocument
 import city.smartb.iris.ld.did.DIDVerificationMethod
 import city.smartb.iris.vault.domain.commands.DidCreateCommand
 import city.smartb.iris.vault.domain.commands.DidCreatedEvent
@@ -16,7 +18,6 @@ import f2.dsl.fnc.invoke
 import java.util.UUID
 import org.springframework.stereotype.Service
 import s2.spring.utils.logger.Logger
-
 
 @Service
 class IrisVaultAggregateService(
@@ -29,12 +30,8 @@ class IrisVaultAggregateService(
         logger.debug("didCreate: $cmd")
         var didDocument = didFeatures.didCreate().invoke(DidLibCreateCommand()).document
 
-        println("1")
-        println(didDocument)
-        // use did lib to init a did document
         val keyId = generateId()
         val publicKey = keypairFeatures.keypairCreate().invoke(KeypairCreateCommand(keyId)).publicKey
-        // use keypair lib to generate a transit key
 
         didDocument = didFeatures.didVerificationMethodAdd().invoke(DidVerificationMethodAddCommand(
             id = didDocument.id,
@@ -43,30 +40,9 @@ class IrisVaultAggregateService(
             controller = didDocument.id,
             publicKey = publicKey
         )).document
-        // use did lib to add the newly created key to the did document
-
-        println("2")
-        println(didDocument)
-
-        val proof = keypairFeatures.sign().invoke(SignQuery(
-            jsonLd = didDocument,
-            privateKey = keyId,
-            method = "transit",
-            pathToVerificationKey = "pathtokey"
-        )).verifiableJsonLd.proof
-        // use keypair lib to sign the did document
-
-        didDocument = didFeatures.didProofUpdate().invoke(DidProofUpdateCommand(
-            id = didDocument.id,
-            proof = proof
-        )).document
-        // use did lib to add the proof to the did document and store in the registry
-
-        println("3")
-        println(didDocument)
 
         return DidCreatedEvent(
-            didDocument = didDocument
+            didDocument = didDocument.updateProof()
         )
     }
 
@@ -83,6 +59,22 @@ class IrisVaultAggregateService(
         )).document
 
         return DidPublicKeyAddedEvent(didDocument)
+    }
+
+    private suspend fun DIDDocument.updateProof(): DIDDocument {
+        val keyPair = RSAKeyPairReader.loadKeyPair("server")
+
+        val proof = keypairFeatures.sign().invoke(SignQuery(
+            jsonLd = this,
+            privateKey = keyPair.private,
+            method = "rsa",
+            pathToVerificationKey = "pathToServerPubKey"
+        )).verifiableJsonLd.proof
+
+        return didFeatures.didProofUpdate().invoke(DidProofUpdateCommand(
+            id = this.id,
+            proof = proof
+        )).document
     }
 
     private fun generateId(): String = UUID.randomUUID().toString()

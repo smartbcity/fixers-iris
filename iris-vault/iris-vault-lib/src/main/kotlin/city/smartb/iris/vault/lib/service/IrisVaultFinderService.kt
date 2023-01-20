@@ -28,8 +28,7 @@ class IrisVaultFinderService(
 
     suspend fun verify(query: VerifyQuery): VerifyResult {
         val publicKey = query.verifiableJsonLd.proof.getVerificationMethod()
-
-        if (publicKey == null) throw Exception("Verification method not found")
+            ?: throw Exception("Verification method not found")
 
         // use did lib to resolve the public key
         // use keypair lib to verify the jsonld

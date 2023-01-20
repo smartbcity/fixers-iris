@@ -12,7 +12,7 @@ class SignQuery(
      * if type is rsa, privateKey is privateKey value (only support #PKCS8 format)
      * if transit type, privateKey is the name in transit store
      */
-    val privateKey: String,
+    val privateKey: Any,
     val method: String, // currently supports: ["transit", "rsa"]
     val pathToVerificationKey: String
 )
