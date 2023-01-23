@@ -34,10 +34,10 @@ class IrisVaultAggregateService(
         val publicKey = keypairFeatures.keypairCreate().invoke(KeypairCreateCommand(keyId)).publicKey
 
         didDocument = didFeatures.didVerificationMethodAdd().invoke(DidVerificationMethodAddCommand(
-            id = didDocument.id,
+            id = didDocument.id!!,
             keyId = keyId,
             type = DIDVerificationMethod.RSA_VERIFICATION_2018,
-            controller = didDocument.id,
+            controller = didDocument.id!!,
             publicKey = publicKey
         )).document
 
@@ -72,7 +72,7 @@ class IrisVaultAggregateService(
         )).verifiableJsonLd.proof
 
         return didFeatures.didProofUpdate().invoke(DidProofUpdateCommand(
-            id = this.id,
+            id = this.id!!,
             proof = proof
         )).document
     }

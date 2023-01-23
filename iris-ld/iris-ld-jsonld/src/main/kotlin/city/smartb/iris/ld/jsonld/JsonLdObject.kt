@@ -37,10 +37,10 @@ open class JsonLdObject {
     val context: List<Any>
         get() = fieldReader.read(jsonLdObject, JsonLdConsts.CONTEXT).asListObjects(Any::class.java)
 
-    val id: String?
+    open val id: String?
         get() {
             val ldId = fieldReader.read(jsonLdObject, JSON_LD_ID).asString()
-            return ldId ?: fieldReader.read(jsonLdObject, JSON_LD_ID).asString()
+            return ldId
         }
     val type: String?
         get() {

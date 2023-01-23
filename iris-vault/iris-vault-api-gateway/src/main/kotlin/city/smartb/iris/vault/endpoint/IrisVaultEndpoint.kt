@@ -12,6 +12,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * @d2 service
+ * @parent [city.smartb.iris.vault.domain.D2IrisVaultPage]
+ */
 @RestController
 @RequestMapping
 @Configuration

@@ -9,6 +9,6 @@ data class DidEntity(
 	var document: DIDDocument,
 	var state: Int,
 ) : WithS2IdAndStatus<DidId, DidState> {
-	override fun s2Id() = document.id
+	override fun s2Id() = document.id!!
 	override fun s2State() = DidState(state)
 }
