@@ -37,6 +37,7 @@ class KeypairFinderService(
 
     fun verify(query: VerifyQuery): VerifyResult {
         val proofType = query.jsonLd.proof.type
+            ?: throw Exception("Type not found")
 
         val verifier = getVerifier(proofType, query.publicKey)
         val ldSigner = RsaSignature2018LdProofVerifier(verifier)

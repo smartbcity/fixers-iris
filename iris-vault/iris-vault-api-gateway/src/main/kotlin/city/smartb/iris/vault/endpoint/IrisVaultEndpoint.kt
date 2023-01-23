@@ -22,21 +22,39 @@ import org.springframework.web.bind.annotation.RestController
 open class IrisVaultEndpoint(
     private val irisVaultFeatures: IrisVaultFeaturesImpl
 ) {
+    /**
+     * Create a new DID Document with a new transit key
+     */
     @Bean
     open fun didCreate(): DidCreateFunction = irisVaultFeatures.didCreate()
 
+    /**
+     * Add a new transit key to the specified DID
+     */
     @Bean
     open fun didPublicKeyAdd(): DidPublicKeyAddFunction = irisVaultFeatures.didPublicKeyAdd()
 
+    /**
+     * Fetch a DID Document
+     */
     @Bean
     open fun didGet(): DidGetFunction = irisVaultFeatures.didGet()
 
+    /**
+     * Fetch all DID Documents
+     */
     @Bean
     open fun didList(): DidListFunction = irisVaultFeatures.didList()
 
+    /**
+     * Sign any json-LD with the specified transit key
+     */
     @Bean
     open fun sign(): SignFunction = irisVaultFeatures.sign()
 
+    /**
+     * Verify any verifiable json-LD
+     */
     @Bean
     open fun verify(): VerifyFunction = irisVaultFeatures.verify()
 

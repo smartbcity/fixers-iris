@@ -48,11 +48,10 @@ class IrisVaultAggregateService(
 
     suspend fun didPublicKeyAdd(cmd: DidPublicKeyAddCommand): DidPublicKeyAddedEvent {
         logger.debug("didPublicKeyAdd: $cmd")
-        val keyName = generateId()
-        val publicKey = keypairFeatures.keypairCreate().invoke(KeypairCreateCommand(keyName)).publicKey
+        val publicKey = keypairFeatures.keypairCreate().invoke(KeypairCreateCommand(cmd.keyName)).publicKey
         val didDocument = didFeatures.didVerificationMethodAdd().invoke(DidVerificationMethodAddCommand(
             id = cmd.did,
-            keyId = keyName,
+            keyId = cmd.keyName,
             type = DIDVerificationMethod.RSA_VERIFICATION_2018,
             controller = cmd.did,
             publicKey = publicKey
