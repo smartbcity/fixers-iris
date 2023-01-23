@@ -1,0 +1,16 @@
+import { CodeHighlighter, DescriptedCode } from '@smartb/g2-documentation'
+import DidCreateCommandDesc from './desc.md'
+import DidCreateCommandVisualJson from './visualJson.json'
+
+<DescriptedCode
+  leftElement={<DidCreateCommandDesc />}
+  leftContainerProps={{}}
+  rightElement={
+    <CodeHighlighter
+      object={DidCreateCommandVisualJson}
+      language={"json"}
+      title={"Command"}
+    />
+  }
+  rightContainerProps={{}}
+/>

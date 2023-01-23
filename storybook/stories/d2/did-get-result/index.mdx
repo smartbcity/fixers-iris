@@ -1,0 +1,16 @@
+import { CodeHighlighter, DescriptedCode } from '@smartb/g2-documentation'
+import DidGetResultDesc from './desc.md'
+import DidGetResultVisualJson from './visualJson.json'
+
+<DescriptedCode
+  leftElement={<DidGetResultDesc />}
+  leftContainerProps={{}}
+  rightElement={
+    <CodeHighlighter
+      object={DidGetResultVisualJson}
+      language={"json"}
+      title={"Result"}
+    />
+  }
+  rightContainerProps={{}}
+/>

@@ -9,14 +9,14 @@
   
 <article>
 
-**didCreate** ( cmd: [`DidCreateCommand`](#query) ) : [`DidCreatedEvent`](#result) <br/> 
+**didCreate** ( cmd: [`DidCreateCommand`](#command) ) : [`DidCreatedEvent`](#event) <br/> 
 
 Create a new DID Document with a new transit key
 
 </article>
 <article>
 
-**didPublicKeyAdd** ( cmd: `DidPublicKeyAddCommand` ) : `DidPublicKeyAddedEvent` <br/> 
+**didPublicKeyAdd** ( cmd: [`DidPublicKeyAddCommand`](#command) ) : [`DidPublicKeyAddedEvent`](#event) <br/> 
 
 Add a new transit key to the specified DID
 
