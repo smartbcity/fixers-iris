@@ -4,7 +4,7 @@
 
 Type: `DidListFunction`
 
-Fetch all DID Documents.
+Get all DID Documents.
 
 
 

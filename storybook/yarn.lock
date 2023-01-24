@@ -1612,31 +1612,30 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
   integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
 
-"@smartb/g2-documentation@^1.0.0-alpha.52":
-  version "1.0.0-alpha.52"
-  resolved "https://gitlab.smartb.city/api/v4/projects/127/packages/npm/@smartb/g2-documentation/-/@smartb/g2-documentation-1.0.0-alpha.52.tgz#f2f9b37db41b9a7bd04e5069920f3ae4edc6732e"
-  integrity sha1-8vmzfbQbmnvQTlBpkg865O3Gcy4=
+"@smartb/g2-documentation@^1.0.0-alpha.69":
+  version "1.0.0-alpha.123"
+  resolved "https://gitlab.smartb.city/api/v4/projects/127/packages/npm/@smartb/g2-documentation/-/@smartb/g2-documentation-1.0.0-alpha.123.tgz#6d826d71bdeadc3322a0aa4c842fafede8fe7e07"
+  integrity sha1-bYJtcb3q3DMioKpMhC+v7ej+fgc=
   dependencies:
-    "@smartb/g2-themes" "1.0.0-alpha.52"
+    "@smartb/g2-themes" "^1.0.0-alpha.123"
     github-markdown-css "^4.0.0"
     react-markdown "^6.0.2"
     react-syntax-highlighter "^15.4.3"
     rehype-raw "^5.1.0"
     rehype-sanitize "^4.0.0"
     remark-gfm "^1.0.0"
-    stringify-object "^4.0.1"
 
-"@smartb/g2-storybook-documentation@^1.0.0-alpha.52":
-  version "1.0.0-alpha.52"
-  resolved "https://gitlab.smartb.city/api/v4/projects/127/packages/npm/@smartb/g2-storybook-documentation/-/@smartb/g2-storybook-documentation-1.0.0-alpha.52.tgz#76bf91c09b534c76fe8abcb770037062efb1cdd7"
-  integrity sha1-dr+RwJtTTHb+iry3cANwYu+xzdc=
+"@smartb/g2-storybook-documentation@^1.0.0-alpha.69":
+  version "1.0.0-alpha.123"
+  resolved "https://gitlab.smartb.city/api/v4/projects/127/packages/npm/@smartb/g2-storybook-documentation/-/@smartb/g2-storybook-documentation-1.0.0-alpha.123.tgz#f6da238c0033dc81895fab86612e5fd1b6bf6b56"
+  integrity sha1-9tojjAAz3IGJX6uGYS5f0ba/a1Y=
   dependencies:
     "@storybook/addon-docs" "^6.3.6"
 
-"@smartb/g2-themes@1.0.0-alpha.52", "@smartb/g2-themes@^1.0.0-alpha.52":
-  version "1.0.0-alpha.52"
-  resolved "https://gitlab.smartb.city/api/v4/projects/127/packages/npm/@smartb/g2-themes/-/@smartb/g2-themes-1.0.0-alpha.52.tgz#2f97fde9f18c19a9cc662ea46c34aba260f81a56"
-  integrity sha1-L5f96fGMGanMZi6kbDSromD4GlY=
+"@smartb/g2-themes@^1.0.0-alpha.123", "@smartb/g2-themes@^1.0.0-alpha.69":
+  version "1.0.0-alpha.123"
+  resolved "https://gitlab.smartb.city/api/v4/projects/127/packages/npm/@smartb/g2-themes/-/@smartb/g2-themes-1.0.0-alpha.123.tgz#d4a73022986eb572937d1dcd05b6354bf4ec8e5c"
+  integrity sha1-1KcwIphutXKTfR3NBbY1S/Tsjlw=
   dependencies:
     ramda "^0.28.0"
     tinycolor2 "^1.4.2"
@@ -6181,11 +6180,6 @@ get-intrinsic@^1.0.2, get-intrinsic@^1.1.0, get-intrinsic@^1.1.1:
     has "^1.0.3"
     has-symbols "^1.0.1"
 
-get-own-enumerable-property-symbols@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/get-own-enumerable-property-symbols/-/get-own-enumerable-property-symbols-3.0.2.tgz#b5fde77f22cbe35f390b4e089922c50bce6ef664"
-  integrity sha512-I0UBV/XOz1XkIJHEUDMZAbzCThU/H8DxmSfmdGcKPnVhu2VfFqr34jr9777IyaTYvxjedWhqVIilEDsCdP5G6g==
-
 get-package-type@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/get-package-type/-/get-package-type-0.1.0.tgz#8de2d803cff44df3bc6c456e6668b36c3926e11a"
@@ -7023,11 +7017,6 @@ is-number@^7.0.0:
   resolved "https://registry.yarnpkg.com/is-number/-/is-number-7.0.0.tgz#7535345b896734d5f80c4d06c50955527a14f12b"
   integrity sha512-41Cifkg6e8TylSpdtTpeLVMqvSBEVzTttHvERD741+pnZ8ANv0004MRL43QKPDlK9cGvNp6NZWZUBlbGXYxxng==
 
-is-obj@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/is-obj/-/is-obj-3.0.0.tgz#b0889f1f9f8cb87e87df53a8d1230a2250f8b9be"
-  integrity sha512-IlsXEHOjtKhpN8r/tRFj2nDyTmHvcfNeu/nrRIcXE17ROeatXchkojffa1SpdqW4cr/Fj6QkEf/Gn4zf6KKvEQ==
-
 is-object@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/is-object/-/is-object-1.0.2.tgz#a56552e1c665c9e950b4a025461da87e72f86fcf"
@@ -7057,11 +7046,6 @@ is-regex@^1.1.2, is-regex@^1.1.4:
   dependencies:
     call-bind "^1.0.2"
     has-tostringtag "^1.0.0"
-
-is-regexp@^3.0.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/is-regexp/-/is-regexp-3.1.0.tgz#0235eab9cda5b83f96ac4a263d8c32c9d5ad7422"
-  integrity sha512-rbku49cWloU5bSMI+zaRaXdQHXnthP6DZ/vLnfdSKyL4zUzuWnomtOEiZZOd+ioQ+avFo/qau3KPTc7Fjy1uPA==
 
 is-set@^2.0.2:
   version "2.0.2"
@@ -10270,15 +10254,6 @@ string_decoder@~1.1.1:
   integrity sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==
   dependencies:
     safe-buffer "~5.1.0"
-
-stringify-object@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/stringify-object/-/stringify-object-4.0.1.tgz#0d2153f3fb330ed0fdd7f17f07676173b0f9b764"
-  integrity sha512-qpV1FBpN0R1gDAhCHIU71SYGZb35Te+gOQbQ6lYRmVJT7pF1NB8mkHeEJvyYNiHXw+fB4KIbeIjQl1rgiIijiA==
-  dependencies:
-    get-own-enumerable-property-symbols "^3.0.2"
-    is-obj "^3.0.0"
-    is-regexp "^3.0.0"
 
 strip-ansi@^3.0.1:
   version "3.0.1"

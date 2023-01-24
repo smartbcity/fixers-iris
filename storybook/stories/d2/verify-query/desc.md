@@ -16,7 +16,7 @@ The verifiable json-LD to verify.
 </article>
 <article>
 
-***publicKey*** `String` 
+***publicKey*** `PublicKey` 
 
 The public key to use to verify the verifiable json-LD.
 
