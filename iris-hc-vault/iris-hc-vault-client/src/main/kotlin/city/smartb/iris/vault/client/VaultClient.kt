@@ -17,7 +17,6 @@ import city.smartb.iris.vault.domain.queries.SecretGetQuery
 import city.smartb.iris.vault.domain.queries.TransitPublicKeyGet
 import city.smartb.iris.vault.domain.queries.TransitPublicKeyGetQuery
 import org.springframework.vault.support.VaultResponse
-import org.springframework.vault.support.VaultResponseSupport
 
 class VaultClient(
     override var generateBearerToken: suspend () -> String? = { null },
@@ -30,6 +29,7 @@ class VaultClient(
         const val TRANSIT_KEYS_PATH = "v1/transit/keys"
         const val TRANSIT_SIGN_PATH = "v1/transit/sign"
         const val TRANSIT_VERIFY_PATH = "v1/transit/verify"
+        const val TRANSIT_SIGN_HASH_ALGORITHM = "sha2-256"
     }
 
     /**
@@ -71,7 +71,12 @@ class VaultClient(
     }
 
     suspend fun transitSign(command: TransitSignCommand): TransitSigned {
-        val response = post<VaultResponse>(buildTransitSignPath(command.keyName), mapOf("input" to command.input))
+        val response = post<VaultResponse>(buildTransitSignPath(command.keyName), mapOf(
+            "input" to command.input,
+            "signature_algorithm" to "pkcs1v15",
+            "prehashed" to false,
+        ))
+
         val signature = response.data?.get("signature") as String
         return TransitSigned(signature)
     }
@@ -87,7 +92,7 @@ class VaultClient(
     }
 
     private suspend fun buildTransitSignPath(keyName: String): String {
-        return "$TRANSIT_SIGN_PATH/${vaultEntityId()}-$keyName"
+        return "$TRANSIT_SIGN_PATH/${vaultEntityId()}-$keyName/$TRANSIT_SIGN_HASH_ALGORITHM"
     }
 
     private suspend fun buildTransitVerifyPath(keyName: String): String {

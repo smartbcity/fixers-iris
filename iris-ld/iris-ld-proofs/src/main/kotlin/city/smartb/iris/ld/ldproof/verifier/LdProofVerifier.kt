@@ -32,6 +32,7 @@ abstract class LdProofVerifier protected constructor(private val verifier: Verif
         jsonLdObject: Map<String, Any>,
         ldProof: LdProof
     ): Boolean {
+        val jws = ldProof.jws!!
         val builder: LdProofBuilder = LdProofBuilder.Companion.fromLdProof(ldProof)
         val canonicalizedProof = builder.canonicalize()
         val canonicalizedDocument: String =
@@ -41,13 +42,12 @@ abstract class LdProofVerifier protected constructor(private val verifier: Verif
         System.arraycopy(SHAUtil.sha256(canonicalizedDocument), 0, signingInput, 32, 32)
 
         // done
-        return verify(signingInput, ldProof)
+        return verify(signingInput, jws)
     }
 
     @Throws(GeneralSecurityException::class)
-    private fun verify(signingInput: ByteArray, ldProof: LdProof): Boolean {
+    private fun verify(signingInput: ByteArray, jws: String): Boolean {
         return try {
-            val jws = ldProof.jws
             val detachedJwsObject = JWSObject.parse(jws)
             val jwsSigningInput = JWSUtil.getJwsSigningInput(detachedJwsObject.header, signingInput)
             val jwsVerifier: JWSVerifier = JoseJWSVerifier(verifier, JWSAlgorithm.RS256)

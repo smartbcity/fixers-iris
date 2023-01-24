@@ -26,6 +26,8 @@ object CanonicalizationUtil {
                 .writer()
             val jsonStr = writer.writeValueAsString(jsonLdObject)
             val json = JsonDocument.of(StringReader(jsonStr))
+            // TODO context that are not array fails
+            // TODO Make this work for both array and string context
             val context = json.jsonContent.get().asJsonObject()[JsonLdConsts.CONTEXT] as JsonStructure?
             val rdf = JsonLd.toRdf(json).context(context).get()
             normalize(rdf, "urdna2015")
