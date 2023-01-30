@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 
 @JsonDeserialize(using = DIDVerificationMethodDeserializer::class)
 class DIDVerificationMethod : ControledJsonLdObject {
-    constructor(json: Map<String, Any>) : super(json) {}
-    constructor() : super(LinkedHashMap<String, Any>()) {}
-    constructor(json: Map<String, Any>, reader: JsonFieldReader) : super(json, reader) {}
+    constructor(json: Map<String, Any>) : super(json)
+    constructor() : super(LinkedHashMap<String, Any>())
+    constructor(json: Map<String, Any>, reader: JsonFieldReader) : super(json, reader)
 
     val publicKeyBase64: String?
         get() = this[JSON_LD_PUBLICKEYBASE64].asString()
@@ -22,7 +22,7 @@ class DIDVerificationMethod : ControledJsonLdObject {
         get() = this[JSON_LD_PUBLICKEYJWK].asMap()
 
     fun toJSON(): Any {
-        return jsonLdObject
+        return jsonLd
     }
 
     companion object {

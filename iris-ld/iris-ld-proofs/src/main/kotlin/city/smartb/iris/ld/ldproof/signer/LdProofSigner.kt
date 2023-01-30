@@ -10,7 +10,7 @@ import com.nimbusds.jose.JOSEException
 import com.nimbusds.jose.JWSHeader
 import java.security.GeneralSecurityException
 
-abstract class LdProofSigner protected constructor(
+open class LdProofSigner protected constructor(
     protected val signatureType: String,
     protected val signer: Signer,
     private val ldProofBuilder: LdProofBuilder

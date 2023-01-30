@@ -6,8 +6,8 @@ import city.smartb.iris.ld.ldproof.LdProof
 import java.util.stream.Collectors
 
 class DIDDocumentBuilder : JsonLdObject {
-    constructor(json: Map<String, Any>) : super(json) {}
-    constructor(json: Map<String, Any>, reader: JsonFieldReader) : super(json, reader) {}
+    constructor(json: Map<String, Any>) : super(json)
+    constructor(json: Map<String, Any>, reader: JsonFieldReader) : super(json, reader)
 
     companion object {
         fun create(): DIDDocumentBuilder {
@@ -20,34 +20,34 @@ class DIDDocumentBuilder : JsonLdObject {
     }
 
     fun withId(id: String): DIDDocumentBuilder {
-        jsonLdObject[JSON_LD_ID] = id
+        jsonLd[JSON_LD_ID] = id
         return this
     }
 
     fun withVerificationMethods(methods: List<DIDVerificationMethod>): DIDDocumentBuilder {
         val methodsJson = methods.parallelStream().map { method: DIDVerificationMethod -> method.asJson() }
             .collect(Collectors.toList())
-        jsonLdObject[DIDDocument.JSON_LD_VERIFICATION_METHOD] = methodsJson
+        jsonLd[DIDDocument.JSON_LD_VERIFICATION_METHOD] = methodsJson
         return this
     }
 
     fun withAssertionMethods(items: List<String>): DIDDocumentBuilder {
-        jsonLdObject[DIDDocument.JSON_LD_ASSERTION_METHOD] = items
+        jsonLd[DIDDocument.JSON_LD_ASSERTION_METHOD] = items
         return this
     }
 
     fun withCapabilityInvocations(items: List<String>): DIDDocumentBuilder {
-        jsonLdObject[DIDDocument.JSON_LD_CAPABILITY_INVOCATION] = items
+        jsonLd[DIDDocument.JSON_LD_CAPABILITY_INVOCATION] = items
         return this
     }
 
     fun withCapabilityDelegations(items: List<String>): DIDDocumentBuilder {
-        jsonLdObject[DIDDocument.JSON_LD_CAPABILITY_DELEGATION] = items
+        jsonLd[DIDDocument.JSON_LD_CAPABILITY_DELEGATION] = items
         return this
     }
 
     fun withKeyAgreements(items: List<String>): DIDDocumentBuilder {
-        jsonLdObject[DIDDocument.JSON_LD_KEY_AGREEMENT] = items
+        jsonLd[DIDDocument.JSON_LD_KEY_AGREEMENT] = items
         return this
     }
 
@@ -59,7 +59,7 @@ class DIDDocumentBuilder : JsonLdObject {
     fun withServices(services: List<DIDService>): DIDDocumentBuilder {
         val servicesJSon = services.parallelStream().map { service: DIDService -> service.asJson() }
             .collect(Collectors.toList())
-        jsonLdObject[DIDDocument.JSON_LD_SERVICE] = servicesJSon
+        jsonLd[DIDDocument.JSON_LD_SERVICE] = servicesJSon
         return this
     }
 
@@ -72,7 +72,7 @@ class DIDDocumentBuilder : JsonLdObject {
         val authenticationsJson =
             authentications.parallelStream().map { authentication: DIDAuthentication -> authentication.toJSON() }
                 .collect(Collectors.toList())
-        jsonLdObject[DIDDocument.JSON_LD_AUTHENTICATION] = authenticationsJson
+        jsonLd[DIDDocument.JSON_LD_AUTHENTICATION] = authenticationsJson
         return this
     }
 
@@ -82,7 +82,7 @@ class DIDDocumentBuilder : JsonLdObject {
     }
 
     fun withController(controller: String): DIDDocumentBuilder {
-        jsonLdObject[ControledJsonLdObject.JSON_LD_CONTROLER] = controller
+        jsonLd[ControledJsonLdObject.JSON_LD_CONTROLER] = controller
         return this
     }
 
@@ -95,11 +95,11 @@ class DIDDocumentBuilder : JsonLdObject {
             .collect(Collectors.toList())
 
     override fun asJson(): Map<String, Any> {
-        return jsonLdObject
+        return jsonLd
     }
 
     fun asJson(proof: LdProof): DIDDocument {
-        jsonLdObject[LdProof.JSON_LD_PROOF] = proof
-        return DIDDocument(jsonLdObject)
+        jsonLd[LdProof.JSON_LD_PROOF] = proof
+        return DIDDocument(jsonLd)
     }
 }

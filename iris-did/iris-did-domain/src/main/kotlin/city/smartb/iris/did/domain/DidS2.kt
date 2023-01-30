@@ -66,17 +66,24 @@ sealed class DidRole : S2Role {
 open class DidState(
 	override val position: Int,
 ) : S2State {
-	@Serializable
-	open class Created : DidState(0)
+	companion object {
+		const val DID_STATE_CREATED_POSITION = 0
+		const val DID_STATE_ACTIVED_POSITION = 1
+		const val DID_STATE_SIGNED_POSITION = 2
+		const val DID_STATE_REVOKED_POSITION = 3
+	}
 
 	@Serializable
-	open class Actived : DidState(1)
+	open class Created : DidState(DID_STATE_CREATED_POSITION)
 
 	@Serializable
-	open class Signed : DidState(2)
+	open class Actived : DidState(DID_STATE_ACTIVED_POSITION)
 
 	@Serializable
-	open class Revoked : DidState(3)
+	open class Signed : DidState(DID_STATE_SIGNED_POSITION)
+
+	@Serializable
+	open class Revoked : DidState(DID_STATE_REVOKED_POSITION)
 
 	override fun toString(): String {
 		return this::class.simpleName!!

@@ -14,7 +14,7 @@ import com.nimbusds.jose.JWSVerifier
 import java.security.GeneralSecurityException
 import java.text.ParseException
 
-abstract class LdProofVerifier protected constructor(private val verifier: Verifier) {
+open class LdProofVerifier protected constructor(private val verifier: Verifier) {
     @Throws(GeneralSecurityException::class)
     fun verify(jsonLdWithProof: VerifiableJsonLd): Boolean {
         return verify(jsonLdWithProof.asJson())

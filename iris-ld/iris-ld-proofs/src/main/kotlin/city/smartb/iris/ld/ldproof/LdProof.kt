@@ -8,8 +8,8 @@ import java.time.LocalDateTime
 
 @JsonDeserialize(using = LdProofDeserializer::class)
 class LdProof : JsonLdObject {
-    constructor(jsonLdObject: Map<String, Any>) : super(jsonLdObject) {}
-    constructor(jsonLdObject: Map<String, Any>, fieldReader: JsonFieldReader) : super(jsonLdObject, fieldReader) {}
+    constructor(jsonLdObject: Map<String, Any>) : super(jsonLdObject)
+    constructor(jsonLdObject: Map<String, Any>, fieldReader: JsonFieldReader) : super(jsonLdObject, fieldReader)
 
     companion object {
         fun fromMap(json: Map<String, Any>): LdProof {

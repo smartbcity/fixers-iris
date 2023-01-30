@@ -12,7 +12,7 @@ class JsonFieldJackson(
     key: String?,
 ) : JsonField(json, key) {
 
-    constructor(json: Map<String, Any>, key: String?) : this(ObjectMapperFactory().create(), json, key) {}
+    constructor(json: Map<String, Any>, key: String?) : this(ObjectMapperFactory().create(), json, key)
 
     override fun asString(): String? {
         return mapper.convertValue(obj, String::class.java)
