@@ -78,7 +78,6 @@ class IrisVaultFeaturesImplTest {
 
     @Test
     fun verifyIsFalse(): Unit {
-        // TODO
         val proofAttributes = mapOf(
             LdProof.JSON_LD_CREATED to "creationDate",
             LdProof.JSON_LD_CHALLENGE to "challenge",
