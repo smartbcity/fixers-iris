@@ -9,8 +9,8 @@ import vc.deserializer.VerifiableCredentialDeserializer
 
 @JsonDeserialize(using = VerifiableCredentialDeserializer::class)
 class VerifiableCredential : JsonLdObject {
-    constructor(json: Map<String, Any>) : super(json) {}
-    constructor(json: Map<String, Any>, reader: JsonFieldReader) : super(json, reader) {}
+    constructor(json: Map<String, Any>) : super(json)
+    constructor(json: Map<String, Any>, reader: JsonFieldReader) : super(json, reader)
 
 
     companion object {
@@ -22,9 +22,9 @@ class VerifiableCredential : JsonLdObject {
         const val VC_CREDENTIAL_SUBJECT = "credentialSubject"
     }
 
-    val issuanceDate: String
+    val issuanceDate: String?
         get() = this.get(VC_ISSUANCE_DATE).asString()
-    val issuer: String
+    val issuer: String?
         get() = this.get(VC_ISSUER).asString()
 
     fun <T> getCredentialSubject(clazz: Class<T>?): T {

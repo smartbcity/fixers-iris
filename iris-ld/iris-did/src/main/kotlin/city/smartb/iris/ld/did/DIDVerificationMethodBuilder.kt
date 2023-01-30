@@ -18,17 +18,17 @@ class DIDVerificationMethodBuilder(json: Map<String, Any>, private var publicKey
     }
 
     fun withId(id: String): DIDVerificationMethodBuilder {
-        jsonLdObject[JSON_LD_ID] = id
+        jsonLd[JSON_LD_ID] = id
         return this
     }
 
     fun withController(controller: String): DIDVerificationMethodBuilder {
-        jsonLdObject[ControledJsonLdObject.JSON_LD_CONTROLER] = controller
+        jsonLd[ControledJsonLdObject.JSON_LD_CONTROLER] = controller
         return this
     }
 
     fun withType(type: String): DIDVerificationMethodBuilder {
-        jsonLdObject[JSON_LD_TYPE] = type
+        jsonLd[JSON_LD_TYPE] = type
         return this
     }
 
@@ -39,7 +39,7 @@ class DIDVerificationMethodBuilder(json: Map<String, Any>, private var publicKey
 
     fun build(): DIDVerificationMethod {
         addPublicKeyProperties()
-        return DIDVerificationMethod(jsonLdObject)
+        return DIDVerificationMethod(jsonLd)
     }
 
     private fun addPublicKeyProperties(): DIDVerificationMethodBuilder {
@@ -49,7 +49,7 @@ class DIDVerificationMethodBuilder(json: Map<String, Any>, private var publicKey
                 .keyUse(KeyUse.SIGNATURE)
                 .keyID(UUID.randomUUID().toString())
                 .build()
-            jsonLdObject[DIDVerificationMethod.JSON_LD_PUBLICKEYJWK] = jwk.toPublicJWK().toJSONObject()
+            jsonLd[DIDVerificationMethod.JSON_LD_PUBLICKEYJWK] = jwk.toPublicJWK().toJSONObject()
             return this
         }
         return this

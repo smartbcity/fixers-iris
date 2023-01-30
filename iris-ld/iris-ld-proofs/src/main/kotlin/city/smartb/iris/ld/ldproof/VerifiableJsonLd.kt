@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 
 @JsonDeserialize(using = VerifiableJsonLdDeserializer::class)
 class VerifiableJsonLd : JsonLdObject {
-    constructor(jsonLdObject: Map<String, Any>) : super(jsonLdObject) {}
-    constructor(jsonLdObject: Map<String, Any>, fieldReader: JsonFieldReader) : super(jsonLdObject, fieldReader) {}
+    constructor(jsonLdObject: Map<String, Any>) : super(jsonLdObject)
+    constructor(jsonLdObject: Map<String, Any>, fieldReader: JsonFieldReader) : super(jsonLdObject, fieldReader)
 
     val proof: LdProof
         get() {

@@ -11,9 +11,9 @@ import java.util.stream.Collectors
 @JsonDeserialize(using = DIDDocumentDeserializer::class)
 @JsonSerialize(using = DIDDocumentSerializer::class)
 class DIDDocument : ControledJsonLdObject {
-    constructor() : super(LinkedHashMap<String, Any>()) {}
-    constructor(json: Map<String, Any>) : super(json) {}
-    constructor(json: Map<String, Any>, reader: JsonFieldReader) : super(json, reader) {}
+    constructor() : super(LinkedHashMap<String, Any>())
+    constructor(json: Map<String, Any>) : super(json)
+    constructor(json: Map<String, Any>, reader: JsonFieldReader) : super(json, reader)
 
     companion object {
         const val MIME_TYPE = "application/did+ld+json"
@@ -44,42 +44,42 @@ class DIDDocument : ControledJsonLdObject {
     fun addVerificationMethod(method: DIDVerificationMethod): DIDDocument {
         val list = verificationMethod
         list.add(method)
-        jsonLdObject[JSON_LD_VERIFICATION_METHOD] = list
+        jsonLd[JSON_LD_VERIFICATION_METHOD] = list
         return this
     }
 
     fun addAssertionMethod(keyId: String): DIDDocument {
         val list = assertionMethod
         list.add(keyId)
-        jsonLdObject[JSON_LD_ASSERTION_METHOD] = list
+        jsonLd[JSON_LD_ASSERTION_METHOD] = list
         return this
     }
 
     fun addCapabilityInvocation(keyId: String): DIDDocument {
         val list = capabilityInvocation
         list.add(keyId)
-        jsonLdObject[JSON_LD_CAPABILITY_INVOCATION] = list
+        jsonLd[JSON_LD_CAPABILITY_INVOCATION] = list
         return this
     }
 
     fun addCapabilityDelegation(keyId: String): DIDDocument {
         val list = capabilityDelegation
         list.add(keyId)
-        jsonLdObject[JSON_LD_CAPABILITY_DELEGATION] = list
+        jsonLd[JSON_LD_CAPABILITY_DELEGATION] = list
         return this
     }
 
     fun addKeyAgreement(keyId: String): DIDDocument {
         val list = keyAgreement
         list.add(keyId)
-        jsonLdObject[JSON_LD_KEY_AGREEMENT] = list
+        jsonLd[JSON_LD_KEY_AGREEMENT] = list
         return this
     }
 
     fun addAuthentication(keyId: String): DIDDocument {
         val list = authentication
         list.add(keyId)
-        jsonLdObject[JSON_LD_AUTHENTICATION] = list
+        jsonLd[JSON_LD_AUTHENTICATION] = list
         return this
     }
 
@@ -91,7 +91,7 @@ class DIDDocument : ControledJsonLdObject {
             .filter { it: DIDVerificationMethod -> (it.id == id) }
             .collect(Collectors.toList())[0]
         list.remove(item)
-        jsonLdObject[JSON_LD_VERIFICATION_METHOD] = list
+        jsonLd[JSON_LD_VERIFICATION_METHOD] = list
         return this
     }
 
@@ -133,8 +133,8 @@ class DIDDocument : ControledJsonLdObject {
         }
 
     fun setProof(proof: LdProof): DIDDocument {
-        jsonLdObject.remove(LdProof.JSON_LD_PROOF)
-        jsonLdObject[LdProof.JSON_LD_PROOF] = proof
+        jsonLd.remove(LdProof.JSON_LD_PROOF)
+        jsonLd[LdProof.JSON_LD_PROOF] = proof
         return this
     }
 }

@@ -15,9 +15,11 @@ object JWSUtil {
     }
 
     private fun encodeHeader(header: JWSHeader): ByteArray {
-        return if (header.parsedBase64URL != null) header.parsedBase64URL.toString()
-            .toByteArray(StandardCharsets.UTF_8) else header.toBase64URL().toString()
-            .toByteArray(StandardCharsets.UTF_8)
+        return if (header.parsedBase64URL != null) {
+            header.parsedBase64URL.toString().toByteArray(StandardCharsets.UTF_8)
+        } else {
+            header.toBase64URL().toString().toByteArray(StandardCharsets.UTF_8)
+        }
     }
 
     fun serializeDetachedJws(jwsHeader: JWSHeader, signature: Base64URL): String {

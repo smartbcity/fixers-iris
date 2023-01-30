@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 @JsonSerialize(using = JsonLdObjectSerializer::class)
 @JsonDeserialize(using = JsonLdObjectDeserializer::class)
 open class JsonLdObject {
-    protected var jsonLdObject: LinkedHashMap<String, Any>
+    protected var jsonLd: LinkedHashMap<String, Any>
     private var fieldReader: JsonFieldReader
 
     companion object {
@@ -21,34 +21,34 @@ open class JsonLdObject {
     }
 
     constructor(jsonLdObject: Map<String, Any>) {
-        this.jsonLdObject = LinkedHashMap(jsonLdObject)
+        this.jsonLd = LinkedHashMap(jsonLdObject)
         this.fieldReader = JsonFieldReaderJackson()
     }
 
     constructor(jsonLdObject: Map<String, Any>, fieldReader: JsonFieldReader) {
-        this.jsonLdObject = LinkedHashMap(jsonLdObject)
+        this.jsonLd = LinkedHashMap(jsonLdObject)
         this.fieldReader = fieldReader
     }
 
     operator fun get(key: String): JsonField {
-        return fieldReader.read(jsonLdObject, key)
+        return fieldReader.read(jsonLd, key)
     }
 
     val context: List<Any>
-        get() = fieldReader.read(jsonLdObject, JsonLdConsts.CONTEXT).asListObjects(Any::class.java)
+        get() = fieldReader.read(jsonLd, JsonLdConsts.CONTEXT).asListObjects(Any::class.java)
 
     open val id: String?
         get() {
-            val ldId = fieldReader.read(jsonLdObject, JSON_LD_ID).asString()
+            val ldId = fieldReader.read(jsonLd, JSON_LD_ID).asString()
             return ldId
         }
     val type: String?
         get() {
-            val ldId = fieldReader.read(jsonLdObject, JsonLdConsts.TYPE).asString()
-            return ldId ?: fieldReader.read(jsonLdObject, JSON_LD_TYPE).asString()
+            val ldId = fieldReader.read(jsonLd, JsonLdConsts.TYPE).asString()
+            return ldId ?: fieldReader.read(jsonLd, JSON_LD_TYPE).asString()
         }
 
     open fun asJson(): Map<String, Any> {
-        return jsonLdObject
+        return jsonLd
     }
 }
