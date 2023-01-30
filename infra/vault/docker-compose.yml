@@ -1,0 +1,15 @@
+version: "3.3"
+
+services:
+  vault:
+    container_name: vault
+    image: vault
+    ports:
+      - 8200:8200
+#    volumes:
+#      - /Users/teddy/DockerVolumes/vault/data/data:/vault/data
+#      - /Users/teddy/DockerVolumes/vault/data/file:/vault/file
+#      - ./config:/vault/config
+    cap_add:
+      - IPC_LOCK
+    command: ["server", "-dev"]

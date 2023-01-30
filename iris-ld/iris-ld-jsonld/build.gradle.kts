@@ -7,4 +7,6 @@ dependencies {
 	api("com.fasterxml.jackson.core:jackson-core:${Versions.jacksonVersion}")
 	api("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${Versions.jacksonVersion}")
 	api("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${Versions.jacksonVersion}")
+
+	implementation("com.apicatalog:titanium-json-ld:1.3.1")
 }

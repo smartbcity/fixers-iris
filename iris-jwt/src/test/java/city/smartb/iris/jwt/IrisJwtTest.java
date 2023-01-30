@@ -37,7 +37,7 @@ class IrisJwtTest {
     @Test
     void shouldBeInvalid_WhenAudianceIsNotGood() throws JOSEException, ParseException, CryptoException {
         DataTest dataTest = new DataTest();
-        KeyPair keyPair = RSAKeyPairGenerator.generate2048Pair();
+        KeyPair keyPair = RSAKeyPairGenerator.INSTANCE.generate2048Pair();
         JWTClaimsSet claims = IrisJwtGenerator.generateClaimSet(keyPair.getPublic(), Optional.empty(), issuer, audience)
                 .audience("NOT_VALID")
                 .build();
@@ -51,7 +51,7 @@ class IrisJwtTest {
     @Test
     void shouldBeInvalid_whenExpirationDateIsBeforeNow() throws CryptoException, JOSEException, ParseException {
         DataTest dataTest = new DataTest();
-        KeyPair keyPair = RSAKeyPairGenerator.generate2048Pair();
+        KeyPair keyPair = RSAKeyPairGenerator.INSTANCE.generate2048Pair();
         JWTClaimsSet claims = IrisJwtGenerator.generateClaimSet(keyPair.getPublic(), Optional.empty(), issuer, audience)
                 .expirationTime(getYesterday())
                 .build();
@@ -65,7 +65,7 @@ class IrisJwtTest {
     @Test
     void shouldBeInvalid_whenIssuerIsNotValid() throws CryptoException, JOSEException, ParseException {
         DataTest dataTest = new DataTest();
-        KeyPair keyPair = RSAKeyPairGenerator.generate2048Pair();
+        KeyPair keyPair = RSAKeyPairGenerator.INSTANCE.generate2048Pair();
         JWTClaimsSet claims = IrisJwtGenerator.generateClaimSet(keyPair.getPublic(), Optional.empty(), issuer, audience)
                 .issuer("NOT VALID")
                 .build();
@@ -79,7 +79,7 @@ class IrisJwtTest {
     @Test
     void shouldBeInvalid_whenSubjectIsNotValid() throws CryptoException, JOSEException, ParseException {
         DataTest dataTest = new DataTest();
-        KeyPair keyPair = RSAKeyPairGenerator.generate2048Pair();
+        KeyPair keyPair = RSAKeyPairGenerator.INSTANCE.generate2048Pair();
         JWTClaimsSet claims = IrisJwtGenerator.generateClaimSet(keyPair.getPublic(), Optional.empty(), issuer, audience)
                 .subject("NOT VALID")
                 .build();

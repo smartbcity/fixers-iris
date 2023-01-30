@@ -6,16 +6,22 @@ plugins {
     id("city.smartb.fixers.gradle.kotlin.mpp") version PluginVersions.fixers apply false
     id("city.smartb.fixers.gradle.kotlin.jvm") version PluginVersions.fixers apply false
     id("city.smartb.fixers.gradle.publish") version PluginVersions.fixers apply false
+
+    id("org.springframework.boot") version PluginVersions.springBoot apply false
+
+    kotlin("plugin.serialization") version PluginVersions.kotlin apply false
 }
 
 allprojects {
     group = "city.smartb.iris"
     version = System.getenv("VERSION") ?: "experimental-SNAPSHOT"
     repositories {
+        mavenLocal()
         mavenCentral()
         maven { url = uri("https://oss.sonatype.org/service/local/repositories/releases/content") }
         maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
         maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://repo.danubetech.com/repository/maven-public/") }
     }
 }
 

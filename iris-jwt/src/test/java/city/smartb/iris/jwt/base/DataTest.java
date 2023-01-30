@@ -24,7 +24,7 @@ public class DataTest {
     }
 
     public IrisJwt generateSignedJWT(String issuer, String audience) throws JOSEException, ParseException, CryptoException {
-        KeyPair keyPair = RSAKeyPairGenerator.generate2048Pair();
+        KeyPair keyPair = RSAKeyPairGenerator.INSTANCE.generate2048Pair();
         return generateSignedJWT(keyPair, issuer, audience);
     }
 
