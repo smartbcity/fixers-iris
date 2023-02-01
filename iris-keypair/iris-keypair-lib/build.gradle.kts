@@ -4,7 +4,6 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":iris-bdd"))
     api(project(":iris-crypto:iris-crypto-key-rsa"))
     implementation(project(":iris-crypto:iris-crypto-hc-vault-transit"))
 
@@ -15,4 +14,6 @@ dependencies {
     api("info.weboftrust:ld-signatures-java:1.0.0")
 
     implementation("city.smartb.s2:s2-spring-boot-starter-utils-logger:${Versions.s2}")
+
+    testImplementation(project(":iris-bdd"))
 }

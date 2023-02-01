@@ -29,6 +29,11 @@ object Versions {
 }
 
 object Dependencies {
+    object ToRemove {
+        fun imCommons(scope: Scope) = scope.add(
+            "city.smartb.im:im-commons-domain:0.5.0"
+        )
+    }
     object Jvm {
         fun ktor(scope: Scope) = scope.add(
             "io.ktor:ktor-client-core:${Versions.ktor}",
@@ -36,6 +41,13 @@ object Dependencies {
             "io.ktor:ktor-client-cio:${Versions.ktor}",
             "io.ktor:ktor-serialization-kotlinx-json:${Versions.ktor}",
             "io.ktor:ktor-serialization-jackson:${Versions.ktor}"
+        )
+
+        fun s2SsmStoring(scope: Scope) = scope.add(
+            "city.smartb.s2:s2-spring-boot-starter-storing-ssm:${Versions.s2}"
+        )
+        fun f2Function(scope: Scope) = scope.add(
+            "city.smartb.f2:f2-spring-boot-starter-function:${Versions.f2}"
         )
     }
 
