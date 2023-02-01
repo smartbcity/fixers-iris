@@ -105,8 +105,8 @@ class LdProofBuilder {
         }
 
         fun fromLdProof(ldProof: LdProof): LdProofBuilder {
-            val json = ldProof!!.asJson() as MutableMap
-            json!!.remove(LdProof.JSON_LD_JWS)
+            val json = ldProof.asJson() as MutableMap
+            json.remove(LdProof.JSON_LD_JWS)
             json.remove(LdProof.JSON_LD_SIGNATURE_VALUE)
             return LdProofBuilder(json)
         }
