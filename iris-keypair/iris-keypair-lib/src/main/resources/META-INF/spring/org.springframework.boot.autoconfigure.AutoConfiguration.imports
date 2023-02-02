@@ -1,1 +1,3 @@
 city.smartb.iris.keypair.lib.KeypairFeaturesImpl
+city.smartb.iris.keypair.lib.service.KeypairFinderService
+city.smartb.iris.keypair.lib.service.KeypairAggregateService

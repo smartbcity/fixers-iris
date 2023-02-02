@@ -1,1 +1,6 @@
 city.smartb.iris.did.DidFeaturesImpl
+city.smartb.iris.did.service.DidFinderService
+city.smartb.iris.did.service.DidAggregateService
+city.smartb.iris.did.s2.config.DidS2Aggregate
+city.smartb.iris.did.config.SsmConfig
+city.smartb.iris.did.s2.config.DidS2Config

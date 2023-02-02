@@ -1,1 +1,3 @@
 city.smartb.iris.vault.lib.IrisVaultFeaturesImpl
+city.smartb.iris.vault.lib.service.IrisVaultFinderService
+city.smartb.iris.vault.lib.service.IrisVaultAggregateService

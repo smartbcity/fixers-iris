@@ -5,9 +5,6 @@ plugins {
 }
 
 dependencies {
-	implementation(project(":iris-hc-vault:iris-hc-vault-auth-client"))
-	implementation(project(":iris-hc-vault:iris-hc-vault-client"))
-
 	api(project(":iris-vault:iris-vault-lib"))
 
 	api("city.smartb.f2:f2-spring-boot-starter-function-http:${Versions.f2}")
