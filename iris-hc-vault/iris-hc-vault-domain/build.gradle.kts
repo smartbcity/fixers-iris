@@ -5,19 +5,8 @@ plugins {
 	kotlin("plugin.serialization")
 }
 
-kotlin {
-	sourceSets {
-		commonMain {
-			dependencies {
-			}
-		}
-		jsMain {
-			dependencies {
-			}
-		}
-		jvmMain {
-			dependencies {
-			}
-		}
-	}
+dependencies {
+	Dependencies.Mpp.ktor(::commonMainApi)
+	Dependencies.Js.ktor(::jsMainImplementation)
+	Dependencies.Jvm.ktor(::jvmMainImplementation)
 }

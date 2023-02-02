@@ -8,8 +8,6 @@ dependencies {
 
 	implementation("org.springframework.vault:spring-vault-core:${Versions.springVault}") // for types
 
-	Dependencies.ToRemove.imCommons(::api)
-
 	Dependencies.Jvm.ktor(::implementation)
 	testImplementation(project(":iris-bdd"))
 }

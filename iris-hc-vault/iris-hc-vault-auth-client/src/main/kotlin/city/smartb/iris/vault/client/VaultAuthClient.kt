@@ -1,8 +1,8 @@
 package city.smartb.iris.vault.client
 
 import city.smartb.i2.spring.boot.auth.AuthenticationProvider
-import city.smartb.im.commons.http.ClientJvm
 import city.smartb.iris.vault.client.config.VaultConfig
+import city.smartb.iris.vault.domain.http.ClientJvm
 import org.springframework.stereotype.Service
 import org.springframework.vault.support.VaultResponse
 

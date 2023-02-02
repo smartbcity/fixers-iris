@@ -25,15 +25,10 @@ object Versions {
 
     const val springVault = "2.3.1"
     const val junit = "5.9.1"
-    const val ktor = "2.0.3"
+    const val ktor = FixersVersions.Kotlin.ktor
 }
 
 object Dependencies {
-    object ToRemove {
-        fun imCommons(scope: Scope) = scope.add(
-            "city.smartb.im:im-commons-domain:0.5.0"
-        )
-    }
     object Jvm {
         fun ktor(scope: Scope) = scope.add(
             "io.ktor:ktor-client-core:${Versions.ktor}",

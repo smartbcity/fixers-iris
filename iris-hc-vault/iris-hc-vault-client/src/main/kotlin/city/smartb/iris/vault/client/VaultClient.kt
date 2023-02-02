@@ -1,6 +1,5 @@
 package city.smartb.iris.vault.client
 
-import city.smartb.im.commons.http.ClientJvm
 import city.smartb.iris.vault.client.config.VaultConfig
 import city.smartb.iris.vault.client.exception.TransitKeyTypeNotFoundException
 import city.smartb.iris.vault.domain.TransitKeyTypes
@@ -12,6 +11,7 @@ import city.smartb.iris.vault.domain.commands.TransitSignCommand
 import city.smartb.iris.vault.domain.commands.TransitSigned
 import city.smartb.iris.vault.domain.commands.TransitVerified
 import city.smartb.iris.vault.domain.commands.TransitVerifyCommand
+import city.smartb.iris.vault.domain.http.ClientJvm
 import city.smartb.iris.vault.domain.queries.SecretGet
 import city.smartb.iris.vault.domain.queries.SecretGetQuery
 import city.smartb.iris.vault.domain.queries.TransitPublicKeyGet
