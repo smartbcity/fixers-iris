@@ -17,39 +17,39 @@ open class Client(
     httpClientBuilder: ClientBuilder,
     protected open var generateBearerToken: suspend () -> String? = { null },
 ) {
-    val client = httpClientBuilder.build()
+    val httpClient = httpClientBuilder.build()
 
     protected suspend inline fun <reified T> get(path: String, withAuth: Boolean = true): T {
         println("GET $path")
-        return client.get {
+        return httpClient.get {
             basicSetup(path, withAuth)
         }.body()
     }
 
     suspend inline fun <reified T> post(path: String, jsonBody: Any, withAuth: Boolean = true): T {
         println("POST json $path")
-        return client.post {
+        return httpClient.post {
             jsonSetup(path, jsonBody, withAuth)
         }.body()
     }
 
     protected suspend inline fun <reified T> post(path: String, formData: Map<String, String>, withAuth: Boolean = true): T {
         println("POST formdata $path")
-        return client.post {
+        return httpClient.post {
             formDataSetup(path, formData, withAuth)
         }.body()
     }
 
     protected suspend inline fun <reified T> put(path: String, jsonBody: Any, withAuth: Boolean = true): T {
         println("PUT json $path")
-        return client.put {
+        return httpClient.put {
             jsonSetup(path, jsonBody, withAuth)
         }.body()
     }
 
     protected suspend inline fun <reified T> put(path: String, formData: Map<String, String>, withAuth: Boolean = true): T {
         println("PUT formdata $path")
-        return client.put {
+        return httpClient.put {
             formDataSetup(path, formData, withAuth)
         }.body()
     }
