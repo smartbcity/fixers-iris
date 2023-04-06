@@ -1,6 +1,6 @@
 include:
   - project: 'framework/fixers/cicd'
-    file: 'make/.gitlab-ci.yml'
+    file: 'make/.gitlab-ci-jdk17.yml'
 
 stages:
   - package
