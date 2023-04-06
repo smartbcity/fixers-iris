@@ -20,9 +20,7 @@ object Versions {
     const val guava = "31.0.1-jre"
     const val jacksonVersion = "2.13.0"
     const val bouncycastleVersion = "1.70"
-
     const val joseJwtVersion = "9.15.2"
-
     const val springVault = "2.3.1"
     const val junit = "5.9.1"
     const val ktor = FixersVersions.Kotlin.ktor
