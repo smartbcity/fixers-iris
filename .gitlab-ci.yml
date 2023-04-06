@@ -1,5 +1,17 @@
 include:
   - project: 'framework/fixers/cicd'
     file: 'make/.gitlab-ci.yml'
-#  - project: 'framework/fixers/cicd'
-#    file: 'fixers/.gitlab-ci-libs.yml'
+
+stages:
+  - package
+
+##########################################
+## Tasks
+##########################################
+
+api:
+  stage: package
+  extends:
+    - .make
+  variables:
+    MAKE_TARGET: package-iris-vault
