@@ -16,3 +16,7 @@ dependencies {
 
 	testImplementation(project(":iris-bdd"))
 }
+
+tasks.withType<org.springframework.boot.gradle.tasks.bundling.BootBuildImage> {
+	imageName.set("smartbcity/iris-vault-api-gateway:${this.project.version}")
+}
